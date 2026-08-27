@@ -1,0 +1,284 @@
+# ============================================================
+# .gitignore for AvtoAnalytics
+# Java + Spring Boot + Maven + Docker + IDE
+# ============================================================
+
+# ===== Java =====
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.nar
+*.jfr
+*.hprof
+*.dump
+
+# ===== Maven =====
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===== Gradle =====
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+gradle-wrapper.properties
+gradle/
+gradlew
+gradlew.bat
+
+# ===== Spring Boot =====
+application-dev.properties
+application-local.properties
+application-test.properties
+application-*.properties
+!application.properties
+!application-example.properties
+
+# ===== Environment Variables =====
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# ===== Docker =====
+docker-compose.override.yml
+*.pid
+*.pid.lock
+.dockerignore
+
+# ===== IDE =====
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
+.idea/**/modules.xml
+.idea/**/compiler.xml
+.idea/**/encodings.xml
+.idea/**/misc.xml
+.idea/**/vcs.xml
+.idea/**/workspace.xml
+.idea/**/caches/
+.idea/**/codeStyles/
+.idea/**/copyright/
+.idea/**/runConfigurations/
+
+# VS Code
+.vscode/
+*.code-workspace
+*.code-snippets
+.vscode-test/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+.metadata/
+*.launch
+*.prefs
+*.tmp
+*.cache
+*.diff
+*.patch
+
+# NetBeans
+nbproject/
+nbactions.xml
+nb-configuration.xml
+build/
+dist/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+*.sublime-settings
+
+# ===== OS =====
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+*.tmp
+*.bak
+*.swp
+*~
+
+# ===== Logs =====
+logs/
+*.log
+*.log.gz
+log/
+debug.log
+error.log
+access.log
+
+# ===== Test =====
+test-output/
+junit.xml
+*.test
+*.test-result
+.surefire/
+.attach_pid*
+jacoco.exec
+coverage/
+*.cover
+
+# ===== Database =====
+*.db
+*.sqlite
+*.h2.db
+*.mv.db
+*.trace.db
+*.lck
+*.lock
+*.script
+*.log
+*.data
+*.backup
+*.properties
+*.lobs
+
+# ===== Temp Files =====
+*.tmp
+*.temp
+*.cache
+*.cached
+*.download
+*.downloads
+*.swp
+*.swo
+*~
+
+# ===== Secrets =====
+*.p12
+*.pfx
+*.keystore
+*.jks
+*.key
+*.crt
+*.csr
+*.pem
+*.priv
+*.pub
+
+# ===== Frontend (если будет) =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+dist/
+build/
+.parcel-cache/
+.next/
+.nuxt/
+.cache/
+.vercel/
+.output/
+
+# ===== Jenkins =====
+.jenkins/
+.jenkins_home/
+jenkins/
+
+# ===== Kubernetes =====
+*.secret.yaml
+*.secrets.yaml
+!*.secret.example.yaml
+
+# ===== Helm =====
+charts/**/values-*.yaml
+!charts/**/values-example.yaml
+charts/**/templates/secrets.yaml
+
+# ===== Terraform =====
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# ===== Misc =====
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.exe
+*.msi
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.apk
+*.iso
+
+# ===== Custom for AvtoAnalytics =====
+# База данных в volume (если не используется Docker volume)
+postgres_data/
+pgdata/
+*.pid.lock
+
+# Логи приложения
+logs/
+*.log
+
+# Токены и ключи
+*.jwt
+*.token
+*.secret
+*.private
+*.public
+
+# Временные файлы Maven
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# ===== GitHub =====
+.github/
+!.github/workflows/
+!**/workflows/
