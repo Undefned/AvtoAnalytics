@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>О нас — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F7F7F8;
+      color: #374151;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #6B7280;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 61px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header__inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 17.62px;
+      color: #111827;
+    }
+
+    .logo__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+    .logo__bars span {
+      display: block;
+      width: 2.8px;
+      background: #111827;
+    }
+    .logo__bars span:nth-child(1) {
+      height: 4.32px;
+    }
+    .logo__bars span:nth-child(2) {
+      height: 12.96px;
+    }
+    .logo__bars span:nth-child(3) {
+      height: 10.08px;
+    }
+    .logo__bars span:nth-child(4) {
+      height: 4.32px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 50px;
+      font-size: 14px;
+      color: #111827;
+    }
+    .nav a {
+      font-weight: 400;
+      line-height: 20px;
+    }
+
+    .header__icon {
+      width: 16px;
+      height: 18px;
+      background: #111827;
+      opacity: 0.8;
+      border-radius: 2px;
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      max-width: 1280px;
+      margin: 20px auto 0;
+      padding: 0 24px;
+      font-size: 12px;
+      color: #111827;
+      line-height: 16px;
+    }
+
+    /* ===== ABOUT ===== */
+    .about {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .about__header {
+      text-align: center;
+      max-width: 700px;
+      margin: 32px auto 48px;
+    }
+
+    .about__badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: #0D4AFE;
+      line-height: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .about__title {
+      font-size: 40px;
+      font-weight: 800;
+      color: #1B254B;
+      line-height: 48px;
+      margin: 8px 0 16px;
+    }
+
+    .about__desc {
+      font-size: 14px;
+      color: #374151;
+      line-height: 20px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 64px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 36px 48px;
+      width: 100%;
+      max-width: 952px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-item__value {
+      font-size: 30px;
+      font-weight: 800;
+      color: #2563EB;
+      line-height: 38px;
+    }
+
+    .stat-item__label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1B254B;
+      line-height: 20px;
+      margin-top: 4px;
+    }
+
+    .stat-item__desc {
+      font-size: 12px;
+      color: #6B7280;
+      line-height: 16px;
+      margin-top: 4px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #111827;
+      color: #fff;
+      padding: 64px 24px 40px;
+      margin-top: 48px;
+    }
+
+    .footer__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 0.5fr;
+      gap: 40px;
+    }
+
+    .footer .logo {
+      color: #fff;
+    }
+    .footer .logo .logo__bars span {
+      background: #fff;
+    }
+
+    .footer__tagline {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-top: 16px;
+      max-width: 380px;
+    }
+
+    .footer__legal h4 {
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .footer__legal ul {
+      list-style: none;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .footer__about {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .footer__social {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .footer__social span {
+      display: block;
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .footer__divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 60px 0 24px;
+      grid-column: 1 / -1;
+    }
+
+    .footer__copy {
+      text-align: center;
+      font-weight: 300;
+      font-size: 16px;
+      grid-column: 1 / -1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+      }
+      .about__title {
+        font-size: 32px;
+        line-height: 40px;
+      }
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px;
+        text-align: center;
+      }
+      .stat-item {
+        align-items: center;
+      }
+      .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer__divider {
+        margin-top: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header__inner {
+        padding: 0 16px;
+      }
+      .about {
+        padding: 0 16px 40px;
+      }
+      .breadcrumb {
+        padding: 0 16px;
+      }
+      .footer {
+        padding: 40px 16px 24px;
+      }
+      .about__title {
+        font-size: 28px;
+        line-height: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+        vtoAnalytics
+      </div>
+      <nav class="nav">
+        <a href="#">Catalogue</a>
+        <a href="#">Sell Avto</a>
+        <a href="#">Compare Cars</a>
+      </nav>
+      <div class="header__icon"></div>
+    </div>
+  </header>
+
+  <!-- ===== BREADCRUMB ===== -->
+  <p class="breadcrumb">Главная / О нас</p>
+
+  <!-- ===== ABOUT ===== -->
+  <main class="about">
+
+    <div class="about__header">
+      <div class="about__badge">ABOUT THE PROJECT</div>
+      <h1 class="about__title">We help you buy cars honestly</h1>
+      <p class="about__desc">
+        AvtoAnalytics uses data and analytics to detect overpriced car ads so you can buy with confidence.
+        We believe the car market should be transparent, fair, and accessible to everyone.
+      </p>
+    </div>
+
+    <!-- ===== STATS ===== -->
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-item__value">15 000+</div>
+        <div class="stat-item__label">ads checked</div>
+        <div class="stat-item__desc">Every day. In real time.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__value">320</div>
+        <div class="stat-item__label">car models analyzed</div>
+        <div class="stat-item__desc">From economy to premium.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__value">4</div>
+        <div class="stat-item__label">years of data</div>
+        <div class="stat-item__desc">Historical data you can trust.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+          vtoAnalytics
+        </div>
+        <p class="footer__tagline">
+          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
+          с помощью данных, аналитики и сообщества
+        </p>
+      </div>
+
+      <div class="footer__legal">
+        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <ul>
+          <li>Политика конфиденциальности</li>
+          <li>Пользовательское соглашение</li>
+          <li>Политика использования файлов cookie</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__about">О НАС</p>
+        <div class="footer__social">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

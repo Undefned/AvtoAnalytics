@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нет результатов — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F7F7F8;
+      color: #374151;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #6B7280;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 61px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header__inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 17.62px;
+      color: #111827;
+    }
+
+    .logo__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+    .logo__bars span {
+      display: block;
+      width: 2.8px;
+      background: #111827;
+    }
+    .logo__bars span:nth-child(1) {
+      height: 4.32px;
+    }
+    .logo__bars span:nth-child(2) {
+      height: 12.96px;
+    }
+    .logo__bars span:nth-child(3) {
+      height: 10.08px;
+    }
+    .logo__bars span:nth-child(4) {
+      height: 4.32px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 50px;
+      font-size: 14px;
+      color: #111827;
+    }
+    .nav a {
+      font-weight: 400;
+      line-height: 20px;
+    }
+    .nav a.active {
+      color: #2563EB;
+      font-weight: 600;
+      border-bottom: 2px solid #2563EB;
+      padding-bottom: 4px;
+    }
+
+    .header__icon {
+      width: 16px;
+      height: 18px;
+      background: #111827;
+      opacity: 0.8;
+      border-radius: 2px;
+    }
+
+    /* ===== LAYOUT ===== */
+    .catalog {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 43px;
+      margin-top: 12px;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .sidebar__title {
+      font-size: 15.65px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 20px;
+    }
+
+    .sidebar__reset {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.74px;
+      color: #2563EB;
+      cursor: pointer;
+    }
+    .sidebar__reset svg {
+      width: 10px;
+      height: 10px;
+      fill: #2563EB;
+    }
+
+    /* ===== FILTER GROUP ===== */
+    .filter-group {
+      background: #fff;
+      border-radius: 8px;
+      padding: 17px;
+    }
+
+    .filter-group__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .filter-group__title {
+      font-size: 11.76px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 16px;
+    }
+
+    .filter-group__arrow {
+      width: 12px;
+      height: 12px;
+    }
+    .filter-group__arrow svg {
+      width: 100%;
+      height: 100%;
+      fill: #111827;
+    }
+
+    .filter-group__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .price-range__labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #6B7280;
+      line-height: 15px;
+    }
+
+    .price-range__inputs {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .price-range__inputs input {
+      width: 50%;
+      padding: 5px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #111827;
+      background: #fff;
+      outline: none;
+    }
+    .price-range__inputs input::placeholder {
+      color: #6B7280;
+    }
+
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #111827;
+      line-height: 16px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #2563EB;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+      min-height: 500px;
+    }
+
+    .empty__image {
+      width: 499px;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 16px;
+    }
+    .empty__image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .empty__title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1B254B;
+      line-height: 32px;
+      margin-bottom: 8px;
+    }
+
+    .empty__desc {
+      font-size: 14px;
+      color: #1B254B;
+      line-height: 22px;
+      max-width: 568px;
+      margin: 0 auto 32px;
+    }
+
+    .empty__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 32px;
+      background: linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13.91px;
+      font-weight: 600;
+      line-height: 20px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .empty__btn:hover {
+      opacity: 0.9;
+    }
+    .empty__btn svg {
+      width: 14px;
+      height: 14px;
+      fill: #fff;
+    }
+
+    .empty__hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: #6B7280;
+      line-height: 16px;
+    }
+    .empty__hint svg {
+      width: 12px;
+      height: 12px;
+      fill: #6B7280;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #111827;
+      color: #fff;
+      padding: 64px 24px 40px;
+    }
+
+    .footer__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 0.5fr;
+      gap: 40px;
+    }
+
+    .footer .logo {
+      color: #fff;
+    }
+    .footer .logo .logo__bars span {
+      background: #fff;
+    }
+
+    .footer__tagline {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-top: 16px;
+      max-width: 380px;
+    }
+
+    .footer__legal h4 {
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .footer__legal ul {
+      list-style: none;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .footer__about {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .footer__social {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .footer__social span {
+      display: block;
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .footer__divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 60px 0 24px;
+      grid-column: 1 / -1;
+    }
+
+    .footer__copy {
+      text-align: center;
+      font-weight: 300;
+      font-size: 16px;
+      grid-column: 1 / -1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .catalog {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .sidebar > * {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+      }
+      .empty__image {
+        width: 100%;
+        max-width: 400px;
+      }
+      .empty__title {
+        font-size: 20px;
+        line-height: 28px;
+      }
+      .empty__desc {
+        font-size: 13px;
+        padding: 0 16px;
+      }
+      .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer__divider {
+        margin-top: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header__inner {
+        padding: 0 16px;
+      }
+      .catalog {
+        padding: 0 16px 40px;
+      }
+      .footer {
+        padding: 40px 16px 24px;
+      }
+      .sidebar {
+        flex-direction: column;
+      }
+      .sidebar > * {
+        min-width: unset;
+      }
+      .empty {
+        padding: 30px 16px;
+        min-height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+        vtoAnalytics
+      </div>
+      <nav class="nav">
+        <a href="#" class="active">Catalogue</a>
+        <a href="#">Sell Avto</a>
+        <a href="#">Compare Cars</a>
+      </nav>
+      <div class="header__icon"></div>
+    </div>
+  </header>
+
+  <!-- ===== CATALOG ===== -->
+  <main class="catalog">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+
+      <div class="sidebar__header">
+        <span class="sidebar__title">Filters</span>
+        <div class="sidebar__reset">
+          Reset all
+          <svg viewBox="0 0 10 10"><path d="M0.3 0.6L4.4 4.7L0.3 8.8L1.2 9.7L5.3 5.6L9.4 9.7L10.3 8.8L6.2 4.7L10.3 0.6L9.4 -0.3L5.3 3.8L1.2 -0.3L0.3 0.6Z"/></svg>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Price (₽)</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__labels">
+            <span>500,000</span>
+            <span>5,000,000</span>
+          </div>
+          <div class="price-range__inputs">
+            <input type="text" placeholder="500,000" />
+            <input type="text" placeholder="5,000,000" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Year -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Year</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__inputs">
+            <input type="text" placeholder="From" />
+            <input type="text" placeholder="To" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Mileage -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Mileage (km)</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__inputs">
+            <input type="text" placeholder="Min mileage" />
+            <input type="text" placeholder="Max mileage" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Engine Type -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Engine Type</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Petrol
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Diesel
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Electric
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transmission -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Transmission</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Automatic
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Manual
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> CVT
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== EMPTY STATE ===== -->
+    <div class="empty">
+
+      <div class="empty__image">
+        <img src="https://placehold.co/499x247" alt="No results" />
+      </div>
+
+      <h2 class="empty__title">Ничего не найдено</h2>
+
+      <p class="empty__desc">
+        По вашему запросу нет авто. Возможно, вы выбрали слишком строгие параметры,
+        или таких машин пока нет в продаже.
+      </p>
+
+      <button class="empty__btn">
+        <svg viewBox="0 0 14 14"><path d="M1 1L13 13M13 1L1 13"/></svg>
+        Сбросить все фильтры
+      </button>
+
+      <div class="empty__hint">
+        <svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="5"/></svg>
+        Попробуйте поискать по марке или модели в строке поиска
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+          vtoAnalytics
+        </div>
+        <p class="footer__tagline">
+          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
+          с помощью данных, аналитики и сообщества
+        </p>
+      </div>
+
+      <div class="footer__legal">
+        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <ul>
+          <li>Политика конфиденциальности</li>
+          <li>Пользовательское соглашение</li>
+          <li>Политика использования файлов cookie</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__about">О НАС</p>
+        <div class="footer__social">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

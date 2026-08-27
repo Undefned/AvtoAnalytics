@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Страница не найдена — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F7F7F8;
+      color: #374151;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #6B7280;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 61px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header__inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 17.62px;
+      color: #111827;
+    }
+
+    .logo__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+    .logo__bars span {
+      display: block;
+      width: 2.8px;
+      background: #111827;
+    }
+    .logo__bars span:nth-child(1) {
+      height: 4.32px;
+    }
+    .logo__bars span:nth-child(2) {
+      height: 12.96px;
+    }
+    .logo__bars span:nth-child(3) {
+      height: 10.08px;
+    }
+    .logo__bars span:nth-child(4) {
+      height: 4.32px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 50px;
+      font-size: 14px;
+      color: #111827;
+    }
+    .nav a {
+      font-weight: 400;
+      line-height: 20px;
+    }
+
+    .header__icon {
+      width: 16px;
+      height: 18px;
+      background: #111827;
+      opacity: 0.8;
+      border-radius: 2px;
+    }
+
+    /* ===== 404 ===== */
+    .notfound {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      min-height: calc(100vh - 387px);
+    }
+
+    .notfound__content {
+      flex: 0 0 432px;
+    }
+
+    .notfound__code {
+      font-size: 144px;
+      font-weight: 800;
+      color: #BCC3CF;
+      line-height: 144px;
+      letter-spacing: -4px;
+    }
+
+    .notfound__title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 40px;
+      margin: 0 0 16px;
+    }
+
+    .notfound__divider {
+      display: block;
+      width: 48px;
+      height: 2px;
+      background: #2563EB;
+      margin-bottom: 16px;
+    }
+
+    .notfound__desc {
+      font-size: 16px;
+      color: #374151;
+      line-height: 24px;
+      max-width: 373px;
+      margin-bottom: 32px;
+    }
+
+    .notfound__actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 17px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .btn--primary {
+      background: #2563EB;
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background: #1d4ed8;
+    }
+    .btn--primary svg {
+      fill: #fff;
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: #2563EB;
+      border: 1px solid #2563EB;
+    }
+    .btn--outline:hover {
+      background: #eff6ff;
+    }
+    .btn--outline svg {
+      fill: #2563EB;
+    }
+
+    .notfound__image {
+      flex: 0 0 409px;
+    }
+    .notfound__image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #111827;
+      color: #fff;
+      padding: 64px 24px 40px;
+    }
+
+    .footer__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 0.5fr;
+      gap: 40px;
+    }
+
+    .footer .logo {
+      color: #fff;
+    }
+    .footer .logo .logo__bars span {
+      background: #fff;
+    }
+
+    .footer__tagline {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-top: 16px;
+      max-width: 380px;
+    }
+
+    .footer__legal h4 {
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .footer__legal ul {
+      list-style: none;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .footer__about {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .footer__social {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .footer__social span {
+      display: block;
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .footer__divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 60px 0 24px;
+      grid-column: 1 / -1;
+    }
+
+    .footer__copy {
+      text-align: center;
+      font-weight: 300;
+      font-size: 16px;
+      grid-column: 1 / -1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .notfound {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+      }
+      .notfound__content {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 432px;
+      }
+      .notfound__divider {
+        margin: 0 auto 16px;
+      }
+      .notfound__desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .notfound__actions {
+        justify-content: center;
+      }
+      .notfound__image {
+        flex: 0 0 auto;
+        max-width: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+      }
+      .notfound__code {
+        font-size: 100px;
+        line-height: 100px;
+      }
+      .notfound__title {
+        font-size: 28px;
+        line-height: 36px;
+      }
+      .notfound__actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer__divider {
+        margin-top: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header__inner {
+        padding: 0 16px;
+      }
+      .notfound {
+        padding: 20px 16px 40px;
+      }
+      .footer {
+        padding: 40px 16px 24px;
+      }
+      .notfound__code {
+        font-size: 72px;
+        line-height: 72px;
+      }
+      .notfound__title {
+        font-size: 24px;
+        line-height: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+        vtoAnalytics
+      </div>
+      <nav class="nav">
+        <a href="#">Catalogue</a>
+        <a href="#">Sell Avto</a>
+        <a href="#">Compare Cars</a>
+      </nav>
+      <div class="header__icon"></div>
+    </div>
+  </header>
+
+  <!-- ===== 404 ===== -->
+  <main class="notfound">
+
+    <div class="notfound__content">
+      <div class="notfound__code">404</div>
+      <h1 class="notfound__title">Похоже, авто <br />уехало без нас</h1>
+      <span class="notfound__divider"></span>
+      <p class="notfound__desc">
+        Возможно, объявление уже продано,<br />
+        или вы перешли по неверной ссылке.<br />
+        Не переживайте — на главной вас<br />
+        ждут тысячи других авто!
+      </p>
+      <div class="notfound__actions">
+        <a href="/" class="btn btn--primary">
+          <svg viewBox="0 0 14 14"><path d="M7 1L1 7L7 13M1 7H13"/></svg>
+          Вернуться на главную
+        </a>
+        <a href="/catalog" class="btn btn--outline">
+          <svg viewBox="0 0 14 14"><path d="M1 2H13V12H1V2Z"/></svg>
+          Перейти в каталог
+        </a>
+      </div>
+    </div>
+
+    <div class="notfound__image">
+      <img src="https://placehold.co/409x579" alt="Car illustration" />
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+          vtoAnalytics
+        </div>
+        <p class="footer__tagline">
+          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
+          с помощью данных, аналитики и сообщества
+        </p>
+      </div>
+
+      <div class="footer__legal">
+        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <ul>
+          <li>Политика конфиденциальности</li>
+          <li>Пользовательское соглашение</li>
+          <li>Политика использования файлов cookie</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__about">О НАС</p>
+        <div class="footer__social">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

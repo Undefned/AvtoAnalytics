@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог авто — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F7F7F8;
+      color: #374151;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #6B7280;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 61px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header__inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 17.62px;
+      color: #111827;
+    }
+
+    .logo__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+    .logo__bars span {
+      display: block;
+      width: 2.8px;
+      background: #111827;
+    }
+    .logo__bars span:nth-child(1) {
+      height: 4.32px;
+    }
+    .logo__bars span:nth-child(2) {
+      height: 12.96px;
+    }
+    .logo__bars span:nth-child(3) {
+      height: 10.08px;
+    }
+    .logo__bars span:nth-child(4) {
+      height: 4.32px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 50px;
+      font-size: 14px;
+      color: #111827;
+    }
+    .nav a {
+      font-weight: 400;
+      line-height: 20px;
+    }
+    .nav a.active {
+      color: #2563EB;
+      font-weight: 600;
+      border-bottom: 2px solid #2563EB;
+      padding-bottom: 4px;
+    }
+
+    .header__icon {
+      width: 16px;
+      height: 18px;
+      background: #111827;
+      opacity: 0.8;
+      border-radius: 2px;
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      max-width: 1280px;
+      margin: 20px auto 0;
+      padding: 0 24px;
+      font-size: 12px;
+      color: #111827;
+      line-height: 16px;
+    }
+
+    /* ===== CATALOG ===== */
+    .catalog {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 43px;
+      margin-top: 12px;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .sidebar__title {
+      font-size: 15.65px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 20px;
+    }
+
+    .sidebar__reset {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.74px;
+      color: #2563EB;
+      cursor: pointer;
+    }
+    .sidebar__reset svg {
+      width: 10px;
+      height: 10px;
+      fill: #2563EB;
+    }
+
+    /* ===== FILTER GROUP ===== */
+    .filter-group {
+      background: #fff;
+      border-radius: 8px;
+      padding: 17px;
+    }
+
+    .filter-group__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .filter-group__title {
+      font-size: 11.76px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 16px;
+    }
+
+    .filter-group__arrow {
+      width: 12px;
+      height: 12px;
+    }
+    .filter-group__arrow svg {
+      width: 100%;
+      height: 100%;
+      fill: #111827;
+    }
+
+    .filter-group__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Price range */
+    .price-range__labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #6B7280;
+      line-height: 15px;
+    }
+
+    .price-range__inputs {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .price-range__inputs input {
+      width: 50%;
+      padding: 5px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #111827;
+      background: #fff;
+      outline: none;
+    }
+    .price-range__inputs input::placeholder {
+      color: #6B7280;
+    }
+
+    /* Checkbox list */
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #111827;
+      line-height: 16px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #2563EB;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .main__toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .main__count {
+      font-size: 15.85px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 20px;
+    }
+
+    .main__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .main__sort-label {
+      font-size: 12px;
+      color: #6B7280;
+      line-height: 16px;
+    }
+
+    .main__sort-select {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 12px;
+      color: #111827;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .main__compare-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 11.63px;
+      font-weight: 600;
+      color: #94A3B8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main__compare-btn:hover {
+      border-color: #2563EB;
+      color: #2563EB;
+    }
+    .main__compare-btn svg {
+      width: 11px;
+      height: 12px;
+      fill: #94A3B8;
+    }
+
+    /* ===== CARDS GRID ===== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 23px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card__image {
+      width: 100%;
+      height: 182px;
+      background: #DDDDDD;
+      position: relative;
+      overflow: hidden;
+    }
+    .card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card__checkbox {
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      width: 16px;
+      height: 16px;
+      accent-color: #2563EB;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .card__favorite {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      z-index: 2;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .card__favorite:hover {
+      opacity: 1;
+    }
+    .card__favorite svg {
+      width: 100%;
+      height: 100%;
+      fill: #6B7280;
+    }
+
+    .card__body {
+      padding: 12px 16px 16px;
+    }
+
+    .card__title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 20px;
+      margin-bottom: 4px;
+    }
+
+    .card__price {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2563EB;
+      line-height: 16px;
+      margin-bottom: 4px;
+    }
+
+    .card__specs {
+      font-size: 10px;
+      color: #6B7280;
+      line-height: 15px;
+      margin-bottom: 8px;
+    }
+
+    .card__tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 15px;
+    }
+    .card__tag--good {
+      background: #DDDDDD;
+      color: #22C55E;
+    }
+    .card__tag--bad {
+      background: #fff;
+      color: #934344;
+      border: 1px solid #934344;
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pagination__item {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6B7280;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pagination__item:hover {
+      border-color: #ddd;
+    }
+    .pagination__item--active {
+      background: #2563EB;
+      color: #fff;
+    }
+    .pagination__item--active:hover {
+      background: #1d4ed8;
+    }
+
+    .pagination__dots {
+      color: #6B7280;
+      font-size: 9.82px;
+      font-weight: 600;
+      line-height: 16px;
+      padding: 0 4px;
+    }
+
+    .pagination__arrow {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pagination__arrow:hover {
+      border-color: #ddd;
+    }
+    .pagination__arrow svg {
+      width: 6px;
+      height: 10px;
+      fill: #6B7280;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #111827;
+      color: #fff;
+      padding: 64px 24px 40px;
+    }
+
+    .footer__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 0.5fr;
+      gap: 40px;
+    }
+
+    .footer .logo {
+      color: #fff;
+    }
+    .footer .logo .logo__bars span {
+      background: #fff;
+    }
+
+    .footer__tagline {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-top: 16px;
+      max-width: 380px;
+    }
+
+    .footer__legal h4 {
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .footer__legal ul {
+      list-style: none;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .footer__about {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .footer__social {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .footer__social span {
+      display: block;
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .footer__divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 60px 0 24px;
+      grid-column: 1 / -1;
+    }
+
+    .footer__copy {
+      text-align: center;
+      font-weight: 300;
+      font-size: 16px;
+      grid-column: 1 / -1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .catalog {
+        grid-template-columns: 1fr;
+      }
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .main__toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .main__actions {
+        flex-wrap: wrap;
+      }
+      .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer__divider {
+        margin-top: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header__inner {
+        padding: 0 16px;
+      }
+      .catalog {
+        padding: 0 16px 40px;
+      }
+      .breadcrumb {
+        padding: 0 16px;
+      }
+      .footer {
+        padding: 40px 16px 24px;
+      }
+      .sidebar {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+        vtoAnalytics
+      </div>
+      <nav class="nav">
+        <a href="#" class="active">Catalogue</a>
+        <a href="#">Sell Avto</a>
+        <a href="#">Compare Cars</a>
+      </nav>
+      <div class="header__icon"></div>
+    </div>
+  </header>
+
+  <!-- ===== BREADCRUMB ===== -->
+  <p class="breadcrumb">Главная / Каталог</p>
+
+  <!-- ===== CATALOG ===== -->
+  <main class="catalog">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+
+      <!-- Filters header -->
+      <div class="sidebar__header">
+        <span class="sidebar__title">Filters</span>
+        <div class="sidebar__reset">
+          Reset all
+          <svg viewBox="0 0 10 10"><path d="M0.3 0.6L4.4 4.7L0.3 8.8L1.2 9.7L5.3 5.6L9.4 9.7L10.3 8.8L6.2 4.7L10.3 0.6L9.4 -0.3L5.3 3.8L1.2 -0.3L0.3 0.6Z"/></svg>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Price (₽)</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__labels">
+            <span>500,000</span>
+            <span>5,000,000</span>
+          </div>
+          <div class="price-range__inputs">
+            <input type="text" placeholder="500,000" />
+            <input type="text" placeholder="5,000,000" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Year -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Year</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__inputs">
+            <input type="text" placeholder="From" />
+            <input type="text" placeholder="To" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Mileage -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Mileage (km)</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__inputs">
+            <input type="text" placeholder="Min mileage" />
+            <input type="text" placeholder="Max mileage" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Engine Type -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Engine Type</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Petrol
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Diesel
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Electric
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transmission -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Transmission</span>
+          <span class="filter-group__arrow">
+            <svg viewBox="0 0 12 12"><path d="M6 9L0.75 3H11.25L6 9Z"/></svg>
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Automatic
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Manual
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> CVT
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main">
+
+      <!-- Toolbar -->
+      <div class="main__toolbar">
+        <span class="main__count">234 cars found</span>
+        <div class="main__actions">
+          <span class="main__sort-label">Sort by:</span>
+          <select class="main__sort-select">
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Year: Newest</option>
+            <option>Year: Oldest</option>
+            <option>Mileage: Low to High</option>
+          </select>
+          <button class="main__compare-btn">
+            <svg viewBox="0 0 11 12"><path d="M1 1L1 11M4 4L4 11M7 7L7 11M10 9L10 11"/></svg>
+            Compare selected
+          </button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="cards-grid">
+
+        <!-- Card 1 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <svg viewBox="0 0 16 16"><path d="M8 14L2.3 8.6C0.9 7.3 0.9 5.1 2.3 3.8C3.7 2.5 6 2.5 7.4 3.8L8 4.4L8.6 3.8C10 2.5 12.3 2.5 13.7 3.8C15.1 5.1 15.1 7.3 13.7 8.6L8 14Z"/></svg>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--good">Good price</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <svg viewBox="0 0 16 16"><path d="M8 14L2.3 8.6C0.9 7.3 0.9 5.1 2.3 3.8C3.7 2.5 6 2.5 7.4 3.8L8 4.4L8.6 3.8C10 2.5 12.3 2.5 13.7 3.8C15.1 5.1 15.1 7.3 13.7 8.6L8 14Z"/></svg>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--good">Good price</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <svg viewBox="0 0 16 16"><path d="M8 14L2.3 8.6C0.9 7.3 0.9 5.1 2.3 3.8C3.7 2.5 6 2.5 7.4 3.8L8 4.4L8.6 3.8C10 2.5 12.3 2.5 13.7 3.8C15.1 5.1 15.1 7.3 13.7 8.6L8 14Z"/></svg>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--bad">Bad price</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <svg viewBox="0 0 16 16"><path d="M8 14L2.3 8.6C0.9 7.3 0.9 5.1 2.3 3.8C3.7 2.5 6 2.5 7.4 3.8L8 4.4L8.6 3.8C10 2.5 12.3 2.5 13.7 3.8C15.1 5.1 15.1 7.3 13.7 8.6L8 14Z"/></svg>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--good">Good price</span>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <svg viewBox="0 0 16 16"><path d="M8 14L2.3 8.6C0.9 7.3 0.9 5.1 2.3 3.8C3.7 2.5 6 2.5 7.4 3.8L8 4.4L8.6 3.8C10 2.5 12.3 2.5 13.7 3.8C15.1 5.1 15.1 7.3 13.7 8.6L8 14Z"/></svg>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--bad">Bad price</span>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <svg viewBox="0 0 16 16"><path d="M8 14L2.3 8.6C0.9 7.3 0.9 5.1 2.3 3.8C3.7 2.5 6 2.5 7.4 3.8L8 4.4L8.6 3.8C10 2.5 12.3 2.5 13.7 3.8C15.1 5.1 15.1 7.3 13.7 8.6L8 14Z"/></svg>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--good">Good price</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="pagination__arrow">
+          <svg viewBox="0 0 6 10"><path d="M5.5 0.5L1 5L5.5 9.5"/></svg>
+        </div>
+        <div class="pagination__item pagination__item--active">1</div>
+        <div class="pagination__item">2</div>
+        <div class="pagination__item">3</div>
+        <div class="pagination__item">4</div>
+        <div class="pagination__item">5</div>
+        <span class="pagination__dots">...</span>
+        <div class="pagination__item">16</div>
+        <div class="pagination__arrow">
+          <svg viewBox="0 0 6 10"><path d="M0.5 0.5L5 5L0.5 9.5"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
+          vtoAnalytics
+        </div>
+        <p class="footer__tagline">
+          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
+          с помощью данных, аналитики и сообщества
+        </p>
+      </div>
+
+      <div class="footer__legal">
+        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <ul>
+          <li>Политика конфиденциальности</li>
+          <li>Пользовательское соглашение</li>
+          <li>Политика использования файлов cookie</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__about">О НАС</p>
+        <div class="footer__social">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
