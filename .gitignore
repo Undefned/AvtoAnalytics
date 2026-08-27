@@ -40,9 +40,9 @@ gradlew.bat
 application-dev.properties
 application-local.properties
 application-test.properties
-application-*.properties
 !application.properties
 !application-example.properties
+!application-dev.example.properties
 
 # ===== Environment Variables =====
 .env
@@ -50,6 +50,8 @@ application-*.properties
 .env.*.local
 .env.production
 .env.development
+.env.example
+!env.example
 
 # ===== Docker =====
 docker-compose.override.yml
@@ -58,46 +60,16 @@ docker-compose.override.yml
 .dockerignore
 
 # ===== IDE =====
-# IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
 out/
 .idea_modules/
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
-.idea/**/contentModel.xml
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
-.idea/**/gradle.xml
-.idea/**/libraries/
-.idea/**/modules.xml
-.idea/**/compiler.xml
-.idea/**/encodings.xml
-.idea/**/misc.xml
-.idea/**/vcs.xml
-.idea/**/workspace.xml
-.idea/**/caches/
-.idea/**/codeStyles/
-.idea/**/copyright/
-.idea/**/runConfigurations/
-
-# VS Code
 .vscode/
 *.code-workspace
 *.code-snippets
 .vscode-test/
-
-# Eclipse
 .project
 .classpath
 .settings/
@@ -105,16 +77,9 @@ bin/
 .metadata/
 *.launch
 *.prefs
-*.tmp
-*.cache
-*.diff
-*.patch
-
-# NetBeans
 nbproject/
 nbactions.xml
 nb-configuration.xml
-build/
 dist/
 
 # Sublime Text
@@ -165,10 +130,8 @@ coverage/
 *.lck
 *.lock
 *.script
-*.log
 *.data
 *.backup
-*.properties
 *.lobs
 
 # ===== Temp Files =====
@@ -193,8 +156,11 @@ coverage/
 *.pem
 *.priv
 *.pub
+*.jwt
+*.token
+*.secret
 
-# ===== Frontend (если будет) =====
+# ===== Frontend =====
 node_modules/
 npm-debug.log*
 yarn-debug.log*
@@ -236,8 +202,7 @@ crash.*.log
 *.tfvars
 *.tfvars.json
 override.tf
-override.tf.json
-*_override.tf
+override.tf.json*_override.tf
 *_override.tf.json
 .terraformrc
 terraform.rc
@@ -258,25 +223,10 @@ terraform.rc
 *.iso
 
 # ===== Custom for AvtoAnalytics =====
-# База данных в volume (если не используется Docker volume)
 postgres_data/
 pgdata/
 *.pid.lock
-
-# Логи приложения
 logs/
-*.log
-
-# Токены и ключи
-*.jwt
-*.token
-*.secret
-*.private
-*.public
-
-# Временные файлы Maven
-.mvn/wrapper/maven-wrapper.jar
-.mvn/wrapper/maven-wrapper.properties
 
 # ===== GitHub =====
 .github/
