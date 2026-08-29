@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "avto_analytics_users")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity implements UserDetails {
@@ -24,8 +24,6 @@ public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "full_name")
     private String fullName;
-
-    private String phone;
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;

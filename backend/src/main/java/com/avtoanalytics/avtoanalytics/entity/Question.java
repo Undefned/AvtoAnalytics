@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "avto_analytics_questions")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Question extends BaseEntity {

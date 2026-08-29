@@ -4,7 +4,7 @@
 -- ============================================================
 
 -- 1. Пользователи
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS avto_analytics_users (
     id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- 2. Автомобили (справочник)
-CREATE TABLE IF NOT EXISTS cars (
+CREATE TABLE IF NOT EXISTS avto_analytics_cars (
     id BIGSERIAL PRIMARY KEY,
     make VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS cars (
 );
 
 -- 3. Объявления
-CREATE TABLE IF NOT EXISTS ads (
+CREATE TABLE IF NOT EXISTS avto_analytics_ads (
     id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    car_id BIGINT NOT NULL REFERENCES cars(id),
+    user_id BIGINT NOT NULL REFERENCES avto_analytics_users(id) ON DELETE CASCADE,
+    car_id BIGINT NOT NULL REFERENCES avto_analytics_cars(id),
     title VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(15,2) NOT NULL,
@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS ads (
 );
 
 -- 4. История цены
-CREATE TABLE IF NOT EXISTS price_history (
+CREATE TABLE IF NOT EXISTS avto_analytics_price_history (
     id BIGSERIAL PRIMARY KEY,
-    ad_id BIGINT NOT NULL REFERENCES ads(id) ON DELETE CASCADE,
+    ad_id BIGINT NOT NULL REFERENCES avto_analytics_ads(id) ON DELETE CASCADE,
     price DECIMAL(15,2) NOT NULL,
     recorded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -62,10 +62,10 @@ CREATE TABLE IF NOT EXISTS price_history (
 );
 
 -- 5. Избранное
-CREATE TABLE IF NOT EXISTS favorites (
+CREATE TABLE IF NOT EXISTS avto_analytics_favorites (
     id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    ad_id BIGINT NOT NULL REFERENCES ads(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES avto_analytics_users(id) ON DELETE CASCADE,
+    ad_id BIGINT NOT NULL REFERENCES avto_analytics_ads(id) ON DELETE CASCADE,
     added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -73,10 +73,10 @@ CREATE TABLE IF NOT EXISTS favorites (
 );
 
 -- 6. Вопросы продавцу
-CREATE TABLE IF NOT EXISTS questions (
+CREATE TABLE IF NOT EXISTS avto_analytics_questions (
     id BIGSERIAL PRIMARY KEY,
-    ad_id BIGINT NOT NULL REFERENCES ads(id) ON DELETE CASCADE,
-    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    ad_id BIGINT NOT NULL REFERENCES avto_analytics_ads(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES avto_analytics_users(id) ON DELETE CASCADE,
     question TEXT NOT NULL,
     answer TEXT,
     is_public BOOLEAN DEFAULT TRUE,
@@ -86,11 +86,11 @@ CREATE TABLE IF NOT EXISTS questions (
 );
 
 -- Индексы для производительности
-CREATE INDEX idx_ads_user_id ON ads(user_id);
-CREATE INDEX idx_ads_car_id ON ads(car_id);
-CREATE INDEX idx_ads_status ON ads(status);
-CREATE INDEX idx_ads_price ON ads(price);
-CREATE INDEX idx_ads_city ON ads(city);
-CREATE INDEX idx_price_history_ad_id ON price_history(ad_id);
-CREATE INDEX idx_questions_ad_id ON questions(ad_id);
-CREATE INDEX idx_favorites_user_id ON favorites(user_id);
+CREATE INDEX idx_ads_user_id ON avto_analytics_ads(user_id);
+CREATE INDEX idx_ads_car_id ON avto_analytics_ads(car_id);
+CREATE INDEX idx_ads_status ON avto_analytics_ads(status);
+CREATE INDEX idx_ads_price ON avto_analytics_ads(price);
+CREATE INDEX idx_ads_city ON avto_analytics_ads(city);
+CREATE INDEX idx_price_history_ad_id ON avto_analytics_price_history(ad_id);
+CREATE INDEX idx_questions_ad_id ON avto_analytics_questions(ad_id);
+CREATE INDEX idx_favorites_user_id ON avto_analytics_favorites(user_id);

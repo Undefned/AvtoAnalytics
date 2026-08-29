@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <img src="assets/logo.svg">
+        <a href="main.html"><img src="assets/logo.svg"></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html">Catalogue</a>
@@ -22,7 +22,7 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <img src="assets/profile.svg">
+        <a href="profile.html"><img src="assets/profile.svg"></a>
       </div>
     </div>
   </header>
@@ -39,7 +39,7 @@
     </div>
 
     <!-- ===== FORM ===== -->
-    <form class="sell__grid">
+    <form class="sell__grid" id="sellForm">
 
       <!-- ===== CAR DETAILS ===== -->
       <div class="card-form">
@@ -52,11 +52,11 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-group__label">Make</label>
-            <input type="text" class="form-control" placeholder="Enter make" />
+            <input type="text" id="sellMake" class="form-control" placeholder="Enter make" required />
           </div>
           <div class="form-group">
             <label class="form-group__label">Model</label>
-            <input type="text" class="form-control" placeholder="Enter model" />
+            <input type="text" id="sellModel" class="form-control" placeholder="Enter model" required />
           </div>
         </div>
 
@@ -64,11 +64,11 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-group__label">Generation</label>
-            <input type="text" class="form-control" placeholder="Enter generation" />
+            <input type="text" id="sellGeneration" class="form-control" placeholder="Enter generation" />
           </div>
           <div class="form-group">
             <label class="form-group__label">Year</label>
-            <input type="text" class="form-control" placeholder="Enter year" />
+            <input type="text" id="sellYear" class="form-control" placeholder="Enter year" />
           </div>
         </div>
 
@@ -77,14 +77,14 @@
           <div class="form-group">
             <label class="form-group__label">Engine Volume</label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter engine volume" />
+              <input type="text" id="sellEngineVolume" class="form-control" placeholder="Enter engine volume" />
               <span class="input-group__unit">L</span>
             </div>
           </div>
           <div class="form-group">
             <label class="form-group__label">Power</label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter power" />
+              <input type="text" id="sellPower" class="form-control" placeholder="Enter power" />
               <span class="input-group__unit">hp</span>
             </div>
           </div>
@@ -94,7 +94,7 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-group__label">Transmission</label>
-            <input type="text" class="form-control" placeholder="Enter transmission" />
+            <input type="text" id="sellTransmission" class="form-control" placeholder="Enter transmission" />
           </div>
           <div class="form-group">
             <label class="form-group__label form-group__label--inline">
@@ -102,7 +102,7 @@
               <span class="hint">?</span>
             </label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter mileage" />
+              <input type="text" id="sellMileage" class="form-control" placeholder="Enter mileage" />
               <span class="input-group__unit">km</span>
             </div>
           </div>
@@ -119,14 +119,13 @@
         <div class="form-group">
           <label class="form-group__label">Price</label>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter price" />
+            <input type="text" id="sellPrice" class="form-control" placeholder="Enter price" required />
             <span class="input-group__unit">₽</span>
           </div>
         </div>
 
         <div class="price-feedback">
-          Average market price for this model is <strong>2,100,000 ₽</strong>.
-          Your price is <span class="highlight">15% higher</span>
+          Fill in the make, model and price to see how it compares to the market.
         </div>
       </div>
 
@@ -141,7 +140,7 @@
 
     <!-- ===== SUBMIT ===== -->
     <div class="sell__actions">
-      <button type="submit" class="btn-submit">
+      <button type="submit" class="btn-submit" form="sellForm">
         <img src="assets/publish.svg">
         Publish Ad
       </button>

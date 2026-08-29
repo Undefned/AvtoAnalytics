@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
+        <a href="main.html"><img src="assets/logo.svg"></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html" class="active">Catalogue</a>
@@ -22,7 +22,7 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <img src="assets/profile.svg" alt="Profile">
+        <a href="profile.html"><img src="assets/profile.svg"></a>
       </div>
     </div>
   </header>
@@ -49,9 +49,7 @@
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Price (₽)</span>
-          <span class="filter-group__arrow">
-            
-          </span>
+          <span class="filter-group__arrow"></span>
         </div>
         <div class="filter-group__body">
           <div class="price-range__labels">
@@ -69,9 +67,7 @@
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Year</span>
-          <span class="filter-group__arrow">
-            
-          </span>
+          <span class="filter-group__arrow"></span>
         </div>
         <div class="filter-group__body">
           <div class="price-range__inputs">
@@ -85,9 +81,7 @@
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Mileage (km)</span>
-          <span class="filter-group__arrow">
-            
-          </span>
+          <span class="filter-group__arrow"></span>
         </div>
         <div class="filter-group__body">
           <div class="price-range__inputs">
@@ -101,9 +95,7 @@
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Engine Type</span>
-          <span class="filter-group__arrow">
-            
-          </span>
+          <span class="filter-group__arrow"></span>
         </div>
         <div class="filter-group__body">
           <div class="checkbox-list">
@@ -124,9 +116,7 @@
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Transmission</span>
-          <span class="filter-group__arrow">
-            
-          </span>
+          <span class="filter-group__arrow"></span>
         </div>
         <div class="filter-group__body">
           <div class="checkbox-list">
@@ -150,7 +140,7 @@
 
       <!-- Toolbar -->
       <div class="main__toolbar">
-        <span class="main__count">234 cars found</span>
+        <span class="main__count">Loading…</span>
         <div class="main__actions">
           <span class="main__sort-label">Sort by:</span>
           <select class="main__sort-select">
@@ -160,86 +150,18 @@
             <option>Year: Oldest</option>
             <option>Mileage: Low to High</option>
           </select>
-          <button class="main__compare-btn">
+          <button class="main__compare-btn" type="button">
             <img src="assets/compare.svg">
             Compare selected
           </button>
         </div>
       </div>
 
-      <!-- Cards Grid -->
-      <div class="cards-grid">
+      <!-- Cards Grid (filled by catalogue.js) -->
+      <div class="cards-grid"></div>
 
-        <!-- Card 1 -->
-        <div class="card">
-          <div class="card__image">
-            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
-            <input type="checkbox" class="card__checkbox" />
-            <div class="card__favorite">
-              <img src="assets/favourite.svg">
-            </div>
-          </div>
-          <div class="card__body">
-            <div class="card__title">Toyota Corolla 1.6</div>
-            <div class="card__price">5 000 000 ₽</div>
-            <div class="card__specs">2016 · 85,000 km</div>
-            <span class="card__tag card__tag--good">Good price</span>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card">
-          <div class="card__image">
-            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
-            <input type="checkbox" class="card__checkbox" />
-            <div class="card__favorite">
-              <img src="assets/favourite.svg">
-            </div>
-          </div>
-          <div class="card__body">
-            <div class="card__title">Toyota Corolla 1.6</div>
-            <div class="card__price">5 000 000 ₽</div>
-            <div class="card__specs">2016 · 85,000 km</div>
-            <span class="card__tag card__tag--good">Good price</span>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card">
-          <div class="card__image">
-            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
-            <input type="checkbox" class="card__checkbox" />
-            <div class="card__favorite">
-              <img src="assets/favouriteBigBlue.svg">
-            </div>
-          </div>
-          <div class="card__body">
-            <div class="card__title">Toyota Corolla 1.6</div>
-            <div class="card__price">5 000 000 ₽</div>
-            <div class="card__specs">2016 · 85,000 km</div>
-            <span class="card__tag card__tag--bad">Bad price</span>
-          </div>
-        </div>
-
-
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination">
-        <div class="pagination__arrow">
-          <svg viewBox="0 0 6 10"><path d="M5.5 0.5L1 5L5.5 9.5"/></svg>
-        </div>
-        <div class="pagination__item pagination__item--active">1</div>
-        <div class="pagination__item">2</div>
-        <div class="pagination__item">3</div>
-        <div class="pagination__item">4</div>
-        <div class="pagination__item">5</div>
-        <span class="pagination__dots">...</span>
-        <div class="pagination__item">16</div>
-        <div class="pagination__arrow">
-          <svg viewBox="0 0 6 10"><path d="M0.5 0.5L5 5L0.5 9.5"/></svg>
-        </div>
-      </div>
+      <!-- Pagination (filled by catalogue.js) -->
+      <div class="pagination"></div>
 
     </div>
 

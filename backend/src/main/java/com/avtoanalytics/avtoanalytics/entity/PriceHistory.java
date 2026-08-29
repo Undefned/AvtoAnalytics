@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "price_history")
+@Table(name = "avto_analytics_price_history")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PriceHistory extends BaseEntity {

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "cars")
+@Table(name = "avto_analytics_cars")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Car extends BaseEntity {

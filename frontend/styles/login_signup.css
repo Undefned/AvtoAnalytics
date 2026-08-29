@@ -93,6 +93,17 @@ body {
   padding: 0 48px;
 }
 
+/* New: inline error message shown above the form fields on failed login/register */
+.form-error {
+  background: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FCA5A5;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -222,6 +233,10 @@ body {
 }
 .btn:hover {
   background: #1D4ED8;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn--secondary {

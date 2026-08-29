@@ -1,8 +1,6 @@
 /* =========================================================
    MAIN.CSS — page-specific styles only.
    Reset, header, breadcrumb, footer are in base.css.
-   (Original file had its own site-header/site-footer system —
-   removed here in favor of the shared header/footer.)
    ========================================================= */
 
 :root{
@@ -87,6 +85,34 @@ button{font-family:inherit; cursor:pointer;}
   color:var(--text-dark);
 }
 .search-field__icon{font-size:20px; flex:0 0 auto;}
+
+/* Was static text inside .search-field — now a real input, styled to
+   look identical to the previous plain text label. */
+.search-field input{
+  flex:1;
+  min-width:0;
+  border:none;
+  outline:none;
+  background:transparent;
+  font-family:inherit;
+  font-size:16px;
+  font-weight:500;
+  color:var(--text-dark);
+}
+.search-field input::placeholder{
+  color:var(--text-dark);
+  opacity:1;
+}
+/* Hide number input spinners so it still reads like plain text */
+.search-field input[type="number"]::-webkit-outer-spin-button,
+.search-field input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+.search-field input[type="number"]{
+  appearance:textfield;
+  -moz-appearance:textfield;
+}
 
 .search-submit{
   background:var(--blue);

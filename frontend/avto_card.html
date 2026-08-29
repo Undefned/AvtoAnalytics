@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toyota Camry 2.5 AT, 2021 — AvtoAnalytics</title>
+  <title id="pageTitle">Объявление — AvtoAnalytics</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/base.css" />
   <link rel="stylesheet" href="styles/avto_card.css" />
@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics" />
+        <a href="main.html"><img src="assets/logo.svg"></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html">Catalogue</a>
@@ -22,12 +22,12 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <img src="assets/profile.svg" alt="Profile" />
+        <a href="profile.html"><img src="assets/profile.svg"></a>
       </div>
     </div>
   </header>
 
-  <p class="breadcrumb">Главная / Каталог / Toyota 2.5 AT</p>
+  <p class="breadcrumb">Главная / Каталог / <span id="breadcrumbCurrent">…</span></p>
 
   <main class="listing">
 
@@ -37,15 +37,15 @@
       <!-- Gallery -->
       <section class="gallery">
         <div class="gallery__main">
-          <img id="mainPhoto" src="https://placehold.co/598x349" alt="Toyota Camry, фото 1 из 20" />
-          <span class="gallery__counter" id="photoCounter">1 / 20</span>
+          <img id="mainPhoto" src="https://placehold.co/598x349" alt="Фото объявления" />
+          <span class="gallery__counter" id="photoCounter">1 / 1</span>
           <button class="gallery__nav gallery__nav--prev" id="prevPhoto" aria-label="Предыдущее фото">&#8249;</button>
           <button class="gallery__nav gallery__nav--next" id="nextPhoto" aria-label="Следующее фото">&#8250;</button>
         </div>
-
+        <div class="gallery__thumbs" id="galleryThumbs"></div>
       </section>
 
-      <!-- Q&A (под фото) -->
+      <!-- Q&A (под фото) — статично: у бэкенда нет эндпоинта для вопросов -->
       <section class="qa-card--inline">
         <div class="qa-item">
           <div class="qa-item__avatar">A</div>
@@ -54,7 +54,7 @@
             <p class="qa-item__date">May 24, 2024 14:32</p>
             <p class="qa-item__q"><b>Q</b> Have there been any accidents or body repairs?</p>
             <p class="qa-item__a"><b>A</b> Hello! No, the car has not been in any accidents. All body parts are original, paint is factory.</p>
-            <p class="qa-item__answered-by">Ivan Petrov (Seller) · May 24, 2024 14:45</p>
+            <p class="qa-item__answered-by">Seller · May 24, 2024 14:45</p>
           </div>
         </div>
 
@@ -65,7 +65,7 @@
             <p class="qa-item__date">May 22, 2024 09:11</p>
             <p class="qa-item__q"><b>Q</b> What is the condition of the tires and brakes?</p>
             <p class="qa-item__a"><b>A</b> Tires are summer, bought last season, ~80% tread left. Brake pads and discs are in good condition.</p>
-            <p class="qa-item__answered-by">Ivan Petrov (Seller) · May 22, 2024 09:27</p>
+            <p class="qa-item__answered-by">Seller · May 22, 2024 09:27</p>
           </div>
         </div>
 
@@ -76,7 +76,7 @@
             <p class="qa-item__date">May 19, 2024 18:07</p>
             <p class="qa-item__q"><b>Q</b> Can I come for an inspection and test drive?</p>
             <p class="qa-item__a"><b>A</b> Yes, of course! I'm available on weekdays after 6 PM and on weekends. Please message me to agree on time.</p>
-            <p class="qa-item__answered-by">Ivan Petrov (Seller) · May 19, 2024 18:20</p>
+            <p class="qa-item__answered-by">Seller · May 19, 2024 18:20</p>
           </div>
         </div>
       </section>
@@ -91,38 +91,31 @@
         <span class="badge">1 owner</span>
       </div>
 
-      <h1 class="listing__title">Toyota Camry 2.5 AT, 2021</h1>
-      <p class="listing__specs">2.5 L · 181 hp · Automatic · Front-wheel drive · Sedan</p>
+      <h1 class="listing__title" id="adTitle">Загрузка…</h1>
+      <p class="listing__specs" id="adSpecs"></p>
 
-      <p class="price">3&nbsp;500&nbsp;000 ₽</p>
+      <p class="price" id="adPrice">—</p>
       <p class="price-compare">
         <span class="info-icon">i</span>
-        Avg. market price: 3,700,000 ₽
+        Avg. market price: <span id="avgPriceInline">—</span>
       </p>
 
       <!-- Price history -->
       <div class="card">
         <div class="card__header">
           <span class="card__title">Price history</span>
-          <button class="range-select">Last 3 months 
+          <button class="range-select">All time
             <img src="assets/open.svg">
           </button>
         </div>
 
         <div class="chart">
-          <svg viewBox="0 0 494 99" preserveAspectRatio="none">
-            <polyline points="0,30 80,25 160,35 240,20 320,32 400,15 494,29"
-                      fill="none" stroke="#F97316" stroke-width="3" />
-            <circle cx="490" cy="29" r="4.5" fill="#F97316" />
-          </svg>
+          <svg id="priceChart" viewBox="0 0 494 99" preserveAspectRatio="none"></svg>
         </div>
-        <div class="chart-labels">
-          <span>Mar 2</span><span>Mar 16</span><span>Mar 30</span><span>Apr 13</span>
-          <span>Apr 27</span><span>May 11</span><span>May 25</span>
-        </div>
-        <p class="chart-note">
-          <img src="assets/downgrade.svg">
-          Price dropped by <span class="chart-note__value">50,000 ₽</span> last week
+        <div class="chart-labels" id="chartLabels"></div>
+        <p class="chart-note" id="chartNote" style="display:none;">
+          <img id="chartNoteIcon" src="assets/downgrade.svg">
+          <span id="chartNoteText"></span>
         </p>
       </div>
 
@@ -130,17 +123,16 @@
       <div class="info-grid">
         <div class="card">
           <div class="card__title"><img src="assets/graphicsBlack.svg"> Market Average <span class="info-icon">i</span></div>
-          <p class="card__label">Average price for Toyota Camry 2.5 AT, 2021 (Russia)</p>
-          <p class="card__value">3 700 000 ₽</p>
+          <p class="card__label" id="avgPriceLabel">Average price for this model</p>
+          <p class="card__value" id="avgPriceValue">—</p>
         </div>
 
         <div class="card">
           <div class="card__title"><img src="assets/profile.svg"> Seller Info</div>
           <div class="seller" style="margin-top:16px;">
-            <img class="seller__avatar" src="https://placehold.co/48x48" alt="Ivan Petrov" />
+            <img class="seller__avatar" src="https://placehold.co/48x48" alt="Seller" />
             <div>
-              <p class="seller__name">Ivan Petrov <span class="seller__verified"><img src="assets/reliable.svg"></span></p>
-              <p class="seller__since">Member since: Feb 18, 2022</p>
+              <p class="seller__name" id="sellerName">—</p>
             </div>
           </div>
         </div>
@@ -150,40 +142,10 @@
       <div class="card location-card">
         <div class="card__title"><img src="assets/location.svg"> Location</div>
         <br>
-        <p class="card__value">Moscow, Russia</p>
+        <p class="card__value" id="adLocation">—</p>
 
         <div class="location-body">
-          <p class="similar-note">3 similar offers nearby</p>
-
-          <div class="similar-list">
-            <div class="similar-item">
-              <span class="similar-item__rank">1</span>
-              <img class="similar-item__img" src="https://placehold.co/48x28" alt="" />
-              <div class="similar-item__info">
-                <p class="similar-item__price">3,550,000 ₽</p>
-                <p class="similar-item__spec">2021 · 2.5 AT</p>
-                <p class="similar-item__dist">1.2 km</p>
-              </div>
-            </div>
-            <div class="similar-item">
-              <span class="similar-item__rank">2</span>
-              <img class="similar-item__img" src="https://placehold.co/48x28" alt="" />
-              <div class="similar-item__info">
-                <p class="similar-item__price">3,620,000 ₽</p>
-                <p class="similar-item__spec">2021 · 2.5 AT</p>
-                <p class="similar-item__dist">2.1 km</p>
-              </div>
-            </div>
-            <div class="similar-item">
-              <span class="similar-item__rank">3</span>
-              <img class="similar-item__img" src="https://placehold.co/48x28" alt="" />
-              <div class="similar-item__info">
-                <p class="similar-item__price">3,690,000 ₽</p>
-                <p class="similar-item__spec">2021 · 2.5 AT</p>
-                <p class="similar-item__dist">3.3 km</p>
-              </div>
-            </div>
-          </div>
+          <p class="similar-note">Similar offers nearby — coming soon</p>
         </div>
       </div>
     </section>

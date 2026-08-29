@@ -18,7 +18,5 @@ public class RegisterRequest {
     @NotBlank
     private String fullName;
 
-    private String phone;
-
     private boolean privateSeller = true;
 }

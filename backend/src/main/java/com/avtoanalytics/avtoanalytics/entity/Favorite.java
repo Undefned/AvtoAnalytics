@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "favorites", uniqueConstraints = {
+@Table(name = "avto_analytics_favorites", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"user_id", "ad_id"})
 })
 @Data
