@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог авто — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/catalogue.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
+      </div>
+      <nav class="nav">
+        <a href="catalogue.html" class="active">Catalogue</a>
+        <a href="sell_car.html">Sell Car</a>
+        <a href="compare.html">Compare Cars</a>
+      </nav>
+      <div class="header__icon">
+        <img src="assets/profile.svg" alt="Profile">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== BREADCRUMB ===== -->
+  <p class="breadcrumb">Главная / Каталог</p>
+
+  <!-- ===== CATALOG ===== -->
+  <main class="catalog">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+
+      <!-- Filters header -->
+      <div class="sidebar__header">
+        <span class="sidebar__title">Filters</span>
+        <div class="sidebar__reset">
+          Reset all
+          <img src="assets/reset.svg">
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Price (₽)</span>
+          <span class="filter-group__arrow">
+            
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__labels">
+            <span>500,000</span>
+            <span>5,000,000</span>
+          </div>
+          <div class="price-range__inputs">
+            <input type="text" placeholder="500,000" />
+            <input type="text" placeholder="5,000,000" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Year -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Year</span>
+          <span class="filter-group__arrow">
+            
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__inputs">
+            <input type="text" placeholder="From" />
+            <input type="text" placeholder="To" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Mileage -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Mileage (km)</span>
+          <span class="filter-group__arrow">
+            
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="price-range__inputs">
+            <input type="text" placeholder="Min mileage" />
+            <input type="text" placeholder="Max mileage" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Engine Type -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Engine Type</span>
+          <span class="filter-group__arrow">
+            
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Petrol
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Diesel
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Electric
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transmission -->
+      <div class="filter-group">
+        <div class="filter-group__header">
+          <span class="filter-group__title">Transmission</span>
+          <span class="filter-group__arrow">
+            
+          </span>
+        </div>
+        <div class="filter-group__body">
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Automatic
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> Manual
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked /> CVT
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main">
+
+      <!-- Toolbar -->
+      <div class="main__toolbar">
+        <span class="main__count">234 cars found</span>
+        <div class="main__actions">
+          <span class="main__sort-label">Sort by:</span>
+          <select class="main__sort-select">
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Year: Newest</option>
+            <option>Year: Oldest</option>
+            <option>Mileage: Low to High</option>
+          </select>
+          <button class="main__compare-btn">
+            <img src="assets/compare.svg">
+            Compare selected
+          </button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="cards-grid">
+
+        <!-- Card 1 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <img src="assets/favourite.svg">
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--good">Good price</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <img src="assets/favourite.svg">
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--good">Good price</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <div class="card__image">
+            <img src="https://placehold.co/280x138" alt="Toyota Corolla" />
+            <input type="checkbox" class="card__checkbox" />
+            <div class="card__favorite">
+              <img src="assets/favouriteBigBlue.svg">
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__title">Toyota Corolla 1.6</div>
+            <div class="card__price">5 000 000 ₽</div>
+            <div class="card__specs">2016 · 85,000 km</div>
+            <span class="card__tag card__tag--bad">Bad price</span>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="pagination__arrow">
+          <svg viewBox="0 0 6 10"><path d="M5.5 0.5L1 5L5.5 9.5"/></svg>
+        </div>
+        <div class="pagination__item pagination__item--active">1</div>
+        <div class="pagination__item">2</div>
+        <div class="pagination__item">3</div>
+        <div class="pagination__item">4</div>
+        <div class="pagination__item">5</div>
+        <span class="pagination__dots">...</span>
+        <div class="pagination__item">16</div>
+        <div class="pagination__arrow">
+          <svg viewBox="0 0 6 10"><path d="M0.5 0.5L5 5L0.5 9.5"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <div class="logo">
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
+      </div>
+      <p class="footer__tagline">
+        We fight against unfair prices and make the used car market transparent
+        through data, analytics, and community
+      </p>
+    </div>
+
+    <div class="footer__legal">
+      <h4>LEGAL INFORMATION</h4>
+      <ul>
+        <li>Privacy Policy</li>
+        <li>Terms of Service</li>
+        <li>Cookie Policy</li>
+      </ul>
+    </div>
+
+    <div class="footer__social-block">
+      <div class="footer__social-icons">
+        <img src="assets/tg.svg" alt="Telegram">
+        <img src="assets/github.svg" alt="GitHub">
+      </div>
+      <a class="footer__about" href="about_us.html">ABOUT US</a>
+    </div>
+
+    <hr class="footer__divider" />
+    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script src="scripts/base.js"></script>
+  <script src="scripts/catalogue.js"></script>
+</body>
+</html>

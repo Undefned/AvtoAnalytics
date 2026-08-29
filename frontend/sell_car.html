@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sell Car — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/sell_car.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <img src="assets/logo.svg">
+      </div>
+      <nav class="nav">
+        <a href="catalogue.html">Catalogue</a>
+        <a href="sell_car.html" class="active">Sell Car</a>
+        <a href="compare.html">Compare Cars</a>
+      </nav>
+      <div class="header__icon">
+        <img src="assets/profile.svg">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== BREADCRUMB ===== -->
+  <p class="breadcrumb">Home / Sell Car</p>
+
+  <!-- ===== SELL ===== -->
+  <main class="sell">
+
+    <div class="sell__header">
+      <h1 class="sell__title">Sell Your Car</h1>
+      <p class="sell__sub">Provide accurate information to attract serious buyers.</p>
+    </div>
+
+    <!-- ===== FORM ===== -->
+    <form class="sell__grid">
+
+      <!-- ===== CAR DETAILS ===== -->
+      <div class="card-form">
+        <div class="card-form__header">
+          <img src="assets/dashboard.svg">
+          <span class="card-form__title">Car Details</span>
+        </div>
+
+        <!-- Row 1: Make + Model -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-group__label">Make</label>
+            <input type="text" class="form-control" placeholder="Enter make" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">Model</label>
+            <input type="text" class="form-control" placeholder="Enter model" />
+          </div>
+        </div>
+
+        <!-- Row 2: Generation + Year -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-group__label">Generation</label>
+            <input type="text" class="form-control" placeholder="Enter generation" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">Year</label>
+            <input type="text" class="form-control" placeholder="Enter year" />
+          </div>
+        </div>
+
+        <!-- Row 3: Engine volume + Power -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-group__label">Engine Volume</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter engine volume" />
+              <span class="input-group__unit">L</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">Power</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter power" />
+              <span class="input-group__unit">hp</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Transmission + Mileage -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-group__label">Transmission</label>
+            <input type="text" class="form-control" placeholder="Enter transmission" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label form-group__label--inline">
+              Mileage
+              <span class="hint">?</span>
+            </label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter mileage" />
+              <span class="input-group__unit">km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PRICING ===== -->
+      <div class="card-form pricing-card">
+        <div class="card-form__header">
+          <img src="assets/progress.svg">
+          <span class="card-form__title">Pricing</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-group__label">Price</label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter price" />
+            <span class="input-group__unit">₽</span>
+          </div>
+        </div>
+
+        <div class="price-feedback">
+          Average market price for this model is <strong>2,100,000 ₽</strong>.
+          Your price is <span class="highlight">15% higher</span>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ===== PHOTO UPLOAD ===== -->
+    <div class="upload-area">
+      <img class="upload-area__svg" src="assets/empty_image.svg">
+      <div class="upload-area__text">Drag & drop photos here (max 15)</div>
+      <div class="upload-area__hint">JPG, PNG up to 10MB each</div>
+    </div>
+
+    <!-- ===== SUBMIT ===== -->
+    <div class="sell__actions">
+      <button type="submit" class="btn-submit">
+        <img src="assets/publish.svg">
+        Publish Ad
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <div class="logo">
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
+      </div>
+      <p class="footer__tagline">
+        We fight against unfair prices and make the used car market transparent
+        through data, analytics, and community
+      </p>
+    </div>
+
+    <div class="footer__legal">
+      <h4>LEGAL INFORMATION</h4>
+      <ul>
+        <li>Privacy Policy</li>
+        <li>Terms of Service</li>
+        <li>Cookie Policy</li>
+      </ul>
+    </div>
+
+    <div class="footer__social-block">
+      <div class="footer__social-icons">
+        <img src="assets/tg.svg" alt="Telegram">
+        <img src="assets/github.svg" alt="GitHub">
+      </div>
+      <a class="footer__about" href="about_us.html">ABOUT US</a>
+    </div>
+
+    <hr class="footer__divider" />
+    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script src="scripts/base.js"></script>
+  <script src="scripts/sell_car.js"></script>
+</body>
+</html>

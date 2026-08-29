@@ -1,0 +1,239 @@
+/* =========================================================
+   COMPARE.CSS — page-specific styles only.
+   Reset, header, breadcrumb, footer are in base.css.
+   ========================================================= */
+
+/* ===== COMPARE PAGE ===== */
+.compare {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+.compare__header {
+  margin: 32px 0 8px;
+}
+
+.compare__title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 32px;
+}
+
+.compare__sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.compare__desc {
+  font-size: 14px;
+  color: #374151;
+  line-height: 22px;
+}
+
+.compare__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #000;
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-size: 14px;
+  color: #6B7280;
+  cursor: pointer;
+}
+
+/* ===== CARDS ROW ===== */
+.compare__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.card-compare {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 17px;
+  position: relative;
+}
+
+.card-compare__remove {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.73px;
+  color: #374151;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+
+.card-compare__image {
+  width: 100%;
+  height: 203px;
+  background: #DDDDDD;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-compare__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-compare__name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 28px;
+  margin-top: 12px;
+}
+
+.card-compare__label {
+  text-align: center;
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 16px;
+  margin-top: 4px;
+}
+
+.card-compare__price {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 24px;
+}
+
+/* ===== COMPARE TABLE ===== */
+.compare__table {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-top: 32px;
+  overflow: hidden;
+}
+
+.compare__table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.compare__table th,
+.compare__table td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.compare__table th:first-child,
+.compare__table td:first-child {
+  text-align: left;
+  font-weight: 400;
+  color: #374151;
+  width: 25%;
+}
+
+.compare__table th {
+  font-weight: 600;
+  color: #374151;
+  background: #fff;
+}
+
+.compare__table .section-header {
+  background: #fff;
+  font-weight: 600;
+  color: #2563EB;
+  border-bottom: 1px solid #DDDDDD;
+}
+.compare__table .section-header td {
+  text-align: left;
+  padding: 12px 16px;
+}
+
+.compare__table .section-header .icon {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Price bars */
+.price-bar {
+  width: 100%;
+  max-width: 220px;
+  height: 4px;
+  background: #DDDDDD;
+  border-radius: 9999px;
+  margin: 4px auto 0;
+  overflow: hidden;
+}
+.price-bar__fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+.price-bar__fill.green {
+  background: #15803D;
+}
+.price-bar__fill.red {
+  background: #B91C1C;
+}
+
+.text-green {
+  color: #15803D;
+}
+.text-red {
+  color: #B91C1C;
+}
+.text-center {
+  text-align: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .compare__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .compare__cards {
+    grid-template-columns: 1fr;
+  }
+  .compare__sub {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .compare__search {
+    justify-content: center;
+  }
+  .compare__table {
+    overflow-x: auto;
+  }
+  .compare__table table {
+    font-size: 12px;
+    min-width: 600px;
+  }
+  .compare__table th,
+  .compare__table td {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .compare {
+    padding: 0 16px 40px;
+  }
+}

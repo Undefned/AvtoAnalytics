@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Вход — AvtoAnalytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/login_signup.css" />
+</head>
+<body>
+
+
+  <!-- ===== AUTH ===== -->
+  <main class="auth-main">
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal">
+
+      <!-- Close -->
+      <div class="modal__close">
+        <svg viewBox="0 0 15 15">
+          <path d="M1.25 1.25L13.75 13.75M13.75 1.25L1.25 13.75" stroke="#374151" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <h2 class="modal__title">Login / Sign Up</h2>
+
+      <!-- ===== TABS ===== -->
+      <div class="tabs">
+        <div class="tab tab--active" data-tab="login">Login</div>
+        <div class="tab" data-tab="register">Register</div>
+      </div>
+
+      <!-- ===== LOGIN FORM ===== -->
+      <form class="form" id="loginForm">
+        <div class="form-group">
+          <label class="form-group__label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <img src="assets/email.svg">
+            </span>
+            <input type="email" class="form-control" placeholder="Enter your email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group__label form-group__label--right">
+            <span>Password</span>
+          </div>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <img src="assets/lock.svg">
+            </span>
+            <input type="password" class="form-control form-control--with-right-icon" placeholder="Enter your password" />
+            <span class="input-wrapper__icon input-wrapper__icon--right" id="togglePassword">
+             <img src="assets/eye.svg">
+            </span>
+          </div>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn">Sign In</button>
+        </div>
+      </form>
+
+      <!-- ===== REGISTER FORM ===== -->
+      <form class="form hidden" id="registerForm">
+        <div class="form-group">
+          <label class="form-group__label">Full Name</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <img src="assets/profile.svg">
+            </span>
+            <input type="text" class="form-control" placeholder="Enter your full name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-group__label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <img src="assets/email.svg">
+            </span>
+            <input type="email" class="form-control" placeholder="Enter your email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-group__label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <img src="assets/lock.svg">
+            </span>
+            <input type="password" class="form-control form-control--with-right-icon" placeholder="Create a password" />
+            <span class="input-wrapper__icon input-wrapper__icon--right">
+              <img src="assets/eye.svg">
+            </span>
+          </div>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="terms" checked />
+          <label for="terms" class="checkbox-wrapper__label">
+            I agree to the <a href="#">Terms of Service</a>
+          </label>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn btn--secondary">Create Account</button>
+        </div>
+      </form>
+
+    </div>
+
+  </main>
+
+  <script src="scripts/base.js"></script>
+  <script src="scripts/login_signup.js"></script>
+</body>
+</html>

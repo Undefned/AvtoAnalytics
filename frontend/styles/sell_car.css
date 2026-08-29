@@ -1,0 +1,261 @@
+/* =========================================================
+   SELL_CAR.CSS — page-specific styles only.
+   Reset, header, breadcrumb, footer are in base.css.
+   ========================================================= */
+
+/* ===== SELL FORM ===== */
+.sell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+.sell__header {
+  margin: 32px 0 8px;
+}
+
+.sell__title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 28px;
+}
+
+.sell__sub {
+  font-size: 12px;
+  color: #374151;
+  line-height: 16px;
+  margin-top: 4px;
+}
+
+/* ===== FORM GRID ===== */
+.sell__grid {
+  display: grid;
+  grid-template-columns: 608px 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ===== CARD ===== */
+.card-form {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #DDDDDD;
+  padding: 25px;
+}
+
+.card-form__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.card-form__header svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.card-form__header svg .stroke-blue {
+  stroke: #2563EB;
+}
+.card-form__header svg .stroke-green {
+  stroke: #2AA32A;
+}
+
+.card-form__title {
+  font-size: 15.8px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 20px;
+}
+
+/* ===== FORM FIELDS ===== */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group__label {
+  font-size: 12px;
+  color: #374151;
+  line-height: 16px;
+}
+
+.form-group__label--inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.form-group__label--inline .hint {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  cursor: help;
+}
+
+.form-control {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 14px;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-control:focus {
+  border-color: #2563EB;
+}
+.form-control::placeholder {
+  color: #9CA3AF;
+}
+
+/* ===== INPUT GROUP ===== */
+.input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group .form-control {
+  border-radius: 4px 0 0 4px;
+  border-right: none;
+}
+
+.input-group .input-group__unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0 10px;
+  background: #F3F4F6;
+  border: 1px solid #DDDDDD;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+/* ===== PRICING CARD ===== */
+.pricing-card .card-form__header svg .stroke-green {
+  stroke: #2AA32A;
+}
+
+.price-feedback {
+  background: #F9FAFB;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #1B1B1B;
+}
+.price-feedback strong {
+  font-weight: 700;
+}
+.price-feedback .highlight {
+  color: #D92D2D;
+  font-weight: 700;
+}
+
+/* ===== UPLOAD ===== */
+.upload-area {
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  background: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.upload-area:hover {
+  border-color: #2563EB;
+}
+
+.upload-area__svg {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 8px;
+  display: block;
+}
+
+.upload-area__text {
+  font-size: 12px;
+  color: #374151;
+  line-height: 16px;
+}
+.upload-area__hint {
+  font-size: 9px;
+  color: #94A3B8;
+  line-height: 13px;
+  margin-top: 4px;
+}
+
+/* ===== SUBMIT ===== */
+.sell__actions {
+  margin-top: 32px;
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: #2AA32A;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-submit:hover {
+  background: #228B22;
+}
+.btn-submit svg {
+  width: 14px;
+  height: 14px;
+  fill: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .sell__grid {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .sell {
+    padding: 0 16px 40px;
+  }
+  .card-form {
+    padding: 16px;
+  }
+  .sell__grid {
+    gap: 16px;
+  }
+}
