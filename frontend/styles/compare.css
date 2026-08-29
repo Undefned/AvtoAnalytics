@@ -47,10 +47,6 @@
   color: #6B7280;
   cursor: pointer;
 }
-.compare__search::before {
-  content: "🔍";
-  font-size: 12px;
-}
 
 /* ===== CARDS ROW ===== */
 .compare__cards {
@@ -77,13 +73,7 @@
   cursor: pointer;
   margin-bottom: 12px;
 }
-.card-compare__remove .icon {
-  width: 16px;
-  height: 16px;
-  background: #2563EB;
-  border-radius: 50%;
-  display: inline-block;
-}
+
 
 .card-compare__image {
   width: 100%;
@@ -176,10 +166,6 @@
 
 .compare__table .section-header .icon {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  background: #2563EB;
-  border-radius: 2px;
   margin-right: 8px;
   vertical-align: middle;
 }

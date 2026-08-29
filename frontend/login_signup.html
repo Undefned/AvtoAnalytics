@@ -10,22 +10,6 @@
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="header">
-    <div class="header__inner">
-      <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
-      </div>
-      <nav class="nav">
-        <a href="catalogue.html">Catalogue</a>
-        <a href="sell_car.html">Sell Car</a>
-        <a href="compare.html">Compare Cars</a>
-      </nav>
-      <div class="header__icon">
-        <img src="assets/profile.svg" alt="Profile">
-      </div>
-    </div>
-  </header>
 
   <!-- ===== AUTH ===== -->
   <main class="auth-main">
@@ -54,7 +38,7 @@
           <label class="form-group__label">Email</label>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
-              <svg viewBox="0 0 14 14"><path d="M1 1.75H13V12.25H1V1.75Z"/><path d="M1 1.75L7 7L13 1.75"/></svg>
+              <img src="assets/email.svg">
             </span>
             <input type="email" class="form-control" placeholder="Enter your email" />
           </div>
@@ -63,15 +47,14 @@
         <div class="form-group">
           <div class="form-group__label form-group__label--right">
             <span>Password</span>
-            <a href="#" class="form-group__forgot">Forgot password?</a>
           </div>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
-              <svg viewBox="0 0 14 14"><path d="M2 5V3C2 1.5 3 0 7 0C11 0 12 1.5 12 3V5M1 5H13V13H1V5Z"/></svg>
+              <img src="assets/lock.svg">
             </span>
             <input type="password" class="form-control form-control--with-right-icon" placeholder="Enter your password" />
             <span class="input-wrapper__icon input-wrapper__icon--right" id="togglePassword">
-              <svg viewBox="0 0 14 14"><path d="M7 3C3 3 1 6 1 7C1 8 3 11 7 11C11 11 13 8 13 7C13 6 11 3 7 3Z"/><circle cx="7" cy="7" r="2.5"/></svg>
+             <img src="assets/eye.svg">
             </span>
           </div>
         </div>
@@ -87,7 +70,7 @@
           <label class="form-group__label">Full Name</label>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
-              <svg viewBox="0 0 14 14"><path d="M7 7C8.5 7 10 5.5 10 3.5C10 1.5 8.5 0 7 0C5.5 0 4 1.5 4 3.5C4 5.5 5.5 7 7 7Z"/><path d="M1 14C1 10 3.5 7 7 7C10.5 7 13 10 13 14"/></svg>
+              <img src="assets/profile.svg">
             </span>
             <input type="text" class="form-control" placeholder="Enter your full name" />
           </div>
@@ -97,7 +80,7 @@
           <label class="form-group__label">Email</label>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
-              <svg viewBox="0 0 14 14"><path d="M1 1.75H13V12.25H1V1.75Z"/><path d="M1 1.75L7 7L13 1.75"/></svg>
+              <img src="assets/email.svg">
             </span>
             <input type="email" class="form-control" placeholder="Enter your email" />
           </div>
@@ -107,11 +90,11 @@
           <label class="form-group__label">Password</label>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
-              <svg viewBox="0 0 14 14"><path d="M2 5V3C2 1.5 3 0 7 0C11 0 12 1.5 12 3V5M1 5H13V13H1V5Z"/></svg>
+              <img src="assets/lock.svg">
             </span>
             <input type="password" class="form-control form-control--with-right-icon" placeholder="Create a password" />
             <span class="input-wrapper__icon input-wrapper__icon--right">
-              <svg viewBox="0 0 14 14"><path d="M7 3C3 3 1 6 1 7C1 8 3 11 7 11C11 11 13 8 13 7C13 6 11 3 7 3Z"/><circle cx="7" cy="7" r="2.5"/></svg>
+              <img src="assets/eye.svg">
             </span>
           </div>
         </div>
@@ -131,41 +114,6 @@
     </div>
 
   </main>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div>
-        <div class="logo">
-          <img src="assets/logo.svg" alt="AvtoAnalytics">
-        </div>
-        <p class="footer__tagline">
-          We fight against unfair prices and make the used car market transparent
-          through data, analytics, and community
-        </p>
-      </div>
-
-      <div class="footer__legal">
-        <h4>LEGAL INFORMATION</h4>
-        <ul>
-          <li>Privacy Policy</li>
-          <li>Terms of Service</li>
-          <li>Cookie Policy</li>
-        </ul>
-      </div>
-
-      <div class="footer__social-block">
-        <div class="footer__social-icons">
-          <img src="assets/tg.svg" alt="Telegram">
-          <img src="assets/github.svg" alt="GitHub">
-        </div>
-        <p class="footer__about">ABOUT US</p>
-      </div>
-
-      <hr class="footer__divider" />
-      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
-    </div>
-  </footer>
 
   <script src="scripts/base.js"></script>
   <script src="scripts/login_signup.js"></script>

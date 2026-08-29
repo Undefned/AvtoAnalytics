@@ -36,15 +36,15 @@
     <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
       <div class="sidebar__item sidebar__item--active">
-        <svg viewBox="0 0 18 18"><path d="M2 2H7V7H2V2ZM2 11H7V16H2V11ZM11 2H16V7H11V2ZM11 11H16V16H11V11Z"/></svg>
+        <img src="assets/dashboardBig.svg">
         Dashboard
       </div>
       <div class="sidebar__item">
-        <svg viewBox="0 0 18 18"><path d="M3 3H15V5H3V3ZM3 8H15V10H3V8ZM3 13H10V15H3V13Z"/></svg>
+        <img src="assets/car.svg">
         My Ads
       </div>
       <div class="sidebar__item">
-        <svg viewBox="0 0 18 18"><path d="M9 16L2.7 9.7C1.2 8.2 1.2 5.8 2.7 4.3C4.2 2.8 6.6 2.8 8.1 4.3L9 5.2L9.9 4.3C11.4 2.8 13.8 2.8 15.3 4.3C16.8 5.8 16.8 8.2 15.3 9.7L9 16Z"/></svg>
+        <img src="assets/favouriteBlack.svg">
         Favorites
       </div>
     </aside>
@@ -56,7 +56,7 @@
       <div class="stats">
         <div class="stat-card">
           <div class="stat-card__icon">
-            <svg viewBox="0 0 20 20"><path d="M10 2L12 8H18L13 12L15 18L10 14L5 18L7 12L2 8H8L10 2Z"/></svg>
+            <img src="assets/docs.svg">
           </div>
           <div>
             <div class="stat-card__label">Active ads</div>
@@ -65,7 +65,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-card__icon">
-            <svg viewBox="0 0 20 20"><path d="M10 2L12 8H18L13 12L15 18L10 14L5 18L7 12L2 8H8L10 2Z"/></svg>
+            <img src="assets/bookmark.svg">
           </div>
           <div>
             <div class="stat-card__label">Saved cars</div>
@@ -74,7 +74,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-card__icon">
-            <svg viewBox="0 0 20 20"><path d="M18 2H2C0.9 2 0 2.9 0 4V16C0 17.1 0.9 18 2 18H18C19.1 18 20 17.1 20 16V4C20 2.9 19.1 2 18 2ZM18 6L10 11L2 6V4L10 9L18 4V6Z"/></svg>
+            <img src="assets/comments.svg">
           </div>
           <div>
             <div class="stat-card__label">Questions answered</div>
@@ -154,10 +154,14 @@
                 <svg viewBox="0 0 18 18"><path d="M9 16L2.7 9.7C1.2 8.2 1.2 5.8 2.7 4.3C4.2 2.8 6.6 2.8 8.1 4.3L9 5.2L9.9 4.3C11.4 2.8 13.8 2.8 15.3 4.3C16.8 5.8 16.8 8.2 15.3 9.7L9 16Z"/></svg>
               </div>
             </div>
-            <div class="card-favorite__body">
-              <div class="card-favorite__compare">
-                <svg viewBox="0 0 16 16"><path d="M2 2H14V14H2V2Z"/></svg>
-                Compare
+          </div>
+
+          <div class="card-favorite">
+            <div class="card-favorite__image">
+              <img src="https://placehold.co/201x99" alt="Car" />
+              <div class="card-favorite__price-tag">1 000 000 ₽</div>
+              <div class="card-favorite__heart">
+                <svg viewBox="0 0 18 18"><path d="M9 16L2.7 9.7C1.2 8.2 1.2 5.8 2.7 4.3C4.2 2.8 6.6 2.8 8.1 4.3L9 5.2L9.9 4.3C11.4 2.8 13.8 2.8 15.3 4.3C16.8 5.8 16.8 8.2 15.3 9.7L9 16Z"/></svg>
               </div>
             </div>
           </div>
@@ -171,10 +175,6 @@
               </div>
             </div>
             <div class="card-favorite__body">
-              <div class="card-favorite__compare">
-                <svg viewBox="0 0 16 16"><path d="M2 2H14V14H2V2Z"/></svg>
-                Compare
-              </div>
             </div>
           </div>
 
@@ -187,27 +187,6 @@
               </div>
             </div>
             <div class="card-favorite__body">
-              <div class="card-favorite__compare">
-                <svg viewBox="0 0 16 16"><path d="M2 2H14V14H2V2Z"/></svg>
-                Compare
-              </div>
-            </div>
-          </div>
-
-          <div class="card-favorite">
-            <div class="card-favorite__image">
-              <img src="https://placehold.co/201x99" alt="Car" />
-              <div class="card-favorite__price-tag">1 000 000 ₽</div>
-              <div class="card-favorite__heart">
-                <svg viewBox="0 0 18 18"><path d="M9 16L2.7 9.7C1.2 8.2 1.2 5.8 2.7 4.3C4.2 2.8 6.6 2.8 8.1 4.3L9 5.2L9.9 4.3C11.4 2.8 13.8 2.8 15.3 4.3C16.8 5.8 16.8 8.2 15.3 9.7L9 16Z"/></svg>
-              </div>
-            </div>
-            <div class="card-favorite__body">
-              <div class="card-favorite__compare">
-                <svg viewBox="0 0 16 16"><path d="M2 2H14V14H2V2Z"/></svg>
-                Compare
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -217,39 +196,39 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div>
-        <div class="logo">
-          <img src="assets/logo.svg" alt="AvtoAnalytics">
-        </div>
-        <p class="footer__tagline">
-          We fight against unfair prices and make the used car market transparent
-          through data, analytics, and community
-        </p>
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <div class="logo">
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
       </div>
-
-      <div class="footer__legal">
-        <h4>LEGAL INFORMATION</h4>
-        <ul>
-          <li>Privacy Policy</li>
-          <li>Terms of Service</li>
-          <li>Cookie Policy</li>
-        </ul>
-      </div>
-
-      <div class="footer__social-block">
-        <div class="footer__social-icons">
-          <img src="assets/tg.svg" alt="Telegram">
-          <img src="assets/github.svg" alt="GitHub">
-        </div>
-        <p class="footer__about">ABOUT US</p>
-      </div>
-
-      <hr class="footer__divider" />
-      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+      <p class="footer__tagline">
+        We fight against unfair prices and make the used car market transparent
+        through data, analytics, and community
+      </p>
     </div>
-  </footer>
+
+    <div class="footer__legal">
+      <h4>LEGAL INFORMATION</h4>
+      <ul>
+        <li>Privacy Policy</li>
+        <li>Terms of Service</li>
+        <li>Cookie Policy</li>
+      </ul>
+    </div>
+
+    <div class="footer__social-block">
+      <div class="footer__social-icons">
+        <img src="assets/tg.svg" alt="Telegram">
+        <img src="assets/github.svg" alt="GitHub">
+      </div>
+      <a class="footer__about" href="about_us.html">ABOUT US</a>
+    </div>
+
+    <hr class="footer__divider" />
+    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+  </div>
+</footer>
 
   <script src="scripts/base.js"></script>
   <script src="scripts/profile.js"></script>

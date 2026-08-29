@@ -34,9 +34,9 @@ function cardHTML(car){
       <span class="car-card__flag ${flagClass}">${flagIcon} ${flagText}</span>
 
       <div class="car-card__stats">
-        <span class="stat"><span class="stat__icon">📅</span>${car.year}</span>
-        <span class="stat"><span class="stat__icon">🛣️</span>${car.mileage}</span>
-        <span class="stat"><span class="stat__icon">⚙️</span>AT</span>
+        <span class="stat"><span class="stat__icon"><img src="assets/calendar.svg"></span>${car.year}</span>
+        <span class="stat"><span class="stat__icon"><img src="assets/graphic_big.svg"></span>${car.mileage}</span>
+        <span class="stat"><span class="stat__icon"><img src="assets/checked.svg"></span>AT</span>
       </div>
 
       <hr class="car-card__divider">
