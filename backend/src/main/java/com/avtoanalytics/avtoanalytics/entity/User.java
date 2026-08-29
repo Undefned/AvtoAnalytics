@@ -25,8 +25,6 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "full_name")
     private String fullName;
 
-    private String phone;
-
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 

@@ -34,13 +34,15 @@
 
       <!-- ===== LOGIN FORM ===== -->
       <form class="form" id="loginForm">
+        <p class="form-error hidden" id="loginError"></p>
+
         <div class="form-group">
           <label class="form-group__label">Email</label>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
               <img src="assets/email.svg">
             </span>
-            <input type="email" class="form-control" placeholder="Enter your email" />
+            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required />
           </div>
         </div>
 
@@ -52,7 +54,7 @@
             <span class="input-wrapper__icon">
               <img src="assets/lock.svg">
             </span>
-            <input type="password" class="form-control form-control--with-right-icon" placeholder="Enter your password" />
+            <input type="password" id="loginPassword" class="form-control form-control--with-right-icon" placeholder="Enter your password" required />
             <span class="input-wrapper__icon input-wrapper__icon--right" id="togglePassword">
              <img src="assets/eye.svg">
             </span>
@@ -60,19 +62,21 @@
         </div>
 
         <div class="form__actions">
-          <button type="submit" class="btn">Sign In</button>
+          <button type="submit" class="btn" id="loginSubmit">Sign In</button>
         </div>
       </form>
 
       <!-- ===== REGISTER FORM ===== -->
       <form class="form hidden" id="registerForm">
+        <p class="form-error hidden" id="registerError"></p>
+
         <div class="form-group">
           <label class="form-group__label">Full Name</label>
           <div class="input-wrapper">
             <span class="input-wrapper__icon">
               <img src="assets/profile.svg">
             </span>
-            <input type="text" class="form-control" placeholder="Enter your full name" />
+            <input type="text" id="registerFullName" class="form-control" placeholder="Enter your full name" required />
           </div>
         </div>
 
@@ -82,7 +86,7 @@
             <span class="input-wrapper__icon">
               <img src="assets/email.svg">
             </span>
-            <input type="email" class="form-control" placeholder="Enter your email" />
+            <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required />
           </div>
         </div>
 
@@ -92,7 +96,7 @@
             <span class="input-wrapper__icon">
               <img src="assets/lock.svg">
             </span>
-            <input type="password" class="form-control form-control--with-right-icon" placeholder="Create a password" />
+            <input type="password" id="registerPassword" class="form-control form-control--with-right-icon" placeholder="Create a password" minlength="6" required />
             <span class="input-wrapper__icon input-wrapper__icon--right">
               <img src="assets/eye.svg">
             </span>
@@ -107,7 +111,7 @@
         </div>
 
         <div class="form__actions">
-          <button type="submit" class="btn btn--secondary">Create Account</button>
+          <button type="submit" class="btn btn--secondary" id="registerSubmit">Create Account</button>
         </div>
       </form>
 

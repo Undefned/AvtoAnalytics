@@ -178,7 +178,6 @@ public class AdService {
         // Seller info
         response.setSellerId(ad.getSeller().getId());
         response.setSellerName(ad.getSeller().getFullName());
-        response.setSellerPhone(ad.getSeller().getPhone());
         response.setPrivateSeller(ad.getSeller().isPrivateSeller());
 
         // Car info

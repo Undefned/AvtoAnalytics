@@ -34,7 +34,6 @@ public class UserService {
     public User updateUser(Long userId, User updatedUser) {
         User user = getUserById(userId);
         user.setFullName(updatedUser.getFullName());
-        user.setPhone(updatedUser.getPhone());
         user.setPrivateSeller(updatedUser.isPrivateSeller());
         return userRepository.save(user);
     }
