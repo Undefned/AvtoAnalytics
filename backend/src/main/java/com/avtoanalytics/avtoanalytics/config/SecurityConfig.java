@@ -37,9 +37,9 @@ public class SecurityConfig {
                     // ===== PUBLIC ENDPOINTS =====
                     "/api/auth/**",
                     "/api/cars/**",
-                    "/api/ads/**",                    // ← ДОБАВИТЬ для просмотра
-                    "/api/analytics/**",              // ← ДОБАВИТЬ для аналитики
-                    "/api/compare/**",                // ← ДОБАВИТЬ для сравнения
+                    "/api/ads/**",
+                    "/api/analytics/**", 
+                    "/api/compare/**",
                     // ===== SWAGGER =====
                     "/swagger-ui/**",
                     "/swagger-ui.html",
@@ -64,10 +64,25 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost",
+            "http://localhost:80",
+            "http://127.0.0.1",
+            "http://127.0.0.1:80"
+        ));
+        configuration.setAllowedMethods(Arrays.asList(
+            "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
+        ));
+        configuration.setAllowedHeaders(List.of(
+            "*",
+            "Authorization",
+            "Content-Type",
+            "X-Requested-With",
+            "Accept"
+        ));
+        configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

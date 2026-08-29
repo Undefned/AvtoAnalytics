@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ads")
+@Table(name = "avto_analytics_ads")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Ad extends BaseEntity {

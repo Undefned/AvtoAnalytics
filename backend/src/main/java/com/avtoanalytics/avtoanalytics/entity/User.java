@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "avto_analytics_users")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity implements UserDetails {

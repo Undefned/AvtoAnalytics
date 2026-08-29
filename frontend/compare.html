@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
+        <a href="main.html"><img src="assets/logo.svg"></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html">Catalogue</a>
@@ -22,7 +22,7 @@
         <a href="compare.html" class="active">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <img src="assets/profile.svg" alt="Profile">
+        <a href="profile.html"><img src="assets/profile.svg"></a>
       </div>
     </div>
   </header>
@@ -41,148 +41,11 @@
       </div>
     </div>
 
-    <!-- ===== CARDS ===== -->
-    <div class="compare__cards">
+    <!-- ===== CARDS (filled by compare.js) ===== -->
+    <div class="compare__cards"></div>
 
-      <div class="card-compare">
-        <div class="card-compare__remove">
-          <img src="assets/checkboxTrue.svg"> Remove
-        </div>
-        <div class="card-compare__image">
-          <img src="https://placehold.co/335x162" alt="BMW 5 Series" />
-        </div>
-        <div class="card-compare__name">BMW 5 Series</div>
-        <div class="card-compare__label">Current Price</div>
-        <div class="card-compare__price">3 800 900 ₽</div>
-      </div>
-
-      <div class="card-compare">
-        <div class="card-compare__remove">
-          <img src="assets/checkboxTrue.svg"> Remove
-        </div>
-        <div class="card-compare__image">
-          <img src="https://placehold.co/335x162" alt="Audi A6" />
-        </div>
-        <div class="card-compare__name">Audi A6</div>
-        <div class="card-compare__label">Current Price</div>
-        <div class="card-compare__price">3 800 900 ₽</div>
-      </div>
-
-      <div class="card-compare">
-        <div class="card-compare__remove">
-          <img src="assets/checkboxFalse.svg"> Remove
-        </div>
-        <div class="card-compare__image">
-          <img src="https://placehold.co/335x162" alt="Mercedes-Benz E-Class" />
-        </div>
-        <div class="card-compare__name">Mercedes-Benz E-Class</div>
-        <div class="card-compare__label">Current Price</div>
-        <div class="card-compare__price">3 800 900 ₽</div>
-      </div>
-
-    </div>
-
-    <!-- ===== TABLE ===== -->
-    <div class="compare__table">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>BMW 5 Series</th>
-            <th>Audi A6</th>
-            <th>Mercedes-Benz E-Class</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <!-- Section: Technical Specs -->
-          <tr class="section-header">
-            <td colspan="4">
-              <span class="icon"><img src="assets/settings.svg"></span> TECHNICAL SPECS
-            </td>
-          </tr>
-
-          <tr>
-            <td>Engine</td>
-            <td>2.0L Turbo Petrol</td>
-            <td>2.0L Turbo Petrol</td>
-            <td>2.0L Turbo Petrol</td>
-          </tr>
-          <tr>
-            <td>HP</td>
-            <td>252 hp</td>
-            <td>245 hp</td>
-            <td>258 hp</td>
-          </tr>
-          <tr>
-            <td>Drive</td>
-            <td>Rear-Wheel Drive</td>
-            <td>Front-Wheel Drive</td>
-            <td>Rear-Wheel Drive</td>
-          </tr>
-
-          <!-- Section: Market Analytics -->
-          <tr class="section-header">
-            <td colspan="4">
-              <span class="icon"><img src="assets/graphics.svg"></span> MARKET ANALYTICS
-            </td>
-          </tr>
-
-          <tr>
-            <td>Average Price</td>
-            <td>€40,500</td>
-            <td>€39,800</td>
-            <td>€42,300</td>
-          </tr>
-
-          <tr>
-            <td>Price vs Market</td>
-            <td>
-              <div class="text-green">-€1,600</div>
-              <div style="font-size:12px; color:#374151;">3.95% cheaper</div>
-              <div class="price-bar">
-                <div class="price-bar__fill green" style="width:60%;"></div>
-              </div>
-            </td>
-            <td>
-              <div class="text-green">-€3,050</div>
-              <div style="font-size:12px; color:#374151;">7.66% cheaper</div>
-              <div class="price-bar">
-                <div class="price-bar__fill green" style="width:100%;"></div>
-              </div>
-            </td>
-            <td>
-              <div class="text-red">+€2,100</div>
-              <div style="font-size:12px; color:#374151;">4.96% more expensive</div>
-              <div class="price-bar">
-                <div class="price-bar__fill red" style="width:40%;"></div>
-              </div>
-            </td>
-          </tr>
-
-          <!-- Section: Seller Score -->
-          <tr class="section-header">
-            <td colspan="4">
-              <span class="icon"><img src="assets/people.svg"></span> SELLER SCORE
-            </td>
-          </tr>
-
-          <tr>
-            <td>Active listings count</td>
-            <td>352</td>
-            <td>298</td>
-            <td>411</td>
-          </tr>
-          <tr>
-            <td>Registration date</td>
-            <td>Mar 2021</td>
-            <td>May 2021</td>
-            <td>Feb 2021</td>
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
+    <!-- ===== TABLE (filled by compare.js) ===== -->
+    <div class="compare__table"></div>
 
   </main>
 
