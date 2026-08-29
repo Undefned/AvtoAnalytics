@@ -5,461 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Сравнение авто — AvtoAnalytics</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #F7F7F8;
-      color: #374151;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    /* ===== HEADER ===== */
-    .header {
-      background: #fff;
-      border-bottom: 1px solid #6B7280;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      height: 61px;
-      display: flex;
-      align-items: center;
-    }
-
-    .header__inner {
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 800;
-      font-size: 17.62px;
-      color: #111827;
-    }
-
-    .logo__bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 16px;
-    }
-    .logo__bars span {
-      display: block;
-      width: 2.8px;
-      background: #111827;
-    }
-    .logo__bars span:nth-child(1) {
-      height: 4.32px;
-    }
-    .logo__bars span:nth-child(2) {
-      height: 12.96px;
-    }
-    .logo__bars span:nth-child(3) {
-      height: 10.08px;
-    }
-    .logo__bars span:nth-child(4) {
-      height: 4.32px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 50px;
-      font-size: 14px;
-      color: #111827;
-    }
-    .nav a {
-      font-weight: 400;
-      line-height: 20px;
-    }
-    .nav a.active {
-      color: #2563EB;
-      font-weight: 600;
-      border-bottom: 2px solid #2563EB;
-      padding-bottom: 4px;
-    }
-
-    .header__icon {
-      width: 16px;
-      height: 18px;
-      background: #111827;
-      opacity: 0.8;
-      border-radius: 2px;
-    }
-
-    /* ===== BREADCRUMB ===== */
-    .breadcrumb {
-      max-width: 1280px;
-      margin: 20px auto 0;
-      padding: 0 24px;
-      font-size: 12px;
-      color: #111827;
-      line-height: 16px;
-    }
-
-    /* ===== COMPARE PAGE ===== */
-    .compare {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px 64px;
-    }
-
-    .compare__header {
-      margin: 32px 0 8px;
-    }
-
-    .compare__title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #111827;
-      line-height: 32px;
-    }
-
-    .compare__sub {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 8px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .compare__desc {
-      font-size: 14px;
-      color: #374151;
-      line-height: 22px;
-    }
-
-    .compare__search {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid #000;
-      border-radius: 25px;
-      padding: 8px 20px;
-      font-size: 14px;
-      color: #6B7280;
-      cursor: pointer;
-    }
-    .compare__search::before {
-      content: "🔍";
-      font-size: 12px;
-    }
-
-    /* ===== CARDS ROW ===== */
-    .compare__cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 32px;
-    }
-
-    .card-compare {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-      padding: 17px;
-      position: relative;
-    }
-
-    .card-compare__remove {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13.73px;
-      color: #374151;
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-    .card-compare__remove .icon {
-      width: 16px;
-      height: 16px;
-      background: #2563EB;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .card-compare__image {
-      width: 100%;
-      height: 203px;
-      background: #DDDDDD;
-      border-radius: 6px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .card-compare__image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card-compare__name {
-      text-align: center;
-      font-size: 18px;
-      font-weight: 800;
-      color: #111827;
-      line-height: 28px;
-      margin-top: 12px;
-    }
-
-    .card-compare__label {
-      text-align: center;
-      font-size: 12px;
-      color: #6B7280;
-      line-height: 16px;
-      margin-top: 4px;
-    }
-
-    .card-compare__price {
-      text-align: center;
-      font-size: 16px;
-      font-weight: 800;
-      color: #111827;
-      line-height: 24px;
-    }
-
-    /* ===== COMPARE TABLE ===== */
-    .compare__table {
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid #DDDDDD;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-      margin-top: 32px;
-      overflow: hidden;
-    }
-
-    .compare__table table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    .compare__table th,
-    .compare__table td {
-      padding: 12px 16px;
-      text-align: center;
-      border-bottom: 1px solid #DDDDDD;
-    }
-
-    .compare__table th:first-child,
-    .compare__table td:first-child {
-      text-align: left;
-      font-weight: 400;
-      color: #374151;
-      width: 25%;
-    }
-
-    .compare__table th {
-      font-weight: 600;
-      color: #374151;
-      background: #fff;
-    }
-
-    .compare__table .section-header {
-      background: #fff;
-      font-weight: 600;
-      color: #2563EB;
-      border-bottom: 1px solid #DDDDDD;
-    }
-    .compare__table .section-header td {
-      text-align: left;
-      padding: 12px 16px;
-    }
-
-    .compare__table .section-header .icon {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      background: #2563EB;
-      border-radius: 2px;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    /* Price bars */
-    .price-bar {
-      width: 100%;
-      max-width: 220px;
-      height: 4px;
-      background: #DDDDDD;
-      border-radius: 9999px;
-      margin: 4px auto 0;
-      overflow: hidden;
-    }
-    .price-bar__fill {
-      height: 100%;
-      border-radius: 9999px;
-    }
-    .price-bar__fill.green {
-      background: #15803D;
-    }
-    .price-bar__fill.red {
-      background: #B91C1C;
-    }
-
-    .text-green {
-      color: #15803D;
-    }
-    .text-red {
-      color: #B91C1C;
-    }
-    .text-center {
-      text-align: center;
-    }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      background: #111827;
-      color: #fff;
-      padding: 64px 24px 40px;
-      margin-top: 64px;
-    }
-
-    .footer__inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 0.5fr;
-      gap: 40px;
-    }
-
-    .footer .logo {
-      color: #fff;
-    }
-    .footer .logo .logo__bars span {
-      background: #fff;
-    }
-
-    .footer__tagline {
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 1.6;
-      margin-top: 16px;
-      max-width: 380px;
-    }
-
-    .footer__legal h4 {
-      font-weight: 400;
-      font-size: 16px;
-      letter-spacing: 0.02em;
-      margin-bottom: 12px;
-    }
-    .footer__legal ul {
-      list-style: none;
-      font-weight: 300;
-      line-height: 1.9;
-    }
-
-    .footer__about {
-      font-weight: 500;
-      font-size: 16px;
-    }
-    .footer__social {
-      display: flex;
-      gap: 16px;
-      margin-top: 8px;
-    }
-    .footer__social span {
-      display: block;
-      width: 26px;
-      height: 26px;
-      background: #fff;
-      border-radius: 4px;
-    }
-
-    .footer__divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      margin: 60px 0 24px;
-      grid-column: 1 / -1;
-    }
-
-    .footer__copy {
-      text-align: center;
-      font-weight: 300;
-      font-size: 16px;
-      grid-column: 1 / -1;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .compare__cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav {
-        display: none;
-      }
-      .compare__cards {
-        grid-template-columns: 1fr;
-      }
-      .compare__sub {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .compare__search {
-        justify-content: center;
-      }
-      .footer__inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      .footer__divider {
-        margin-top: 32px;
-      }
-      .compare__table {
-        overflow-x: auto;
-      }
-      .compare__table table {
-        font-size: 12px;
-        min-width: 600px;
-      }
-      .compare__table th,
-      .compare__table td {
-        padding: 8px 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header__inner {
-        padding: 0 16px;
-      }
-      .compare {
-        padding: 0 16px 40px;
-      }
-      .breadcrumb {
-        padding: 0 16px;
-      }
-      .footer {
-        padding: 40px 16px 24px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/compare.css" />
 </head>
 <body>
 
@@ -467,15 +14,16 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-        vtoAnalytics
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
       </div>
       <nav class="nav">
-        <a href="#">Catalogue</a>
-        <a href="#">Sell Avto</a>
-        <a href="#" class="active">Compare Cars</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="sell_car.html">Sell Car</a>
+        <a href="compare.html" class="active">Compare Cars</a>
       </nav>
-      <div class="header__icon"></div>
+      <div class="header__icon">
+        <img src="assets/profile.svg" alt="Profile">
+      </div>
     </div>
   </header>
 
@@ -643,36 +191,37 @@
     <div class="footer__inner">
       <div>
         <div class="logo">
-          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-          vtoAnalytics
+          <img src="assets/logo.svg" alt="AvtoAnalytics">
         </div>
         <p class="footer__tagline">
-          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
-          с помощью данных, аналитики и сообщества
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
         </p>
       </div>
 
       <div class="footer__legal">
-        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <h4>LEGAL INFORMATION</h4>
         <ul>
-          <li>Политика конфиденциальности</li>
-          <li>Пользовательское соглашение</li>
-          <li>Политика использования файлов cookie</li>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
         </ul>
       </div>
 
-      <div>
-        <p class="footer__about">О НАС</p>
-        <div class="footer__social">
-          <span></span>
-          <span></span>
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram">
+          <img src="assets/github.svg" alt="GitHub">
         </div>
+        <p class="footer__about">ABOUT US</p>
       </div>
 
       <hr class="footer__divider" />
-      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
     </div>
   </footer>
 
+  <script src="scripts/base.js"></script>
+  <script src="scripts/compare.js"></script>
 </body>
 </html>

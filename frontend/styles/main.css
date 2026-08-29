@@ -1,0 +1,213 @@
+/* =========================================================
+   MAIN.CSS — page-specific styles only.
+   Reset, header, breadcrumb, footer are in base.css.
+   (Original file had its own site-header/site-footer system —
+   removed here in favor of the shared header/footer.)
+   ========================================================= */
+
+:root{
+  --text-dark:#111827;
+  --text-muted:#6B7280;
+  --border:#000;
+  --card-border:#000;
+  --green:#15803D;
+  --green-price:#577F66;
+  --red:#934344;
+  --blue:#0641CC;
+  --gradient-start:#2352F8;
+  --gradient-end:#8AD390;
+  --radius-lg:15px;
+}
+
+button{font-family:inherit; cursor:pointer;}
+
+/* ---------- Hero ---------- */
+.hero{
+  max-width:1280px;
+  margin:0 auto;
+  padding:60px 24px 0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:32px;
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;}
+}
+.hero__title{
+  font-size:46px;
+  font-weight:700;
+  line-height:1.15;
+  margin:0 0 24px;
+}
+.hero__subtitle{
+  font-size:20px;
+  font-weight:300;
+  line-height:1.5;
+  max-width:460px;
+  margin:0;
+}
+.hero__image{
+  width:100%;
+  border-radius:16px;
+}
+
+/* ---------- Search bar ---------- */
+.search-bar{
+  max-width:1280px;
+  margin:56px auto 0;
+  padding:0 24px;
+}
+.search-bar__inner{
+  background:linear-gradient(90deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  border-radius:16px;
+  padding:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1.1fr;
+  gap:16px;
+}
+@media (max-width:900px){
+  .search-bar__inner{grid-template-columns:1fr 1fr; }
+}
+@media (max-width:560px){
+  .search-bar__inner{grid-template-columns:1fr; }
+}
+
+.search-field{
+  background:#fff;
+  border:none;
+  border-radius:15px;
+  padding:0 20px;
+  height:90px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  font-size:16px;
+  font-weight:500;
+  color:var(--text-dark);
+}
+.search-field__icon{font-size:20px; flex:0 0 auto;}
+
+.search-submit{
+  background:var(--blue);
+  border:none;
+  border-radius:15px;
+  height:90px;
+  color:#fff;
+  font-size:16px;
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+.search-submit__icon{font-size:20px;}
+
+/* ---------- Catalog ---------- */
+.catalog{
+  max-width:1280px;
+  margin:64px auto 0;
+  padding:0 24px 64px;
+}
+.catalog__title{
+  font-size:20px;
+  font-weight:400;
+  margin:0 0 24px;
+}
+.catalog__grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+}
+@media (max-width:960px){
+  .catalog__grid{grid-template-columns:repeat(2, 1fr);}
+}
+@media (max-width:640px){
+  .catalog__grid{grid-template-columns:1fr;}
+}
+
+.car-card{
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-lg);
+  padding:29px;
+  display:flex;
+  flex-direction:column;
+}
+.car-card__top{
+  display:flex;
+  gap:14px;
+  margin-bottom:16px;
+}
+.car-card__image{
+  width:186px;
+  height:119px;
+  object-fit:cover;
+  border-radius:8px;
+  flex:0 0 auto;
+}
+.car-card__info{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  padding-top:10px;
+}
+.car-card__title{
+  font-size:16px;
+  font-weight:700;
+  margin:0 0 8px;
+}
+.car-card__trim{
+  font-size:16px;
+  font-weight:400;
+  color:var(--text-dark);
+  margin:0 0 16px;
+}
+.car-card__price{
+  font-size:24px;
+  font-weight:700;
+  margin:0 0 12px;
+}
+.car-card__flag{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:14px;
+  font-weight:500;
+  background:#fff;
+  border-radius:15px;
+  padding:4px 12px;
+  width:fit-content;
+}
+.car-card__flag--down{color:var(--green);}
+.car-card__flag--up{color:var(--red);}
+
+.car-card__stats{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 4px;
+  margin-top:4px;
+}
+.stat{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:16px;
+  font-weight:500;
+}
+.stat__icon{font-size:18px;}
+
+.car-card__divider{
+  border:none;
+  border-top:1px solid #000;
+  margin:4px 0 16px;
+}
+.car-card__fair-price{
+  font-size:16px;
+}
+.car-card__fair-price .value{
+  color:var(--green-price);
+}
+.car-card__fair-price .label{
+  color:#01122E;
+}

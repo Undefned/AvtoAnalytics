@@ -1,477 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Продажа авто — AvtoAnalytics</title>
+  <title>Sell Car — AvtoAnalytics</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #F7F7F8;
-      color: #374151;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    /* ===== HEADER ===== */
-    .header {
-      background: #fff;
-      border-bottom: 1px solid #6B7280;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      height: 61px;
-      display: flex;
-      align-items: center;
-    }
-
-    .header__inner {
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 800;
-      font-size: 17.62px;
-      color: #111827;
-    }
-
-    .logo__bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 16px;
-    }
-    .logo__bars span {
-      display: block;
-      width: 2.8px;
-      background: #111827;
-    }
-    .logo__bars span:nth-child(1) {
-      height: 4.32px;
-    }
-    .logo__bars span:nth-child(2) {
-      height: 12.96px;
-    }
-    .logo__bars span:nth-child(3) {
-      height: 10.08px;
-    }
-    .logo__bars span:nth-child(4) {
-      height: 4.32px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 50px;
-      font-size: 14px;
-      color: #111827;
-    }
-    .nav a {
-      font-weight: 400;
-      line-height: 20px;
-    }
-    .nav a.active {
-      color: #2563EB;
-      font-weight: 600;
-      border-bottom: 2px solid #2563EB;
-      padding-bottom: 4px;
-    }
-
-    .header__icon {
-      width: 16px;
-      height: 18px;
-      background: #111827;
-      opacity: 0.8;
-      border-radius: 2px;
-    }
-
-    /* ===== BREADCRUMB ===== */
-    .breadcrumb {
-      max-width: 1280px;
-      margin: 20px auto 0;
-      padding: 0 24px;
-      font-size: 12px;
-      color: #111827;
-      line-height: 16px;
-    }
-
-    /* ===== SELL FORM ===== */
-    .sell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px 64px;
-    }
-
-    .sell__header {
-      margin: 32px 0 8px;
-    }
-
-    .sell__title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #111827;
-      line-height: 28px;
-    }
-
-    .sell__sub {
-      font-size: 12px;
-      color: #374151;
-      line-height: 16px;
-      margin-top: 4px;
-    }
-
-    /* ===== FORM GRID ===== */
-    .sell__grid {
-      display: grid;
-      grid-template-columns: 608px 1fr;
-      gap: 24px;
-      margin-top: 24px;
-    }
-
-    /* ===== CARD ===== */
-    .card-form {
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid #DDDDDD;
-      padding: 25px;
-    }
-
-    .card-form__header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .card-form__header svg {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-    .card-form__header svg .stroke-blue {
-      stroke: #2563EB;
-    }
-    .card-form__header svg .stroke-green {
-      stroke: #2AA32A;
-    }
-
-    .card-form__title {
-      font-size: 15.8px;
-      font-weight: 600;
-      color: #111827;
-      line-height: 20px;
-    }
-
-    /* ===== FORM FIELDS ===== */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 16px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .form-group__label {
-      font-size: 12px;
-      color: #374151;
-      line-height: 16px;
-    }
-
-    .form-group__label--inline {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .form-group__label--inline .hint {
-      font-size: 12px;
-      font-weight: 600;
-      color: #374151;
-      cursor: help;
-    }
-
-    .form-control {
-      width: 100%;
-      height: 36px;
-      padding: 0 12px;
-      border: 1px solid #DDDDDD;
-      border-radius: 4px;
-      background: #fff;
-      font-size: 14px;
-      color: #374151;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-control:focus {
-      border-color: #2563EB;
-    }
-    .form-control::placeholder {
-      color: #374151;
-    }
-
-    .form-control--with-unit {
-      border-radius: 4px 0 0 4px;
-      border-right: none;
-    }
-
-    .form-control--unit {
-      width: auto;
-      min-width: 40px;
-      border-radius: 0 4px 4px 0;
-      border-left: none;
-      text-align: center;
-      font-weight: 400;
-      color: #374151;
-      background: #fff;
-      flex-shrink: 0;
-    }
-
-    .input-group {
-      display: flex;
-      align-items: stretch;
-    }
-    .input-group .form-control:first-child {
-      border-radius: 4px 0 0 4px;
-      border-right: none;
-    }
-    .input-group .form-control:last-child {
-      border-radius: 0 4px 4px 0;
-      border-left: none;
-    }
-
-    /* ===== PRICING CARD ===== */
-    .pricing-card .card-form__header svg .stroke-green {
-      stroke: #2AA32A;
-    }
-
-    .price-feedback {
-      background: #fff;
-      border-radius: 6px;
-      padding: 16px;
-      margin: 12px 0 0;
-      font-size: 12px;
-      line-height: 20px;
-      color: #1B1B1B;
-    }
-    .price-feedback strong {
-      font-weight: 700;
-    }
-    .price-feedback .highlight {
-      color: #D92D2D;
-      font-weight: 700;
-    }
-
-    /* ===== UPLOAD ===== */
-    .upload-area {
-      border: 1px solid #DDDDDD;
-      border-radius: 8px;
-      background: #fff;
-      padding: 40px 20px;
-      text-align: center;
-      margin-top: 24px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-    .upload-area:hover {
-      border-color: #2563EB;
-    }
-    .upload-area svg {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 8px;
-      display: block;
-    }
-    .upload-area svg .stroke-gray {
-      stroke: #94A3B8;
-    }
-    .upload-area__text {
-      font-size: 12px;
-      color: #374151;
-      line-height: 16px;
-    }
-    .upload-area__hint {
-      font-size: 9px;
-      color: #94A3B8;
-      line-height: 13px;
-      margin-top: 4px;
-    }
-
-    /* ===== SUBMIT ===== */
-    .sell__actions {
-      margin-top: 32px;
-    }
-
-    .btn-submit {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 24px;
-      background: #2AA32A;
-      border-radius: 6px;
-      border: none;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 20px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-submit:hover {
-      background: #228B22;
-    }
-    .btn-submit svg {
-      width: 14px;
-      height: 14px;
-      fill: #fff;
-    }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      background: #111827;
-      color: #fff;
-      padding: 64px 24px 40px;
-      margin-top: 48px;
-    }
-
-    .footer__inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 0.5fr;
-      gap: 40px;
-    }
-
-    .footer .logo {
-      color: #fff;
-    }
-    .footer .logo .logo__bars span {
-      background: #fff;
-    }
-
-    .footer__tagline {
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 1.6;
-      margin-top: 16px;
-      max-width: 380px;
-    }
-
-    .footer__legal h4 {
-      font-weight: 400;
-      font-size: 16px;
-      letter-spacing: 0.02em;
-      margin-bottom: 12px;
-    }
-    .footer__legal ul {
-      list-style: none;
-      font-weight: 300;
-      line-height: 1.9;
-    }
-
-    .footer__about {
-      font-weight: 500;
-      font-size: 16px;
-    }
-    .footer__social {
-      display: flex;
-      gap: 16px;
-      margin-top: 8px;
-    }
-    .footer__social span {
-      display: block;
-      width: 26px;
-      height: 26px;
-      background: #fff;
-      border-radius: 4px;
-    }
-
-    .footer__divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      margin: 60px 0 24px;
-      grid-column: 1 / -1;
-    }
-
-    .footer__copy {
-      text-align: center;
-      font-weight: 300;
-      font-size: 16px;
-      grid-column: 1 / -1;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .sell__grid {
-        grid-template-columns: 1fr;
-      }
-      .form-row {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav {
-        display: none;
-      }
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-      .footer__inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      .footer__divider {
-        margin-top: 32px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header__inner {
-        padding: 0 16px;
-      }
-      .sell {
-        padding: 0 16px 40px;
-      }
-      .breadcrumb {
-        padding: 0 16px;
-      }
-      .footer {
-        padding: 40px 16px 24px;
-      }
-      .card-form {
-        padding: 16px;
-      }
-      .sell__grid {
-        gap: 16px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/sell_car.css" />
 </head>
 <body>
 
@@ -479,20 +14,21 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-        vtoAnalytics
+        <img src="assets/logo.svg">
       </div>
       <nav class="nav">
-        <a href="#">Catalogue</a>
-        <a href="#" class="active">Sell Avto</a>
-        <a href="#">Compare Cars</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="sell_car.html" class="active">Sell Car</a>
+        <a href="compare.html">Compare Cars</a>
       </nav>
-      <div class="header__icon"></div>
+      <div class="header__icon">
+        <img src="assets/profile.svg">
+      </div>
     </div>
   </header>
 
   <!-- ===== BREADCRUMB ===== -->
-  <p class="breadcrumb">Главная / Продажа авто</p>
+  <p class="breadcrumb">Home / Sell Car</p>
 
   <!-- ===== SELL ===== -->
   <main class="sell">
@@ -508,96 +44,57 @@
       <!-- ===== CAR DETAILS ===== -->
       <div class="card-form">
         <div class="card-form__header">
-          <svg viewBox="0 0 20 20">
-            <rect x="2.5" y="9.17" width="15" height="8.33" stroke="#2563EB" stroke-width="1.5" fill="none" />
-            <circle cx="6.67" cy="15" r="2.5" stroke="#2563EB" stroke-width="1.5" fill="none" />
-            <circle cx="13.33" cy="15" r="2.5" stroke="#2563EB" stroke-width="1.5" fill="none" />
-            <line x1="2.5" y1="11.67" x2="17.5" y2="11.67" stroke="#2563EB" stroke-width="1.5" />
-          </svg>
+          <img src="assets/dashboard.svg">
           <span class="card-form__title">Car Details</span>
         </div>
 
-        <!-- Row 1 -->
+        <!-- Row 1: Make + Model -->
         <div class="form-row">
           <div class="form-group">
             <label class="form-group__label">Make</label>
-            <select class="form-control">
-              <option value="">Select make</option>
-              <option>Toyota</option>
-              <option>BMW</option>
-              <option>Mercedes-Benz</option>
-              <option>Audi</option>
-              <option>Volkswagen</option>
-            </select>
+            <input type="text" class="form-control" placeholder="Enter make" />
           </div>
           <div class="form-group">
             <label class="form-group__label">Model</label>
-            <select class="form-control">
-              <option value="">Select model</option>
-              <option>Camry</option>
-              <option>Corolla</option>
-              <option>X5</option>
-              <option>E-Class</option>
-              <option>A6</option>
-            </select>
+            <input type="text" class="form-control" placeholder="Enter model" />
           </div>
         </div>
 
-        <!-- Row 2 -->
+        <!-- Row 2: Generation + Year -->
         <div class="form-row">
           <div class="form-group">
             <label class="form-group__label">Generation</label>
-            <select class="form-control">
-              <option value="">Select generation</option>
-              <option>XV70 (2018-2023)</option>
-              <option>XV60 (2014-2018)</option>
-              <option>G30 (2017-2023)</option>
-              <option>W213 (2016-2023)</option>
-            </select>
+            <input type="text" class="form-control" placeholder="Enter generation" />
           </div>
           <div class="form-group">
             <label class="form-group__label">Year</label>
-            <select class="form-control">
-              <option value="">Select year</option>
-              <option>2023</option>
-              <option>2022</option>
-              <option>2021</option>
-              <option>2020</option>
-              <option>2019</option>
-              <option>2018</option>
-            </select>
+            <input type="text" class="form-control" placeholder="Enter year" />
           </div>
         </div>
 
-        <!-- Row 3 -->
+        <!-- Row 3: Engine volume + Power -->
         <div class="form-row">
           <div class="form-group">
-            <label class="form-group__label">Engine volume</label>
+            <label class="form-group__label">Engine Volume</label>
             <div class="input-group">
-              <input type="text" class="form-control form-control--with-unit" placeholder="Enter engine volume" />
-              <span class="form-control form-control--unit">L</span>
+              <input type="text" class="form-control" placeholder="Enter engine volume" />
+              <span class="input-group__unit">L</span>
             </div>
           </div>
           <div class="form-group">
             <label class="form-group__label">Power</label>
             <div class="input-group">
-              <input type="text" class="form-control form-control--with-unit" placeholder="Enter power" />
-              <span class="form-control form-control--unit">hp</span>
+              <input type="text" class="form-control" placeholder="Enter power" />
+              <span class="input-group__unit">hp</span>
             </div>
           </div>
         </div>
 
-        <!-- Row 4 -->
+        <!-- Row 4: Transmission + Mileage -->
         <div class="form-row">
           <div class="form-group">
             <label class="form-group__label">Transmission</label>
-            <select class="form-control">
-              <option value="">Select transmission</option>
-              <option>Automatic</option>
-              <option>Manual</option>
-              <option>CVT</option>
-              <option>Robot</option>
-            </select>
+            <input type="text" class="form-control" placeholder="Enter transmission" />
           </div>
           <div class="form-group">
             <label class="form-group__label form-group__label--inline">
@@ -605,8 +102,8 @@
               <span class="hint">?</span>
             </label>
             <div class="input-group">
-              <input type="text" class="form-control form-control--with-unit" placeholder="Enter mileage" />
-              <span class="form-control form-control--unit">km</span>
+              <input type="text" class="form-control" placeholder="Enter mileage" />
+              <span class="input-group__unit">km</span>
             </div>
           </div>
         </div>
@@ -615,19 +112,15 @@
       <!-- ===== PRICING ===== -->
       <div class="card-form pricing-card">
         <div class="card-form__header">
-          <svg viewBox="0 0 20 20">
-            <circle cx="10" cy="10" r="7.5" stroke="#2AA32A" stroke-width="1.5" fill="none" />
-            <line x1="5" y1="10" x2="15" y2="10" stroke="#2AA32A" stroke-width="1.5" />
-            <line x1="10" y1="5" x2="10" y2="15" stroke="#2AA32A" stroke-width="1.5" />
-          </svg>
+          <img src="assets/progress.svg">
           <span class="card-form__title">Pricing</span>
         </div>
 
         <div class="form-group">
           <label class="form-group__label">Price</label>
           <div class="input-group">
-            <input type="text" class="form-control form-control--with-unit" placeholder="Enter price" />
-            <span class="form-control form-control--unit">₽</span>
+            <input type="text" class="form-control" placeholder="Enter price" />
+            <span class="input-group__unit">₽</span>
           </div>
         </div>
 
@@ -641,12 +134,7 @@
 
     <!-- ===== PHOTO UPLOAD ===== -->
     <div class="upload-area">
-      <svg viewBox="0 0 40 40">
-        <rect x="5" y="8.75" width="30" height="22.5" stroke="#94A3B8" stroke-width="1.5" fill="none" rx="2" />
-        <line x1="5" y1="15" x2="35" y2="15" stroke="#94A3B8" stroke-width="1.5" />
-        <path d="M15 20L20 15L25 20" stroke="#94A3B8" stroke-width="1.5" fill="none" />
-        <line x1="20" y1="15" x2="20" y2="25" stroke="#94A3B8" stroke-width="1.5" />
-      </svg>
+      <img class="upload-area__svg" src="assets/empty_image.svg">
       <div class="upload-area__text">Drag & drop photos here (max 15)</div>
       <div class="upload-area__hint">JPG, PNG up to 10MB each</div>
     </div>
@@ -654,7 +142,7 @@
     <!-- ===== SUBMIT ===== -->
     <div class="sell__actions">
       <button type="submit" class="btn-submit">
-        <svg viewBox="0 0 14 14"><path d="M1 1L13 13M13 1L1 13"/></svg>
+        <img src="assets/publish.svg">
         Publish Ad
       </button>
     </div>
@@ -664,38 +152,42 @@
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="footer__inner">
+      <!-- Left column: Logo and description -->
       <div>
         <div class="logo">
-          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-          vtoAnalytics
+          <img src="assets/logo.svg">
         </div>
         <p class="footer__tagline">
-          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
-          с помощью данных, аналитики и сообщества
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
         </p>
       </div>
 
+      <!-- Center column: Legal information -->
       <div class="footer__legal">
-        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <h4>LEGAL INFORMATION</h4>
         <ul>
-          <li>Политика конфиденциальности</li>
-          <li>Пользовательское соглашение</li>
-          <li>Политика использования файлов cookie</li>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
         </ul>
       </div>
 
-      <div>
-        <p class="footer__about">О НАС</p>
-        <div class="footer__social">
-          <span></span>
-          <span></span>
+      <!-- Right column -->
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram">
+          <img src="assets/github.svg" alt="GitHub">
         </div>
+        <p class="footer__about">ABOUT US</p>
       </div>
 
       <hr class="footer__divider" />
-      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
     </div>
   </footer>
 
+  <script src="scripts/base.js"></script>
+  <script src="scripts/sell_car.js"></script>
 </body>
 </html>

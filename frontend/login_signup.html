@@ -5,419 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Вход — AvtoAnalytics</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #111827;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    /* ===== MODAL ===== */
-    .modal {
-      width: 604px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 32px;
-      position: relative;
-    }
-
-    .modal__close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 15px;
-      height: 15px;
-      cursor: pointer;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-    .modal__close:hover {
-      opacity: 1;
-    }
-    .modal__close svg {
-      width: 100%;
-      height: 100%;
-      fill: #374151;
-    }
-
-    .modal__title {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-      color: #111827;
-      line-height: 28px;
-      margin-bottom: 24px;
-    }
-
-    /* ===== TABS ===== */
-    .tabs {
-      display: flex;
-      gap: 16px;
-      border-bottom: 1px solid #DDDDDD;
-      margin-bottom: 24px;
-      padding: 0 48px;
-    }
-
-    .tab {
-      padding-bottom: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #6B7280;
-      line-height: 20px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-    }
-    .tab--active {
-      color: #2563EB;
-      border-bottom-color: #2563EB;
-    }
-    .tab:hover:not(.tab--active) {
-      color: #374151;
-    }
-
-    /* ===== FORM ===== */
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      padding: 0 48px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .form-group__label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #374151;
-      line-height: 16px;
-    }
-
-    .form-group__label--right {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .form-group__forgot {
-      font-size: 12px;
-      font-weight: 400;
-      color: #2563EB;
-      line-height: 16px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .form-group__forgot:hover {
-      text-decoration: underline;
-    }
-
-    .input-wrapper {
-      position: relative;
-    }
-
-    .input-wrapper__icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 14px;
-      height: 14px;
-      opacity: 0.5;
-    }
-    .input-wrapper__icon svg {
-      width: 100%;
-      height: 100%;
-      fill: #94A3B8;
-    }
-
-    .input-wrapper__icon--right {
-      left: auto;
-      right: 12px;
-      cursor: pointer;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-    .input-wrapper__icon--right:hover {
-      opacity: 1;
-    }
-
-    .form-control {
-      width: 100%;
-      height: 42px;
-      padding: 0 12px 0 36px;
-      border: 1px solid #DDDDDD;
-      border-radius: 6px;
-      font-size: 14px;
-      color: #111827;
-      background: #fff;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-control:focus {
-      border-color: #2563EB;
-    }
-    .form-control::placeholder {
-      color: #6B7280;
-    }
-
-    .form-control--with-right-icon {
-      padding-right: 36px;
-    }
-
-    /* ===== CHECKBOX ===== */
-    .checkbox-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .checkbox-wrapper input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: #2563EB;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .checkbox-wrapper__label {
-      font-size: 12px;
-      color: #374151;
-      line-height: 16px;
-    }
-    .checkbox-wrapper__label a {
-      color: #2563EB;
-      text-decoration: none;
-    }
-    .checkbox-wrapper__label a:hover {
-      text-decoration: underline;
-    }
-
-    /* ===== BUTTONS ===== */
-    .btn {
-      width: 100%;
-      height: 40px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      background: #2563EB;
-      cursor: pointer;
-      transition: background 0.2s;
-      line-height: 20px;
-    }
-    .btn:hover {
-      background: #1D4ED8;
-    }
-
-    .btn--secondary {
-      background: #2563EB;
-    }
-    .btn--secondary:hover {
-      background: #1D4ED8;
-    }
-
-    .form__actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    /* ===== HIDDEN ===== */
-    .hidden {
-      display: none !important;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 640px) {
-      .modal {
-        width: 100%;
-        max-width: 420px;
-        padding: 24px 16px;
-      }
-      .tabs {
-        padding: 0 16px;
-      }
-      .form {
-        padding: 0 16px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/login_signup.css" />
 </head>
 <body>
 
-  <!-- ===== MODAL ===== -->
-  <div class="modal">
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="logo">
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
+      </div>
+      <nav class="nav">
+        <a href="catalogue.html">Catalogue</a>
+        <a href="sell_car.html">Sell Car</a>
+        <a href="compare.html">Compare Cars</a>
+      </nav>
+      <div class="header__icon">
+        <img src="assets/profile.svg" alt="Profile">
+      </div>
+    </div>
+  </header>
 
-    <!-- Close -->
-    <div class="modal__close">
-      <svg viewBox="0 0 15 15">
-        <path d="M1.25 1.25L13.75 13.75M13.75 1.25L1.25 13.75" stroke="#374151" stroke-width="1.5" stroke-linecap="round" />
-      </svg>
+  <!-- ===== AUTH ===== -->
+  <main class="auth-main">
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal">
+
+      <!-- Close -->
+      <div class="modal__close">
+        <svg viewBox="0 0 15 15">
+          <path d="M1.25 1.25L13.75 13.75M13.75 1.25L1.25 13.75" stroke="#374151" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <h2 class="modal__title">Login / Sign Up</h2>
+
+      <!-- ===== TABS ===== -->
+      <div class="tabs">
+        <div class="tab tab--active" data-tab="login">Login</div>
+        <div class="tab" data-tab="register">Register</div>
+      </div>
+
+      <!-- ===== LOGIN FORM ===== -->
+      <form class="form" id="loginForm">
+        <div class="form-group">
+          <label class="form-group__label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <svg viewBox="0 0 14 14"><path d="M1 1.75H13V12.25H1V1.75Z"/><path d="M1 1.75L7 7L13 1.75"/></svg>
+            </span>
+            <input type="email" class="form-control" placeholder="Enter your email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group__label form-group__label--right">
+            <span>Password</span>
+            <a href="#" class="form-group__forgot">Forgot password?</a>
+          </div>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <svg viewBox="0 0 14 14"><path d="M2 5V3C2 1.5 3 0 7 0C11 0 12 1.5 12 3V5M1 5H13V13H1V5Z"/></svg>
+            </span>
+            <input type="password" class="form-control form-control--with-right-icon" placeholder="Enter your password" />
+            <span class="input-wrapper__icon input-wrapper__icon--right" id="togglePassword">
+              <svg viewBox="0 0 14 14"><path d="M7 3C3 3 1 6 1 7C1 8 3 11 7 11C11 11 13 8 13 7C13 6 11 3 7 3Z"/><circle cx="7" cy="7" r="2.5"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn">Sign In</button>
+        </div>
+      </form>
+
+      <!-- ===== REGISTER FORM ===== -->
+      <form class="form hidden" id="registerForm">
+        <div class="form-group">
+          <label class="form-group__label">Full Name</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <svg viewBox="0 0 14 14"><path d="M7 7C8.5 7 10 5.5 10 3.5C10 1.5 8.5 0 7 0C5.5 0 4 1.5 4 3.5C4 5.5 5.5 7 7 7Z"/><path d="M1 14C1 10 3.5 7 7 7C10.5 7 13 10 13 14"/></svg>
+            </span>
+            <input type="text" class="form-control" placeholder="Enter your full name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-group__label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <svg viewBox="0 0 14 14"><path d="M1 1.75H13V12.25H1V1.75Z"/><path d="M1 1.75L7 7L13 1.75"/></svg>
+            </span>
+            <input type="email" class="form-control" placeholder="Enter your email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-group__label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-wrapper__icon">
+              <svg viewBox="0 0 14 14"><path d="M2 5V3C2 1.5 3 0 7 0C11 0 12 1.5 12 3V5M1 5H13V13H1V5Z"/></svg>
+            </span>
+            <input type="password" class="form-control form-control--with-right-icon" placeholder="Create a password" />
+            <span class="input-wrapper__icon input-wrapper__icon--right">
+              <svg viewBox="0 0 14 14"><path d="M7 3C3 3 1 6 1 7C1 8 3 11 7 11C11 11 13 8 13 7C13 6 11 3 7 3Z"/><circle cx="7" cy="7" r="2.5"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="terms" checked />
+          <label for="terms" class="checkbox-wrapper__label">
+            I agree to the <a href="#">Terms of Service</a>
+          </label>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn btn--secondary">Create Account</button>
+        </div>
+      </form>
+
     </div>
 
-    <h2 class="modal__title">Login / Sign Up</h2>
+  </main>
 
-    <!-- ===== TABS ===== -->
-    <div class="tabs">
-      <div class="tab tab--active" data-tab="login">Login</div>
-      <div class="tab" data-tab="register">Register</div>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <img src="assets/logo.svg" alt="AvtoAnalytics">
+        </div>
+        <p class="footer__tagline">
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
+        </p>
+      </div>
+
+      <div class="footer__legal">
+        <h4>LEGAL INFORMATION</h4>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
+        </ul>
+      </div>
+
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram">
+          <img src="assets/github.svg" alt="GitHub">
+        </div>
+        <p class="footer__about">ABOUT US</p>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
     </div>
+  </footer>
 
-    <!-- ===== LOGIN FORM ===== -->
-    <form class="form" id="loginForm">
-      <div class="form-group">
-        <label class="form-group__label">Email</label>
-        <div class="input-wrapper">
-          <span class="input-wrapper__icon">
-            <svg viewBox="0 0 14 14"><path d="M1 1.75H13V12.25H1V1.75Z"/><path d="M1 1.75L7 7L13 1.75"/></svg>
-          </span>
-          <input type="email" class="form-control" placeholder="Enter your email" />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="form-group__label form-group__label--right">
-          <span>Password</span>
-          <a href="#" class="form-group__forgot">Forgot password?</a>
-        </div>
-        <div class="input-wrapper">
-          <span class="input-wrapper__icon">
-            <svg viewBox="0 0 14 14"><path d="M2 5V3C2 1.5 3 0 7 0C11 0 12 1.5 12 3V5M1 5H13V13H1V5Z"/></svg>
-          </span>
-          <input type="password" class="form-control form-control--with-right-icon" placeholder="Enter your password" />
-          <span class="input-wrapper__icon input-wrapper__icon--right" id="togglePassword">
-            <svg viewBox="0 0 14 14"><path d="M7 3C3 3 1 6 1 7C1 8 3 11 7 11C11 11 13 8 13 7C13 6 11 3 7 3Z"/><circle cx="7" cy="7" r="2.5"/></svg>
-          </span>
-        </div>
-      </div>
-
-      <div class="form__actions">
-        <button type="submit" class="btn">Sign In</button>
-      </div>
-    </form>
-
-    <!-- ===== REGISTER FORM ===== -->
-    <form class="form hidden" id="registerForm">
-      <div class="form-group">
-        <label class="form-group__label">Full Name</label>
-        <div class="input-wrapper">
-          <span class="input-wrapper__icon">
-            <svg viewBox="0 0 14 14"><path d="M7 7C8.5 7 10 5.5 10 3.5C10 1.5 8.5 0 7 0C5.5 0 4 1.5 4 3.5C4 5.5 5.5 7 7 7Z"/><path d="M1 14C1 10 3.5 7 7 7C10.5 7 13 10 13 14"/></svg>
-          </span>
-          <input type="text" class="form-control" placeholder="Enter your full name" />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-group__label">Email</label>
-        <div class="input-wrapper">
-          <span class="input-wrapper__icon">
-            <svg viewBox="0 0 14 14"><path d="M1 1.75H13V12.25H1V1.75Z"/><path d="M1 1.75L7 7L13 1.75"/></svg>
-          </span>
-          <input type="email" class="form-control" placeholder="Enter your email" />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-group__label">Password</label>
-        <div class="input-wrapper">
-          <span class="input-wrapper__icon">
-            <svg viewBox="0 0 14 14"><path d="M2 5V3C2 1.5 3 0 7 0C11 0 12 1.5 12 3V5M1 5H13V13H1V5Z"/></svg>
-          </span>
-          <input type="password" class="form-control form-control--with-right-icon" placeholder="Create a password" />
-          <span class="input-wrapper__icon input-wrapper__icon--right">
-            <svg viewBox="0 0 14 14"><path d="M7 3C3 3 1 6 1 7C1 8 3 11 7 11C11 11 13 8 13 7C13 6 11 3 7 3Z"/><circle cx="7" cy="7" r="2.5"/></svg>
-          </span>
-        </div>
-      </div>
-
-      <div class="checkbox-wrapper">
-        <input type="checkbox" id="terms" checked />
-        <label for="terms" class="checkbox-wrapper__label">
-          I agree to the <a href="#">Terms of Service</a>
-        </label>
-      </div>
-
-      <div class="form__actions">
-        <button type="submit" class="btn btn--secondary">Create Account</button>
-      </div>
-    </form>
-
-  </div>
-
-  <!-- ===== JAVASCRIPT ===== -->
-  <script>
-    (function() {
-      const tabs = document.querySelectorAll('.tab');
-      const loginForm = document.getElementById('loginForm');
-      const registerForm = document.getElementById('registerForm');
-
-      // ===== Tabs switching =====
-      tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-          // Update active tab
-          tabs.forEach(t => t.classList.remove('tab--active'));
-          this.classList.add('tab--active');
-
-          // Show/hide forms
-          const tabName = this.dataset.tab;
-          if (tabName === 'login') {
-            loginForm.classList.remove('hidden');
-            registerForm.classList.add('hidden');
-          } else {
-            loginForm.classList.add('hidden');
-            registerForm.classList.remove('hidden');
-          }
-        });
-      });
-
-      // ===== Toggle password visibility =====
-      const toggleBtns = document.querySelectorAll('.input-wrapper__icon--right');
-      toggleBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-          const input = this.closest('.input-wrapper').querySelector('input');
-          if (input) {
-            const isPassword = input.type === 'password';
-            input.type = isPassword ? 'text' : 'password';
-          }
-        });
-      });
-
-      // ===== Form submit (demo) =====
-      loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Login form submitted');
-      });
-
-      registerForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Register form submitted');
-      });
-
-      // ===== Close modal (demo) =====
-      document.querySelector('.modal__close').addEventListener('click', function() {
-        alert('Close modal');
-      });
-    })();
-  </script>
-
+  <script src="scripts/base.js"></script>
+  <script src="scripts/login_signup.js"></script>
 </body>
 </html>

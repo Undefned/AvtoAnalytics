@@ -1,0 +1,325 @@
+/* =========================================================
+   AVTO_CARD.CSS — page-specific styles only.
+   Reset, header, breadcrumb, footer are in base.css.
+   (Original file had its own site-header/site-footer system —
+   removed here in favor of the shared header/footer.)
+   ========================================================= */
+
+:root{
+  --text-dark:#111827;
+  --text-body:#374151;
+  --text-muted:#6B7280;
+  --text-faint:#94A3B8;
+  --border:#DDDDDD;
+  --accent:#F97316;
+  --link:#2563EB;
+  --radius:8px;
+  --radius-sm:6px;
+  font-size:16px;
+}
+
+/* ---------- Layout ---------- */
+.listing{
+  max-width:1280px;
+  margin:24px auto 0;
+  padding:0 24px 64px;
+  display:grid;
+  grid-template-columns:600px 1fr;
+  gap:56px;
+}
+@media (max-width:980px){
+  .listing{grid-template-columns:1fr;}
+}
+
+/* ---------- Gallery ---------- */
+.gallery__main{
+  position:relative;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.gallery__main img{
+  width:100%;
+  aspect-ratio:598/349;
+  object-fit:cover;
+}
+.gallery__counter{
+  position:absolute;
+  top:13px; left:13px;
+  background:#374151;
+  color:#fff;
+  font-size:11.5px;
+  font-weight:600;
+  padding:2px 12px;
+  border-radius:9999px;
+}
+.gallery__nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:32px; height:32px;
+  border-radius:9999px;
+  background:#fff;
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:14px;
+  color:var(--text-muted);
+}
+.gallery__nav--prev{left:13px;}
+.gallery__nav--next{right:13px;}
+
+.gallery__thumbs{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
+}
+.gallery__thumb{
+  width:80px; height:48px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border);
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  flex:0 0 auto;
+}
+.gallery__thumb img{width:100%; height:100%; object-fit:cover;}
+.gallery__thumb--more::after{
+  content:"+15";
+  position:absolute; inset:0;
+  background:rgba(0,0,0,.5);
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ---------- Info column ---------- */
+.badges{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
+.badge{
+  font-size:11.6px;
+  font-weight:600;
+  padding:2px 8px;
+  border-radius:9999px;
+  background:#fff;
+  color:var(--text-muted);
+}
+.badge--active{background:var(--border); color:var(--link);}
+
+.listing__title{
+  font-size:20px;
+  font-weight:700;
+  color:var(--text-dark);
+  margin:0 0 12px;
+}
+.listing__specs{
+  font-size:12px;
+  color:var(--text-muted);
+  margin:0 0 24px;
+}
+
+.price{
+  font-size:30px;
+  font-weight:800;
+  color:#000;
+  margin:0 0 8px;
+}
+.price-compare{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:var(--text-faint);
+  margin-bottom:24px;
+}
+.info-icon{
+  width:12px; height:12px;
+  border-radius:50%;
+  background:var(--text-faint);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:9px;
+  line-height:1;
+  flex:0 0 auto;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:17px;
+  margin-bottom:24px;
+}
+.card__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.card__title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--text-body);
+}
+.card__title .info-icon{margin-left:2px;}
+
+.range-select{
+  font-size:12px;
+  color:var(--text-body);
+  background:none;
+  border:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  padding:4px 8px;
+}
+
+/* price history chart */
+.chart{
+  position:relative;
+  height:99px;
+  margin-bottom:12px;
+}
+.chart svg{width:100%; height:100%; overflow:visible;}
+.chart-labels{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  color:var(--text-faint);
+  margin-bottom:16px;
+}
+.chart-note{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:var(--text-body);
+}
+.chart-note__dot{width:9px; height:9px; background:var(--accent); border-radius:50%; flex:0 0 auto;}
+.chart-note__value{color:var(--accent); font-weight:600;}
+
+/* two-column mini cards */
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-bottom:24px;
+}
+@media (max-width:560px){ .info-grid{grid-template-columns:1fr;} }
+
+.info-grid .card{margin-bottom:0;}
+.card__label{
+  font-size:12px;
+  color:var(--text-muted);
+  margin:8px 0 12px;
+}
+.card__value{
+  font-size:20px;
+  font-weight:700;
+  color:var(--text-dark);
+}
+
+.seller{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.seller__avatar{
+  width:48px; height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  flex:0 0 auto;
+}
+.seller__name{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:16px;
+  font-weight:600;
+  color:var(--text-dark);
+}
+.seller__verified{color:var(--link); font-size:12px;}
+.seller__since{font-size:12px; color:var(--text-muted); margin-top:2px;}
+
+/* location + similar offers */
+.location-card .card__value{font-size:12px; font-weight:400; color:var(--text-muted); margin-top:-8px;}
+.location-body{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  margin-top:16px;
+}
+.similar-note{font-size:12px; color:var(--text-body);}
+.similar-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-width:220px;
+}
+.similar-item{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+.similar-item__rank{
+  width:9px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--accent);
+  text-align:right;
+}
+.similar-item__img{width:48px; height:28px; border-radius:4px; object-fit:cover; flex:0 0 auto;}
+.similar-item__info{flex:1; text-align:right;}
+.similar-item__price{font-size:12px; font-weight:600; color:var(--text-dark);}
+.similar-item__spec{font-size:12px; color:var(--text-muted);}
+.similar-item__dist{font-size:12px; color:var(--text-faint);}
+
+/* ---------- Q&A ---------- */
+.qa-card{
+  grid-column:1 / -1;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-top:8px;
+}
+.qa-item{
+  display:flex;
+  gap:16px;
+  padding:24px 0;
+  border-bottom:1px solid #F1F1F1;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-item__avatar{
+  width:32px; height:32px;
+  border-radius:50%;
+  background:var(--border);
+  color:#fff;
+  font-weight:600;
+  font-size:12.6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.qa-item__author{font-size:14px; font-weight:600; color:var(--text-body);}
+.qa-item__date{font-size:12px; color:var(--text-faint); margin:2px 0 8px;}
+.qa-item__q, .qa-item__a{font-size:14px; line-height:20px; color:#475569;}
+.qa-item__q b{color:var(--link);}
+.qa-item__a b{color:var(--accent);}
+.qa-item__answered-by{font-size:12px; color:var(--text-faint); margin-top:6px;}

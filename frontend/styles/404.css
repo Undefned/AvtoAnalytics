@@ -1,0 +1,170 @@
+/* =========================================================
+   404.CSS — page-specific styles only.
+   Reset, header, breadcrumb, footer are in base.css.
+   ========================================================= */
+
+/* ===== 404 ===== */
+.notfound {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  min-height: calc(100vh - 387px);
+}
+
+.notfound__content {
+  flex: 0 0 432px;
+}
+
+.notfound__code {
+  font-size: 144px;
+  font-weight: 800;
+  color: #BCC3CF;
+  line-height: 144px;
+  letter-spacing: -4px;
+}
+
+.notfound__title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 40px;
+  margin: 0 0 16px;
+}
+
+.notfound__divider {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: #2563EB;
+  margin-bottom: 16px;
+}
+
+.notfound__desc {
+  font-size: 16px;
+  color: #374151;
+  line-height: 24px;
+  max-width: 373px;
+  margin-bottom: 32px;
+}
+
+.notfound__actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.btn--primary {
+  background: #2563EB;
+  color: #fff;
+}
+.btn--primary:hover {
+  background: #1d4ed8;
+}
+.btn--primary svg {
+  fill: #fff;
+}
+
+.btn--outline {
+  background: transparent;
+  color: #2563EB;
+  border: 1px solid #2563EB;
+}
+.btn--outline:hover {
+  background: #eff6ff;
+}
+.btn--outline svg {
+  fill: #2563EB;
+}
+
+.notfound__image {
+  flex: 0 0 409px;
+}
+.notfound__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .notfound {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+  .notfound__content {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 432px;
+  }
+  .notfound__divider {
+    margin: 0 auto 16px;
+  }
+  .notfound__desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .notfound__actions {
+    justify-content: center;
+  }
+  .notfound__image {
+    flex: 0 0 auto;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .notfound__code {
+    font-size: 100px;
+    line-height: 100px;
+  }
+  .notfound__title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .notfound__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .notfound {
+    padding: 20px 16px 40px;
+  }
+  .notfound__code {
+    font-size: 72px;
+    line-height: 72px;
+  }
+  .notfound__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}

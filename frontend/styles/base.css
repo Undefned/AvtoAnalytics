@@ -1,0 +1,238 @@
+/* =========================================================
+   BASE.CSS
+   Общие стили для всех страниц: reset, header, breadcrumb, footer.
+   Header/footer унифицированы по образцу sell_car.html.
+   ========================================================= */
+
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #F7F7F8;
+  color: #374151;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #6B7280;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 61px;
+  display: flex;
+  align-items: center;
+}
+
+.header__inner {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 17.62px;
+  color: #111827;
+}
+
+.logo__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+.logo__bars span {
+  display: block;
+  width: 2.8px;
+  background: #111827;
+}
+.logo__bars span:nth-child(1) {
+  height: 4.32px;
+}
+.logo__bars span:nth-child(2) {
+  height: 12.96px;
+}
+.logo__bars span:nth-child(3) {
+  height: 10.08px;
+}
+.logo__bars span:nth-child(4) {
+  height: 4.32px;
+}
+
+.nav {
+  display: flex;
+  gap: 50px;
+  font-size: 14px;
+  color: #111827;
+}
+.nav a {
+  font-weight: 400;
+  line-height: 20px;
+}
+.nav a.active {
+  color: #2563EB;
+  font-weight: 600;
+  border-bottom: 2px solid #2563EB;
+  padding-bottom: 4px;
+}
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb {
+  max-width: 1280px;
+  margin: 20px auto 0;
+  padding: 0 24px;
+  font-size: 12px;
+  color: #111827;
+  line-height: 16px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: #111827;
+  color: #fff;
+  padding: 64px 24px 40px;
+  margin-top: 48px;
+}
+
+.footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.5fr;
+  gap: 40px;
+}
+
+.footer .logo {
+  color: #fff;
+}
+
+.footer .logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.footer .logo .logo__bars span {
+  background: #fff;
+}
+
+.footer__tagline {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 16px;
+  max-width: 380px;
+}
+
+.footer__legal h4 {
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+.footer__legal ul {
+  list-style: none;
+  font-weight: 300;
+  line-height: 1.9;
+}
+
+.footer__social-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.footer__social-block .footer__about {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 12px;
+  order: 2;
+}
+
+.footer__social-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  order: 1;
+  margin-bottom: 12px;
+}
+
+.footer__social-icons img {
+  width: 26px;
+  height: 26px;
+  display: block;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.footer__divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 60px 0 24px;
+  grid-column: 1 / -1;
+}
+
+.footer__copy {
+  text-align: center;
+  font-weight: 300;
+  font-size: 16px;
+  grid-column: 1 / -1;
+}
+
+/* ===== RESPONSIVE: HEADER / BREADCRUMB / FOOTER ===== */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .footer__social-block {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .footer__social-icons {
+    align-items: flex-start;
+  }
+  .footer__divider {
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__inner {
+    padding: 0 16px;
+  }
+  .breadcrumb {
+    padding: 0 16px;
+  }
+  .footer {
+    padding: 40px 16px 24px;
+  }
+}

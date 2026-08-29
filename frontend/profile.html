@@ -5,513 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Личный кабинет — AvtoAnalytics</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #F7F7F8;
-      color: #374151;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    /* ===== HEADER ===== */
-    .header {
-      background: #fff;
-      border-bottom: 1px solid #6B7280;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      height: 61px;
-      display: flex;
-      align-items: center;
-    }
-
-    .header__inner {
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 800;
-      font-size: 17.62px;
-      color: #111827;
-    }
-
-    .logo__bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 16px;
-    }
-    .logo__bars span {
-      display: block;
-      width: 2.8px;
-      background: #111827;
-    }
-    .logo__bars span:nth-child(1) {
-      height: 4.32px;
-    }
-    .logo__bars span:nth-child(2) {
-      height: 12.96px;
-    }
-    .logo__bars span:nth-child(3) {
-      height: 10.08px;
-    }
-    .logo__bars span:nth-child(4) {
-      height: 4.32px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 50px;
-      font-size: 14px;
-      color: #111827;
-    }
-    .nav a {
-      font-weight: 400;
-      line-height: 20px;
-    }
-
-    .header__icon {
-      width: 16px;
-      height: 18px;
-      background: #111827;
-      opacity: 0.8;
-      border-radius: 2px;
-    }
-
-    /* ===== BREADCRUMB ===== */
-    .breadcrumb {
-      max-width: 1280px;
-      margin: 20px auto 0;
-      padding: 0 24px;
-      font-size: 12px;
-      color: #111827;
-      line-height: 16px;
-    }
-
-    /* ===== DASHBOARD LAYOUT ===== */
-    .dashboard {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px 64px;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 40px;
-      margin-top: 12px;
-    }
-
-    /* ===== SIDEBAR ===== */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-top: 8px;
-    }
-
-    .sidebar__item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: 400;
-      color: #1B254B;
-      line-height: 24px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .sidebar__item:hover {
-      background: #f0f2f5;
-    }
-    .sidebar__item--active {
-      background: #e8edf9;
-    }
-    .sidebar__item svg {
-      width: 18px;
-      height: 18px;
-      fill: #1B254B;
-      flex-shrink: 0;
-    }
-
-    /* ===== MAIN CONTENT ===== */
-    .main {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      padding-top: 8px;
-    }
-
-    /* ===== STATS ===== */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .stat-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .stat-card__icon {
-      width: 48px;
-      height: 48px;
-      background: #DDDDDD;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .stat-card__icon svg {
-      width: 20px;
-      height: 20px;
-      fill: #2563EB;
-    }
-
-    .stat-card__label {
-      font-size: 12px;
-      color: #1B254B;
-      line-height: 16px;
-    }
-    .stat-card__value {
-      font-size: 24px;
-      font-weight: 700;
-      color: #2563EB;
-      line-height: 24px;
-    }
-
-    /* ===== SECTION HEADER ===== */
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-    }
-
-    .section-header__title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1B254B;
-      line-height: 22px;
-    }
-
-    .section-header__link {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #2563EB;
-      line-height: 20px;
-      cursor: pointer;
-    }
-    .section-header__link svg {
-      width: 8px;
-      height: 12px;
-      fill: #2563EB;
-    }
-
-    /* ===== CARDS ROW ===== */
-    .cards-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .card-horizontal {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    }
-
-    .card-horizontal__image {
-      width: 100%;
-      height: 160px;
-      background: #DDDDDD;
-      overflow: hidden;
-    }
-    .card-horizontal__image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card-horizontal__body {
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-horizontal__info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .card-horizontal__title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1B254B;
-      line-height: 17px;
-    }
-
-    .card-horizontal__location {
-      font-size: 12px;
-      color: #6B7280;
-      line-height: 15px;
-    }
-
-    .card-horizontal__price {
-      font-size: 13.73px;
-      font-weight: 600;
-      color: #2563EB;
-      line-height: 17px;
-    }
-
-    /* ===== FAVORITES ===== */
-    .favorites-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .card-favorite {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .card-favorite__image {
-      width: 100%;
-      height: 200px;
-      background: #DDDDDD;
-      overflow: hidden;
-      position: relative;
-    }
-    .card-favorite__image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card-favorite__price-tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: #1B254B;
-      border-radius: 4px;
-      padding: 4px 12px;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 16px;
-    }
-
-    .card-favorite__heart {
-      position: absolute;
-      top: 17px;
-      right: 17px;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-    .card-favorite__heart svg {
-      width: 100%;
-      height: 100%;
-      fill: #fff;
-    }
-
-    .card-favorite__body {
-      padding: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-favorite__compare {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: #1B254B;
-      line-height: 16px;
-      cursor: pointer;
-    }
-    .card-favorite__compare svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      background: #111827;
-      color: #fff;
-      padding: 64px 24px 40px;
-    }
-
-    .footer__inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 0.5fr;
-      gap: 40px;
-    }
-
-    .footer .logo {
-      color: #fff;
-    }
-    .footer .logo .logo__bars span {
-      background: #fff;
-    }
-
-    .footer__tagline {
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 1.6;
-      margin-top: 16px;
-      max-width: 380px;
-    }
-
-    .footer__legal h4 {
-      font-weight: 400;
-      font-size: 16px;
-      letter-spacing: 0.02em;
-      margin-bottom: 12px;
-    }
-    .footer__legal ul {
-      list-style: none;
-      font-weight: 300;
-      line-height: 1.9;
-    }
-
-    .footer__about {
-      font-weight: 500;
-      font-size: 16px;
-    }
-    .footer__social {
-      display: flex;
-      gap: 16px;
-      margin-top: 8px;
-    }
-    .footer__social span {
-      display: block;
-      width: 26px;
-      height: 26px;
-      background: #fff;
-      border-radius: 4px;
-    }
-
-    .footer__divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      margin: 60px 0 24px;
-      grid-column: 1 / -1;
-    }
-
-    .footer__copy {
-      text-align: center;
-      font-weight: 300;
-      font-size: 16px;
-      grid-column: 1 / -1;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-      .sidebar {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 4px;
-      }
-      .sidebar__item {
-        padding: 10px 16px;
-        font-size: 14px;
-      }
-      .stats {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .cards-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .favorites-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav {
-        display: none;
-      }
-      .stats {
-        grid-template-columns: 1fr;
-      }
-      .cards-row {
-        grid-template-columns: 1fr;
-      }
-      .favorites-grid {
-        grid-template-columns: 1fr;
-      }
-      .footer__inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      .footer__divider {
-        margin-top: 32px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header__inner {
-        padding: 0 16px;
-      }
-      .dashboard {
-        padding: 0 16px 40px;
-      }
-      .breadcrumb {
-        padding: 0 16px;
-      }
-      .footer {
-        padding: 40px 16px 24px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/profile.css" />
 </head>
 <body>
 
@@ -519,15 +14,16 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-        vtoAnalytics
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
       </div>
       <nav class="nav">
-        <a href="#">Catalogue</a>
-        <a href="#">Sell Avto</a>
-        <a href="#">Compare Cars</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="sell_car.html">Sell Car</a>
+        <a href="compare.html">Compare Cars</a>
       </nav>
-      <div class="header__icon"></div>
+      <div class="header__icon">
+        <img src="assets/profile.svg" alt="Profile">
+      </div>
     </div>
   </header>
 
@@ -725,36 +221,37 @@
     <div class="footer__inner">
       <div>
         <div class="logo">
-          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-          vtoAnalytics
+          <img src="assets/logo.svg" alt="AvtoAnalytics">
         </div>
         <p class="footer__tagline">
-          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
-          с помощью данных, аналитики и сообщества
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
         </p>
       </div>
 
       <div class="footer__legal">
-        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+        <h4>LEGAL INFORMATION</h4>
         <ul>
-          <li>Политика конфиденциальности</li>
-          <li>Пользовательское соглашение</li>
-          <li>Политика использования файлов cookie</li>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
         </ul>
       </div>
 
-      <div>
-        <p class="footer__about">О НАС</p>
-        <div class="footer__social">
-          <span></span>
-          <span></span>
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram">
+          <img src="assets/github.svg" alt="GitHub">
         </div>
+        <p class="footer__about">ABOUT US</p>
       </div>
 
       <hr class="footer__divider" />
-      <p class="footer__copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
     </div>
   </footer>
 
+  <script src="scripts/base.js"></script>
+  <script src="scripts/profile.js"></script>
 </body>
 </html>

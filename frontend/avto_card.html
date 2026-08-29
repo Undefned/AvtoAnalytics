@@ -3,461 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Toyota Camry 2.5 AT, 2021 — <A></A>vtoAnalytics</title>
-<style>
-  :root{
-    --text-dark:#111827;
-    --text-body:#374151;
-    --text-muted:#6B7280;
-    --text-faint:#94A3B8;
-    --border:#DDDDDD;
-    --accent:#F97316;
-    --link:#2563EB;
-    --footer-bg:#111827;
-    --radius:8px;
-    --radius-sm:6px;
-    font-size:16px;
-  }
-
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:"Roboto", Arial, sans-serif;
-    color:var(--text-body);
-    background:#F7F7F8;
-  }
-  a{color:inherit; text-decoration:none;}
-  img{display:block; max-width:100%;}
-
-  /* ---------- Header ---------- */
-  .site-header{
-    background:#fff;
-    border-bottom:1px solid var(--text-muted);
-    position:sticky;
-    top:0;
-    z-index:10;
-  }
-  .site-header__inner{
-    max-width:1280px;
-    margin:0 auto;
-    padding:16px 24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:24px;
-  }
-  .logo{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-weight:800;
-    font-size:17px;
-    color:var(--text-dark);
-    white-space:nowrap;
-  }
-  .logo__bars{display:flex; align-items:flex-end; gap:2px; height:16px;}
-  .logo__bars span{width:3px; background:var(--text-dark); display:block;}
-  .logo__bars span:nth-child(1){height:5px;}
-  .logo__bars span:nth-child(2){height:16px;}
-  .logo__bars span:nth-child(3){height:12px;}
-  .logo__bars span:nth-child(4){height:5px;}
-
-  .main-nav{
-    display:flex;
-    gap:32px;
-    font-size:14px;
-    color:var(--text-dark);
-  }
-  .header-icon{width:18px; height:18px; opacity:.8;}
-
-  /* ---------- Breadcrumb ---------- */
-  .breadcrumb{
-    max-width:1280px;
-    margin:20px auto 0;
-    padding:0 24px;
-    font-size:12px;
-    color:var(--text-dark);
-  }
-
-  /* ---------- Layout ---------- */
-  .listing{
-    max-width:1280px;
-    margin:24px auto 0;
-    padding:0 24px 64px;
-    display:grid;
-    grid-template-columns:600px 1fr;
-    gap:56px;
-  }
-  @media (max-width:980px){
-    .listing{grid-template-columns:1fr;}
-  }
-
-  /* ---------- Gallery ---------- */
-  .gallery__main{
-    position:relative;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    overflow:hidden;
-  }
-  .gallery__main img{
-    width:100%;
-    aspect-ratio:598/349;
-    object-fit:cover;
-  }
-  .gallery__counter{
-    position:absolute;
-    top:13px; left:13px;
-    background:#374151;
-    color:#fff;
-    font-size:11.5px;
-    font-weight:600;
-    padding:2px 12px;
-    border-radius:9999px;
-  }
-  .gallery__nav{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    width:32px; height:32px;
-    border-radius:9999px;
-    background:#fff;
-    border:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    font-size:14px;
-    color:var(--text-muted);
-  }
-  .gallery__nav--prev{left:13px;}
-  .gallery__nav--next{right:13px;}
-
-  .gallery__thumbs{
-    display:flex;
-    gap:12px;
-    margin-top:16px;
-  }
-  .gallery__thumb{
-    width:80px; height:48px;
-    border-radius:var(--radius-sm);
-    border:1px solid var(--border);
-    overflow:hidden;
-    position:relative;
-    cursor:pointer;
-    flex:0 0 auto;
-  }
-  .gallery__thumb img{width:100%; height:100%; object-fit:cover;}
-  .gallery__thumb--more::after{
-    content:"+15";
-    position:absolute; inset:0;
-    background:rgba(0,0,0,.5);
-    color:#fff;
-    font-size:14px;
-    font-weight:600;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  /* ---------- Info column ---------- */
-  .badges{
-    display:flex;
-    gap:8px;
-    margin-bottom:20px;
-  }
-  .badge{
-    font-size:11.6px;
-    font-weight:600;
-    padding:2px 8px;
-    border-radius:9999px;
-    background:#fff;
-    color:var(--text-muted);
-  }
-  .badge--active{background:var(--border); color:var(--link);}
-
-  .listing__title{
-    font-size:20px;
-    font-weight:700;
-    color:var(--text-dark);
-    margin:0 0 12px;
-  }
-  .listing__specs{
-    font-size:12px;
-    color:var(--text-muted);
-    margin:0 0 24px;
-  }
-
-  .price{
-    font-size:30px;
-    font-weight:800;
-    color:#000;
-    margin:0 0 8px;
-  }
-  .price-compare{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:12px;
-    color:var(--text-faint);
-    margin-bottom:24px;
-  }
-  .info-icon{
-    width:12px; height:12px;
-    border-radius:50%;
-    background:var(--text-faint);
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:9px;
-    line-height:1;
-    flex:0 0 auto;
-  }
-
-  .card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:17px;
-    margin-bottom:24px;
-  }
-  .card__header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:20px;
-  }
-  .card__title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:14px;
-    font-weight:600;
-    color:var(--text-body);
-  }
-  .card__title .info-icon{margin-left:2px;}
-
-  .range-select{
-    font-size:12px;
-    color:var(--text-body);
-    background:none;
-    border:none;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    cursor:pointer;
-    padding:4px 8px;
-  }
-
-  /* price history chart */
-  .chart{
-    position:relative;
-    height:99px;
-    margin-bottom:12px;
-  }
-  .chart svg{width:100%; height:100%; overflow:visible;}
-  .chart-labels{
-    display:flex;
-    justify-content:space-between;
-    font-size:10px;
-    color:var(--text-faint);
-    margin-bottom:16px;
-  }
-  .chart-note{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:12px;
-    color:var(--text-body);
-  }
-  .chart-note__dot{width:9px; height:9px; background:var(--accent); border-radius:50%; flex:0 0 auto;}
-  .chart-note__value{color:var(--accent); font-weight:600;}
-
-  /* two-column mini cards */
-  .info-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px;
-    margin-bottom:24px;
-  }
-  @media (max-width:560px){ .info-grid{grid-template-columns:1fr;} }
-
-  .info-grid .card{margin-bottom:0;}
-  .card__label{
-    font-size:12px;
-    color:var(--text-muted);
-    margin:8px 0 12px;
-  }
-  .card__value{
-    font-size:20px;
-    font-weight:700;
-    color:var(--text-dark);
-  }
-
-  .seller{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .seller__avatar{
-    width:48px; height:48px;
-    border-radius:50%;
-    object-fit:cover;
-    flex:0 0 auto;
-  }
-  .seller__name{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:16px;
-    font-weight:600;
-    color:var(--text-dark);
-  }
-  .seller__verified{color:var(--link); font-size:12px;}
-  .seller__since{font-size:12px; color:var(--text-muted); margin-top:2px;}
-
-  /* location + similar offers */
-  .location-card .card__value{font-size:12px; font-weight:400; color:var(--text-muted); margin-top:-8px;}
-  .location-body{
-    display:flex;
-    justify-content:space-between;
-    gap:24px;
-    margin-top:16px;
-  }
-  .similar-note{font-size:12px; color:var(--text-body);}
-  .similar-list{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    min-width:220px;
-  }
-  .similar-item{
-    display:flex;
-    align-items:center;
-    gap:15px;
-  }
-  .similar-item__rank{
-    width:9px;
-    font-size:12px;
-    font-weight:600;
-    color:var(--accent);
-    text-align:right;
-  }
-  .similar-item__img{width:48px; height:28px; border-radius:4px; object-fit:cover; flex:0 0 auto;}
-  .similar-item__info{flex:1; text-align:right;}
-  .similar-item__price{font-size:12px; font-weight:600; color:var(--text-dark);}
-  .similar-item__spec{font-size:12px; color:var(--text-muted);}
-  .similar-item__dist{font-size:12px; color:var(--text-faint);}
-
-  /* ---------- Q&A ---------- */
-  .qa-card{
-    grid-column:1 / -1;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:24px;
-    margin-top:8px;
-  }
-  .qa-item{
-    display:flex;
-    gap:16px;
-    padding:24px 0;
-    border-bottom:1px solid #F1F1F1;
-  }
-  .qa-item:last-child{border-bottom:none;}
-  .qa-item__avatar{
-    width:32px; height:32px;
-    border-radius:50%;
-    background:var(--border);
-    color:#fff;
-    font-weight:600;
-    font-size:12.6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex:0 0 auto;
-  }
-  .qa-item__author{font-size:14px; font-weight:600; color:var(--text-body);}
-  .qa-item__date{font-size:12px; color:var(--text-faint); margin:2px 0 8px;}
-  .qa-item__q, .qa-item__a{font-size:14px; line-height:20px; color:#475569;}
-  .qa-item__q b{color:var(--link);}
-  .qa-item__a b{color:var(--accent);}
-  .qa-item__answered-by{font-size:12px; color:var(--text-faint); margin-top:6px;}
-
-  /* ---------- Footer ---------- */
-  .site-footer{
-    background:var(--footer-bg);
-    color:#fff;
-    margin-top:64px;
-    padding:64px 24px 40px;
-  }
-  .site-footer__inner{
-    max-width:1280px;
-    margin:0 auto;
-  }
-  .site-footer__top{
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:32px;
-  }
-  .footer-logo{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-weight:800;
-    font-size:17px;
-  }
-  .footer-logo .logo__bars span{background:#fff;}
-  .footer-tagline{
-    font-weight:300;
-    font-size:16px;
-    margin-top:20px;
-    line-height:1.5;
-    max-width:340px;
-  }
-  .footer-legal{
-    font-weight:300;
-    font-size:16px;
-    line-height:1.9;
-  }
-  .footer-legal h4{
-    font-size:16px;
-    font-weight:400;
-    letter-spacing:.02em;
-    margin:0 0 12px;
-  }
-  .footer-legal ul{list-style:none; margin:0; padding:0;}
-  .footer-social{display:flex; gap:16px; margin-top:8px;}
-  .footer-social img, .footer-social span{width:26px; height:26px; display:block;}
-  .footer-about{font-size:16px; font-weight:500; margin-top:8px;}
-  .footer-rule{
-    border:none;
-    border-top:1px solid #fff;
-    margin:60px 0 24px;
-  }
-  .footer-copy{
-    text-align:center;
-    font-weight:300;
-    font-size:16px;
-  }
-</style>
+<title>Toyota Camry 2.5 AT, 2021 — AvtoAnalytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles/base.css" />
+<link rel="stylesheet" href="styles/avto_card.css" />
 </head>
 <body>
 
-<header class="site-header">
-  <div class="site-header__inner">
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header__inner">
     <div class="logo">
-      <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-      vtoAnalytics
+      <img src="assets/logo.svg" alt="AvtoAnalytics">
     </div>
-    <nav class="main-nav">
-      <a href="#">Catalogue</a>
-      <a href="#">Sell Avto</a>
-      <a href="#">Compare Cars</a>
+    <nav class="nav">
+      <a href="catalogue.html">Catalogue</a>
+      <a href="sell_car.html">Sell Car</a>
+      <a href="compare.html">Compare Cars</a>
     </nav>
-    <span class="header-icon">☰</span>
+    <div class="header__icon">
+      <img src="assets/profile.svg" alt="Profile">
+    </div>
   </div>
 </header>
 
@@ -622,74 +188,42 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <div class="site-footer__top">
-      <div>
-        <div class="footer-logo">
-          <span class="logo__bars"><span></span><span></span><span></span><span></span></span>
-          vtoAnalytics
-        </div>
-        <p class="footer-tagline">
-          Мы боремся с несправедливыми ценами и делаем рынок авто с пробегом прозрачным
-          с помощью данных, аналитики и сообщества
-        </p>
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <div class="logo">
+        <img src="assets/logo.svg" alt="AvtoAnalytics">
       </div>
-
-      <div class="footer-legal">
-        <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
-        <ul>
-          <li>Политика конфиденциальности</li>
-          <li>Пользовательское соглашение</li>
-          <li>Политика использования файлов cookie</li>
-        </ul>
-      </div>
-
-      <div>
-        <p class="footer-about">О НАС</p>
-        <div class="footer-social">
-          <span>●</span>
-          <span>●</span>
-        </div>
-      </div>
+      <p class="footer__tagline">
+        We fight against unfair prices and make the used car market transparent
+        through data, analytics, and community
+      </p>
     </div>
 
-    <hr class="footer-rule">
-    <p class="footer-copy">© 2026 AvtoAnalytics. Все права защищены.</p>
+    <div class="footer__legal">
+      <h4>LEGAL INFORMATION</h4>
+      <ul>
+        <li>Privacy Policy</li>
+        <li>Terms of Service</li>
+        <li>Cookie Policy</li>
+      </ul>
+    </div>
+
+    <div class="footer__social-block">
+      <div class="footer__social-icons">
+        <img src="assets/tg.svg" alt="Telegram">
+        <img src="assets/github.svg" alt="GitHub">
+      </div>
+      <p class="footer__about">ABOUT US</p>
+    </div>
+
+    <hr class="footer__divider" />
+    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
   </div>
 </footer>
 
-<script>
-  // Simple gallery: cycles through a small set of placeholder photos
-  const totalPhotos = 20;
-  let currentPhoto = 1;
-  const counterEl = document.getElementById('photoCounter');
-  const mainPhotoEl = document.getElementById('mainPhoto');
-
-  function renderPhoto() {
-    counterEl.textContent = currentPhoto + ' / ' + totalPhotos;
-    mainPhotoEl.alt = 'Toyota Camry, фото ' + currentPhoto + ' из ' + totalPhotos;
-    // placeholder image service just needs a different seed to look "new"
-    mainPhotoEl.src = 'https://placehold.co/598x349?text=Photo+' + currentPhoto;
-  }
-
-  document.getElementById('nextPhoto').addEventListener('click', () => {
-    currentPhoto = currentPhoto < totalPhotos ? currentPhoto + 1 : 1;
-    renderPhoto();
-  });
-
-  document.getElementById('prevPhoto').addEventListener('click', () => {
-    currentPhoto = currentPhoto > 1 ? currentPhoto - 1 : totalPhotos;
-    renderPhoto();
-  });
-
-  document.querySelectorAll('.gallery__thumb').forEach((thumb, i) => {
-    thumb.addEventListener('click', () => {
-      currentPhoto = i + 1;
-      renderPhoto();
-    });
-  });
-</script>
-
+<script src="scripts/base.js"></script>
+<script src="scripts/avto_card.js"></script>
 </body>
 </html>
