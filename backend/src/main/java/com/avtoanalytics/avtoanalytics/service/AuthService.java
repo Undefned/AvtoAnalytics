@@ -7,11 +7,8 @@ import com.avtoanalytics.avtoanalytics.entity.User;
 import com.avtoanalytics.avtoanalytics.exception.BadRequestException;
 import com.avtoanalytics.avtoanalytics.repository.UserRepository;
 import com.avtoanalytics.avtoanalytics.security.JwtTokenProvider;
+import com.avtoanalytics.avtoanalytics.security.Role;  // ← ДОБАВИТЬ ЭТОТ ИМПОРТ
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,28 +20,29 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public JwtResponse register(RegisterRequest request) {
-        // Проверка, существует ли пользователь
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("User with this email already exists");
         }
 
-        // Создание пользователя
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFullName(request.getFullName());
         user.setPrivateSeller(request.isPrivateSeller());
         user.setActive(true);
-        user.setRole(User.Role.USER);
+        user.setRole(Role.USER);
 
         User savedUser = userRepository.save(user);
 
-        // Генерация токена
-        String token = jwtTokenProvider.generateToken(savedUser);
+        String token = jwtTokenProvider.generateToken(
+            savedUser.getId(),
+            savedUser.getEmail(),
+            savedUser.getFullName(),
+            savedUser.getRole()
+        );
 
         return new JwtResponse(
             token,
@@ -56,14 +54,19 @@ public class AuthService {
     }
 
     public JwtResponse login(LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+        User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new BadRequestException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new BadRequestException("Invalid email or password");
+        }
+
+        String token = jwtTokenProvider.generateToken(
+            user.getId(),
+            user.getEmail(),
+            user.getFullName(),
+            user.getRole()
         );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        User user = (User) authentication.getPrincipal();
-        String token = jwtTokenProvider.generateToken(user);
 
         return new JwtResponse(
             token,

@@ -34,10 +34,11 @@ public class AdService {
     private final PriceHistoryRepository priceHistoryRepository;
 
     // ===== GET ALL ADS =====
-    public Page<Ad> getAllAds(String city, String status, int page, int size) {
+    public Page<AdResponse> getAllAds(String city, String status, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Specification<Ad> spec = buildSpecification(city, status);
-        return adRepository.findAll(spec, pageable);
+        Page<Ad> adPage = adRepository.findAll(spec, pageable);
+        return adPage.map(this::mapToResponse);  // ← преобразуем в DTO
     }
 
     // ===== GET AD BY ID =====

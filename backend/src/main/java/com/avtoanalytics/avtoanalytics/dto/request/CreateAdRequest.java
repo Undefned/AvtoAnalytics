@@ -28,5 +28,6 @@ public class CreateAdRequest {
 
     private String address;
 
-    private String[] photoUrls;
+    private String[] photoUrls; 
+
 }
