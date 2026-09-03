@@ -171,7 +171,7 @@ INSERT INTO avto_analytics_cars (make, model, year, engine_volume, horsepower, t
 
 
 -- ============================================================
--- 5.3. ОБЪЯВЛЕНИЯ (100 штук)
+-- 5.3. ОБЪЯВЛЕНИЯ
 -- ============================================================
 
 INSERT INTO avto_analytics_ads (user_id, car_id, title, description, price, mileage, city, address, status, views, photo_urls, created_at, updated_at)
@@ -194,7 +194,7 @@ SELECT
 FROM avto_analytics_users u
 CROSS JOIN avto_analytics_cars c
 WHERE u.id <= 25 AND c.id <= 50
-LIMIT 100;
+LIMIT 1000;
 
 
 -- ============================================================
@@ -297,6 +297,69 @@ LIMIT 50;
 
 
 -- ============================================================
+-- Обновление photo_urls с правильным кодированием пробелов
+-- ============================================================
+
+WITH car_images AS (
+    SELECT 
+        c.id as car_id,
+        c.make,
+        CASE 
+            WHEN c.make = 'Audi' THEN 'Audi'
+            WHEN c.make = 'BMW' THEN 'Audi'
+            WHEN c.make = 'Mercedes' THEN 'Rolls Royce'
+            WHEN c.make = 'Volkswagen' THEN 'Audi'
+            WHEN c.make = 'Skoda' THEN 'Swift'
+            WHEN c.make = 'Kia' THEN 'Hyundai Creta'
+            WHEN c.make = 'Hyundai' THEN 'Hyundai Creta'
+            WHEN c.make = 'Lexus' THEN 'Toyota Innova'
+            WHEN c.make = 'Nissan' THEN 'Toyota Innova'
+            WHEN c.make = 'Mahindra' THEN 'Mahindra Scorpio'
+            WHEN c.make = 'Rolls' THEN 'Rolls Royce'
+            WHEN c.make = 'Swift' THEN 'Swift'
+            WHEN c.make = 'Tata' THEN 'Tata Safari'
+            WHEN c.make = 'Toyota' THEN 'Toyota Innova'
+            ELSE 'Audi'
+        END as folder_name,
+        CASE 
+            WHEN c.make = 'Audi' OR c.make = 'BMW' OR c.make = 'Volkswagen' OR c.make = 'Skoda' OR c.make IS NULL THEN
+                ARRAY['104','109','134','135','138','141','163','167','176','187','190','195','205','209','213','216','222','23','230','231','232','236','253','257','259','276','279','284','290','303','308','312','313','316','321','349','355','356','360','364','382','39','41','42','43','47','48','54','66','67','68','87','96','98']
+            WHEN c.make = 'Hyundai' OR c.make = 'Kia' THEN
+                ARRAY['102','147','151','155','188','190','205','226','232','242','247','249','254','257','281','283','285','291','294','297','299','300','304','305','326','328','342','345','348','372','394','399','57','58','62','91','99']
+            WHEN c.make = 'Mahindra' THEN
+                ARRAY['254','261','265','288','291','296','298','302','307','308','329','331','345','348','379','396','400','403','410','419','425','426','432','434','442','447','458','462','474','476']
+            WHEN c.make = 'Rolls' OR c.make = 'Mercedes' THEN
+                ARRAY['271','273','274','278','281','282','301','313','316','319','354','359','361','366','373','379','385','386','392','397']
+            WHEN c.make = 'Swift' THEN
+                ARRAY['608','648','654','674','676','677','691','695','697','701','705','711','713','717','723','724','726','759','764','776','789']
+            WHEN c.make = 'Tata' THEN
+                ARRAY['521','531','550','553','558','560','563','581','591','596','599','601','602','608','612','614','622','628','635','647','662','666','671','704','705']
+            WHEN c.make = 'Toyota' OR c.make = 'Lexus' OR c.make = 'Nissan' THEN
+                ARRAY['1053','1055','1057','1066','1075','1077','1082','1092','1093','1100','1105','1106','1110','1114','1115','1222','1232','1246','1248','1251','1260','1263','1265','1268','1270','1271','1279','1299']
+            ELSE
+                ARRAY['104','109','134','135','138','141','163','167','176','187','190','195','205','209','213','216','222','23','230','231','232','236','253','257','259','276','279','284','290','303','308','312','313','316','321','349','355','356','360','364','382','39','41','42','43','47','48','54','66','67','68','87','96','98']
+        END as file_names,
+        CASE 
+            WHEN c.make = 'Audi' OR c.make = 'BMW' OR c.make = 'Volkswagen' OR c.make = 'Skoda' OR c.make IS NULL THEN 55
+            WHEN c.make = 'Hyundai' OR c.make = 'Kia' THEN 37
+            WHEN c.make = 'Mahindra' THEN 30
+            WHEN c.make = 'Rolls' OR c.make = 'Mercedes' THEN 20
+            WHEN c.make = 'Swift' THEN 21
+            WHEN c.make = 'Tata' THEN 25
+            WHEN c.make = 'Toyota' OR c.make = 'Lexus' OR c.make = 'Nissan' THEN 28
+            ELSE 55
+        END as file_count
+    FROM avto_analytics_cars c
+)
+UPDATE avto_analytics_ads a
+SET photo_urls = ARRAY[
+    'http://localhost:9000/avtoanalytics/' || REPLACE(ci.folder_name, ' ', '%20') || '/' || ci.file_names[floor(random() * ci.file_count) + 1] || '.jpg',
+    'http://localhost:9000/avtoanalytics/' || REPLACE(ci.folder_name, ' ', '%20') || '/' || ci.file_names[floor(random() * ci.file_count) + 1] || '.jpg'
+]
+FROM car_images ci
+WHERE a.car_id = ci.car_id;
+
+-- ============================================================
 -- 6. ВКЛЮЧАЕМ АВТООБНОВЛЕНИЕ СТАТИСТИКИ
 -- ============================================================
 VACUUM ANALYZE;
@@ -304,28 +367,13 @@ VACUUM ANALYZE;
 -- ============================================================
 -- 7. ВЫВОД ИНФОРМАЦИИ
 -- ============================================================
-DO $$
-DECLARE
-    users_count INTEGER;
-    cars_count INTEGER;
-    ads_count INTEGER;
-    price_history_count INTEGER;
-    favorites_count INTEGER;
-    questions_count INTEGER;
-BEGIN
-    SELECT COUNT(*) INTO users_count FROM avto_analytics_users;
-    SELECT COUNT(*) INTO cars_count FROM avto_analytics_cars;
-    SELECT COUNT(*) INTO ads_count FROM avto_analytics_ads;
-    SELECT COUNT(*) INTO price_history_count FROM avto_analytics_price_history;
-    SELECT COUNT(*) INTO favorites_count FROM avto_analytics_favorites;
-    SELECT COUNT(*) INTO questions_count FROM avto_analytics_questions;
-    
-    RAISE NOTICE '✅ Данные успешно загружены!';
-    RAISE NOTICE '📊 Статистика:';
-    RAISE NOTICE '   👤 Пользователей: %', users_count;
-    RAISE NOTICE '   🚗 Автомобилей: %', cars_count;
-    RAISE NOTICE '   📝 Объявлений: %', ads_count;
-    RAISE NOTICE '   📈 История цен: %', price_history_count;
-    RAISE NOTICE '   ❤️ Избранное: %', favorites_count;
-    RAISE NOTICE '   ❓ Вопросов: %', questions_count;
-END $$;
+-- ============================================================
+-- 7. ВЫВОД ИНФОРМАЦИИ (упрощённо, без RAISE)
+-- ============================================================
+SELECT 
+    (SELECT COUNT(*) FROM avto_analytics_users) AS users_count,
+    (SELECT COUNT(*) FROM avto_analytics_cars) AS cars_count,
+    (SELECT COUNT(*) FROM avto_analytics_ads) AS ads_count,
+    (SELECT COUNT(*) FROM avto_analytics_price_history) AS price_history_count,
+    (SELECT COUNT(*) FROM avto_analytics_favorites) AS favorites_count,
+    (SELECT COUNT(*) FROM avto_analytics_questions) AS questions_count;

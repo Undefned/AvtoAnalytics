@@ -2,6 +2,7 @@ package com.avtoanalytics.avtoanalytics.controller;
 
 import com.avtoanalytics.avtoanalytics.entity.Ad;
 import com.avtoanalytics.avtoanalytics.entity.User;
+import com.avtoanalytics.avtoanalytics.exception.BadRequestException;
 import com.avtoanalytics.avtoanalytics.security.JwtTokenProvider;
 import com.avtoanalytics.avtoanalytics.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +44,19 @@ public class UserController {
     public ResponseEntity<Void> addFavorite(
             @PathVariable Long adId,
             @RequestHeader("Authorization") String authHeader) {
+        
+        // ✅ Проверяем, что adId не null
+        if (adId == null) {
+            throw new BadRequestException("Ad ID cannot be null");
+        }
+        
         Long userId = getUserIdFromToken(authHeader);
+        
+        // ✅ Проверяем, что userId не null
+        if (userId == null) {
+            throw new BadRequestException("User ID cannot be null");
+        }
+        
         userService.addFavorite(userId, adId);
         return ResponseEntity.ok().build();
     }
@@ -75,7 +88,12 @@ public class UserController {
     }
 
     private Long getUserIdFromToken(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new BadRequestException("Invalid authorization header");
+        }
+        
         String token = authHeader.substring(7);
-        return jwtTokenProvider.getUserIdFromToken(token);
+        JwtTokenProvider.JwtPayload payload = jwtTokenProvider.parse(token);
+        return payload.userId();  // ← теперь точно вернёт Long, а не null
     }
 }

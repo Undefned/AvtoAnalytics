@@ -1,5 +1,6 @@
 package com.avtoanalytics.avtoanalytics.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,7 +70,12 @@ public class JwtTokenProvider {
     }
 
     public Long getUserIdFromToken(String token) {
-        return parse(token).userId();   // ← теперь возвращает Long
+        Claims claims = Jwts.parser()
+            .verifyWith(key)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
+        return claims.get("userId", Long.class);
     }
 
     public record JwtPayload(long userId, String email, String fullName, Role role) {}
