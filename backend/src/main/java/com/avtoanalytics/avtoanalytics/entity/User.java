@@ -1,5 +1,6 @@
 package com.avtoanalytics.avtoanalytics.entity;
 
+import com.avtoanalytics.avtoanalytics.security.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,7 @@ public class User extends BaseEntity implements UserDetails {
     private Role role = Role.USER;
 
     @Column(name = "is_private_seller")
-    private boolean privateSeller = true;   // true = частник, false = перекуп/дилер
+    private boolean privateSeller = true;
 
     @Column(name = "is_active")
     private boolean active = true;
@@ -63,9 +64,5 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return active;
-    }
-
-    public enum Role {
-        USER, ADMIN
     }
 }

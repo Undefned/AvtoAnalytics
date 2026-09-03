@@ -26,7 +26,7 @@ public class AdController {
 
     @GetMapping
     @Operation(summary = "Get all ads with filters")
-    public ResponseEntity<Page<Ad>> getAds(
+    public ResponseEntity<Page<AdResponse>> getAds(
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String status,
             @RequestParam(defaultValue = "0") int page,

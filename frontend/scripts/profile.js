@@ -8,9 +8,9 @@
    поэтому эта метрика показывается как "—".
    ========================================================= */
 
-if (!Auth.isAuthenticated()) {
-  window.location.href = 'login_signup.html';
-}
+// if (!Auth.isAuthenticated()) {
+//   window.location.href = 'login_signup.html';
+// }
 
 function formatPrice(value) {
   if (value == null) return '—';
@@ -117,3 +117,38 @@ document.querySelectorAll('.sidebar__item').forEach((item, i) => {
 });
 
 load();
+
+
+// ============================================================
+//  PROFILE DROPDOWN
+// ============================================================
+(function() {
+  const profileBtn = document.getElementById('profileBtn');
+  const dropdown = document.getElementById('profileDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  if (!profileBtn || !dropdown) return;
+
+  profileBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    dropdown.classList.toggle('header__dropdown--open');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('header__dropdown--open');
+    }
+  });
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      if (window.Auth) {
+        Auth.logout();
+      } else {
+        localStorage.removeItem('aa_token');
+        localStorage.removeItem('aa_user');
+      }
+      window.location.href = 'login_signup.html';
+    });
+  }
+})();
