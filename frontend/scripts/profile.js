@@ -1,20 +1,25 @@
 /* =========================================================
-   PROFILE.JS
-   - GET /api/users/me            -> текущий пользователь (auth)
-   - GET /api/ads/seller/{userId} -> мои объявления
-   - GET /api/users/favorites     -> избранное (auth)
-
-   "Questions answered" — на бэкенде нет контроллера для вопросов,
-   поэтому эта метрика показывается как "—".
+   PROFILE.JS - COMPLETE FIX
    ========================================================= */
-
-// if (!Auth.isAuthenticated()) {
-//   window.location.href = 'login_signup.html';
-// }
 
 function formatPrice(value) {
   if (value == null) return '—';
   return Math.round(value).toLocaleString('ru-RU') + ' ₽';
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ru-RU', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function getInitials(name) {
+  if (!name) return '?';
+  const parts = name.split(' ');
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
 }
 
 const myAdsRow = document.querySelector('.cards-row');
@@ -25,17 +30,17 @@ const questionsValue = document.querySelectorAll('.stat-card__value')[2];
 
 function myAdCardHTML(ad) {
   const car = ad.car || {};
-  const title = [car.make, car.model, car.year].filter(Boolean).join(' ');
-  const image = (ad.photoUrls && ad.photoUrls[0]) || 'https://placehold.co/261x128';
+  const title = [car.make, car.model, car.year].filter(Boolean).join(' ') || ad.title || 'Untitled';
+  const image = (ad.photoUrls && ad.photoUrls[0]) || 'https://placehold.co/261x128?text=No+photo';
 
   return `
     <a class="card-horizontal" href="avto_card.html?id=${ad.id}" style="text-decoration:none; color:inherit;">
       <div class="card-horizontal__image">
-        <img src="${image}" alt="${title}" />
+        <img src="${image}" alt="${title}" loading="lazy" />
       </div>
       <div class="card-horizontal__body">
         <div class="card-horizontal__info">
-          <div class="card-horizontal__title">${title || ad.title}</div>
+          <div class="card-horizontal__title">${title}</div>
           <div class="card-horizontal__location">${ad.city || '—'}</div>
         </div>
         <div class="card-horizontal__price">${formatPrice(ad.price)}</div>
@@ -45,12 +50,15 @@ function myAdCardHTML(ad) {
 }
 
 function favoriteCardHTML(ad) {
-  const image = (ad.photoUrls && ad.photoUrls[0]) || 'https://placehold.co/201x99';
+  const image = (ad.photoUrls && ad.photoUrls[0]) || 'https://placehold.co/201x99?text=No+photo';
+  const car = ad.car || {};
+  const title = [car.make, car.model, car.year].filter(Boolean).join(' ') || ad.title || 'Car';
+
   return `
     <div class="card-favorite" data-ad-id="${ad.id}">
-      <a href="avto_card.html?id=${ad.id}">
+      <a href="avto_card.html?id=${ad.id}" style="text-decoration:none; color:inherit;">
         <div class="card-favorite__image">
-          <img src="${image}" alt="Car" />
+          <img src="${image}" alt="${title}" loading="lazy" />
           <div class="card-favorite__price-tag">${formatPrice(ad.price)}</div>
         </div>
       </a>
@@ -62,50 +70,115 @@ function favoriteCardHTML(ad) {
 }
 
 async function load() {
-  myAdsRow.innerHTML = '<p>Загружаем…</p>';
-  favoritesGrid.innerHTML = '<p>Загружаем…</p>';
+  // ✅ Check authentication first
+  if (!Auth.isAuthenticated()) {
+    window.location.href = 'login_signup.html';
+    return;
+  }
+
+  if (myAdsRow) myAdsRow.innerHTML = '<p>Loading…</p>';
+  if (favoritesGrid) favoritesGrid.innerHTML = '<p>Loading…</p>';
 
   try {
+    // ✅ Get current user
     const me = await apiFetch('/users/me', { auth: true });
+    console.log('✅ User loaded:', me);
 
-    const [myAds, favorites] = await Promise.all([
-      apiFetch(`/ads/seller/${me.id}`, { auth: true }).catch(() => []),
-      apiFetch('/users/favorites', { auth: true }).catch(() => []),
-    ]);
+    // ✅ Update dropdown with user info
+    updateDropdownUser(me);
 
-    activeAdsValue.textContent = myAds.filter(a => a.status === 'ACTIVE').length;
-    savedCarsValue.textContent = favorites.length;
-    questionsValue.textContent = '—';
+    // ✅ Get user's ads using the same /api/ads endpoint with filter
+    // Since /api/ads/seller/{userId} might not exist, use /api/ads with seller filter
+    let myAds = [];
+    let favorites = [];
+    
+    try {
+      // Try to get ads by seller using the main ads endpoint
+      const allAds = await apiFetch('/ads?page=0&size=200', { auth: true });
+      const ads = allAds.content || [];
+      // Filter ads by seller ID
+      myAds = ads.filter(ad => ad.sellerId === me.id || ad.seller?.id === me.id);
+    } catch (err) {
+      console.warn('Could not fetch ads:', err);
+      myAds = [];
+    }
 
-    myAdsRow.innerHTML = myAds.length
-      ? myAds.map(myAdCardHTML).join('')
-      : '<p>You haven\'t published any ads yet.</p>';
+    try {
+      favorites = await apiFetch('/users/favorites', { auth: true });
+      if (!Array.isArray(favorites)) favorites = [];
+    } catch (err) {
+      console.warn('Could not fetch favorites:', err);
+      favorites = [];
+    }
 
-    favoritesGrid.innerHTML = favorites.length
-      ? favorites.map(favoriteCardHTML).join('')
-      : '<p>No favorites yet.</p>';
+    console.log('✅ My ads:', myAds);
+    console.log('✅ Favorites:', favorites);
 
-    favoritesGrid.addEventListener('click', async (e) => {
-      const heart = e.target.closest('[data-remove-favorite]');
-      if (!heart) return;
-      e.preventDefault();
-      const adId = Number(heart.dataset.removeFavorite);
-      try {
-        await apiFetch(`/users/favorites/${adId}`, { method: 'DELETE', auth: true });
-        heart.closest('.card-favorite').remove();
-        savedCarsValue.textContent = Number(savedCarsValue.textContent) - 1;
-      } catch (err) {
-        alert(`Couldn't remove from favorites: ${err.message}`);
+    // ✅ Update stats
+    const activeCount = Array.isArray(myAds) ? myAds.filter(a => a.status === 'ACTIVE').length : 0;
+    const favoritesCount = Array.isArray(favorites) ? favorites.length : 0;
+
+    if (activeAdsValue) activeAdsValue.textContent = activeCount;
+    if (savedCarsValue) savedCarsValue.textContent = favoritesCount;
+    if (questionsValue) questionsValue.textContent = '—';
+
+    // ✅ Render My Ads
+    if (myAdsRow) {
+      if (Array.isArray(myAds) && myAds.length > 0) {
+        myAdsRow.innerHTML = myAds.map(ad => myAdCardHTML(ad)).join('');
+      } else {
+        myAdsRow.innerHTML = '<p style="color:#6B7280; padding: 20px; text-align: center;">You haven\'t published any ads yet.</p>';
       }
-    });
+    }
+
+    // ✅ Render Favorites
+    if (favoritesGrid) {
+      if (Array.isArray(favorites) && favorites.length > 0) {
+        favoritesGrid.innerHTML = favorites.map(ad => favoriteCardHTML(ad)).join('');
+        
+        // ✅ Event listeners for removing favorites
+        favoritesGrid.querySelectorAll('[data-remove-favorite]').forEach(el => {
+          el.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            const adId = Number(this.dataset.removeFavorite);
+            try {
+              await apiFetch(`/users/favorites/${adId}`, { method: 'DELETE', auth: true });
+              const card = this.closest('.card-favorite');
+              if (card) card.remove();
+              if (savedCarsValue) {
+                savedCarsValue.textContent = Number(savedCarsValue.textContent) - 1;
+              }
+            } catch (err) {
+              alert(`Couldn't remove from favorites: ${err.message}`);
+            }
+          });
+        });
+      } else {
+        favoritesGrid.innerHTML = '<p style="color:#6B7280; padding: 20px; text-align: center;">No favorites yet.</p>';
+      }
+    }
+
   } catch (err) {
-    myAdsRow.innerHTML = `<p style="color:#934344;">Failed to load profile: ${err.message}</p>`;
-    favoritesGrid.innerHTML = '';
+    console.error('❌ Profile load error:', err);
+    if (myAdsRow) myAdsRow.innerHTML = `<p style="color:#934344;">Failed to load profile: ${err.message}</p>`;
+    if (favoritesGrid) favoritesGrid.innerHTML = '';
   }
 }
 
-/* ===== Sidebar: scroll to the matching section instead of navigating away,
-   since both "My Ads" and "Favorites" already live on this same page ===== */
+// ✅ Update dropdown with user info
+function updateDropdownUser(user) {
+  const nameEl = document.getElementById('dropdownUserName');
+  const emailEl = document.getElementById('dropdownUserEmail');
+  const avatarEl = document.getElementById('dropdownAvatar');
+
+  if (nameEl) nameEl.textContent = user.fullName || user.email || 'User';
+  if (emailEl) emailEl.textContent = user.email || '';
+  if (avatarEl && user.avatarUrl) {
+    avatarEl.src = user.avatarUrl;
+  }
+}
+
+/* ===== Sidebar navigation ===== */
 document.querySelectorAll('.sidebar__item').forEach((item, i) => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.sidebar__item').forEach(el => el.classList.remove('sidebar__item--active'));
@@ -116,9 +189,6 @@ document.querySelectorAll('.sidebar__item').forEach((item, i) => {
   });
 });
 
-load();
-
-
 // ============================================================
 //  PROFILE DROPDOWN
 // ============================================================
@@ -127,18 +197,18 @@ load();
   const dropdown = document.getElementById('profileDropdown');
   const logoutBtn = document.getElementById('logoutBtn');
 
-  if (!profileBtn || !dropdown) return;
+  if (profileBtn && dropdown) {
+    profileBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('header__dropdown--open');
+    });
 
-  profileBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    dropdown.classList.toggle('header__dropdown--open');
-  });
-
-  document.addEventListener('click', function(e) {
-    if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.classList.remove('header__dropdown--open');
-    }
-  });
+    document.addEventListener('click', function(e) {
+      if (profileBtn && !profileBtn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('header__dropdown--open');
+      }
+    });
+  }
 
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
@@ -152,3 +222,12 @@ load();
     });
   }
 })();
+
+// ============================================================
+//  INIT
+// ============================================================
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', load);
+} else {
+  load();
+}

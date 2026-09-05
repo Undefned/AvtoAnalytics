@@ -21,15 +21,15 @@ public class MinioService {
     @Value("${minio.bucket-name}")
     private String bucketName;
 
-    @Value("${minio.endpoint}")
-    private String endpoint;
+    @Value("${minio.public-endpoint:localhost}")
+    private String publicEndpoint;
 
-    @Value("${minio.port}")
-    private int port;
+    @Value("${minio.public-port:9000}")
+    private int publicPort;
 
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file, String folder) {
         try {
-            // Создаём bucket если не существует
+            // Check if bucket exists
             boolean bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
                     .bucket(bucketName)
                     .build());
@@ -41,19 +41,27 @@ public class MinioService {
                 log.info("Bucket '{}' created", bucketName);
             }
 
-            // Генерируем уникальное имя файла
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            // Generate unique filename
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename != null && originalFilename.contains(".") 
+                    ? originalFilename.substring(originalFilename.lastIndexOf('.')) 
+                    : "";
+            String fileName = UUID.randomUUID() + extension;
+            
+            String fullPath = folder != null && !folder.isEmpty() 
+                    ? folder + "/" + fileName 
+                    : fileName;
 
-            // Загружаем файл
+            // Upload file
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
-                    .object(fileName)
+                    .object(fullPath)
                     .stream(file.getInputStream(), file.getSize(), -1)
                     .contentType(file.getContentType())
                     .build());
 
-            // Возвращаем URL для доступа
-            return getFileUrl(fileName);
+            // ✅ Return DIRECT URL instead of presigned URL
+            return getDirectFileUrl(fullPath);
 
         } catch (Exception e) {
             log.error("Error uploading file to MinIO: {}", e.getMessage());
@@ -61,10 +69,26 @@ public class MinioService {
         }
     }
 
-    public String getFileUrl(String fileName) {
+    public String uploadFile(MultipartFile file) {
+        return uploadFile(file, null);
+    }
+
+    /**
+     * ✅ Returns a direct URL without presigned parameters
+     * Works if MinIO bucket is public
+     */
+    public String getDirectFileUrl(String fileName) {
+        return String.format("http://%s:%d/%s/%s", publicEndpoint, publicPort, bucketName, fileName);
+    }
+
+    /**
+     * ⚠️ Deprecated: Use getDirectFileUrl instead
+     * This was causing issues with the browser
+     */
+    @Deprecated
+    public String getPresignedFileUrl(String fileName) {
         try {
-            // Генерируем подписанный URL (доступен 7 дней)
-            return minioClient.getPresignedObjectUrl(
+            String url = minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .bucket(bucketName)
                             .object(fileName)
@@ -72,10 +96,10 @@ public class MinioService {
                             .expiry(7, java.util.concurrent.TimeUnit.DAYS)
                             .build()
             );
+            return url;
         } catch (Exception e) {
-            log.error("Error generating URL for file: {}", e.getMessage());
-            // Если не удалось сгенерировать подписанный URL - возвращаем прямой
-            return String.format("http://%s:%d/%s/%s", endpoint, port, bucketName, fileName);
+            log.error("Error generating presigned URL: {}", e.getMessage());
+            return getDirectFileUrl(fileName);
         }
     }
 

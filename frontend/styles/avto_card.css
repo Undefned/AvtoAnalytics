@@ -490,3 +490,215 @@
   color: var(--text-faint);
   margin-top: 4px;
 }
+
+/* Q&A - Dynamic */
+.qa-item__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #DDDDDD;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12.6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.qa-item__avatar[style*="background-image"] {
+  background-size: cover !important;
+  background-position: center !important;
+  color: transparent;
+}
+
+.qa-item__q {
+  font-size: 14px;
+  line-height: 20px;
+  color: #475569;
+}
+
+.qa-item__q b {
+  color: #2563EB;
+}
+
+.qa-item__a {
+  font-size: 14px;
+  line-height: 20px;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.qa-item__a b {
+  color: #F97316;
+}
+
+.qa-item__answered-by {
+  font-size: 12px;
+  color: #94A3B8;
+  margin-top: 4px;
+}
+
+/* ===== FAVORITE HEART ON GALLERY IMAGE ===== */
+.gallery-favorite-heart {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  z-index: 5;
+}
+
+.favorite-btn-gallery {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  padding: 0;
+}
+
+.favorite-btn-gallery:hover {
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.favorite-btn-gallery svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.25s ease;
+}
+
+.favorite-btn-gallery:hover svg {
+  stroke: #2563EB;
+}
+
+/* If favorited, make the heart more visible */
+.favorite-btn-gallery svg[fill="#2563EB"] {
+  filter: drop-shadow(0 0 4px rgba(37, 99, 235, 0.4));
+}
+
+/* ===== QUESTION FORM ===== */
+.ask-question-form textarea:focus {
+  border-color: #2563EB;
+}
+
+.ask-question-form #submitQuestionBtn:hover {
+  background: #1D4ED8;
+}
+
+.ask-question-form #cancelQuestionBtn:hover {
+  background: #F3F4F6;
+}
+
+/* =========================================================
+   Q&A (под фото)
+   ========================================================= */
+.qa-card--inline {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.qa-card--inline .qa-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #F1F1F1;
+  text-align: left; /* ✅ Force left alignment */
+}
+
+.qa-card--inline .qa-item:last-child {
+  border-bottom: none;
+}
+
+.qa-card--inline .qa-item__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--border);
+  color: #fff;
+  font-weight: 600;
+  font-size: 12.6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.qa-card--inline .qa-item__author {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-body);
+  text-align: left; /* ✅ Force left alignment */
+}
+
+.qa-card--inline .qa-item__date {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin: 2px 0 6px;
+  text-align: left; /* ✅ Force left alignment */
+}
+
+.qa-card--inline .qa-item__q,
+.qa-card--inline .qa-item__a {
+  font-size: 14px;
+  line-height: 20px;
+  color: #475569;
+  text-align: left; /* ✅ Force left alignment */
+}
+
+.qa-card--inline .qa-item__q b {
+  color: var(--link);
+}
+
+.qa-card--inline .qa-item__a b {
+  color: var(--accent);
+}
+
+.qa-card--inline .qa-item__answered-by {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 4px;
+  text-align: left; /* ✅ Force left alignment */
+}
+
+/* ✅ Fix for the question form - left aligned */
+.ask-question-form {
+  text-align: left;
+}
+
+.ask-question-form h4 {
+  text-align: left;
+}
+
+.ask-question-form textarea {
+  text-align: left;
+}
+
+.ask-question-form .qa-answer-btn {
+  text-align: left;
+}
+
+/* ✅ Ensure all child elements are left-aligned */
+.qa-card--inline * {
+  text-align: left !important;
+}
+
+/* But keep buttons centered if needed */
+.qa-card--inline .qa-answer-btn,
+.ask-question-form .ask-question-form__actions {
+  text-align: center !important;
+}
+
+/* ✅ Fix for the "No questions" message */
+.qa-card--inline .no-questions {
+  text-align: center !important;
+  color: #6B7280;
+  padding: 20px;
+}

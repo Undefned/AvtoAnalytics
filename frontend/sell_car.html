@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <a href="main.html"><img src="assets/logo.svg"></a>
+        <a href="main.html"><img src="assets/logo.svg" alt="Logo" /></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html">Catalogue</a>
@@ -22,13 +22,17 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <a href="profile.html"><img src="assets/profile.svg"></a>
+        <a href="profile.html"><img src="assets/profile.svg" alt="Profile" /></a>
       </div>
     </div>
   </header>
 
   <!-- ===== BREADCRUMB ===== -->
-  <p class="breadcrumb">Home / Sell Car</p>
+  <p class="breadcrumb">
+    <a href="main.html">Главная</a>
+    <span class="breadcrumb__separator">/</span>
+    <span class="breadcrumb__current">Продать авто</span>
+  </p>
 
   <!-- ===== SELL ===== -->
   <main class="sell">
@@ -44,82 +48,75 @@
       <!-- ===== CAR DETAILS ===== -->
       <div class="card-form">
         <div class="card-form__header">
-          <img src="assets/dashboard.svg">
+          <img src="assets/dashboard.svg" alt="Car Details" />
           <span class="card-form__title">Car Details</span>
         </div>
 
         <!-- Row 1: Make + Model -->
         <div class="form-row">
           <div class="form-group">
-            <label class="form-group__label">Make</label>
-            <input type="text" id="sellMake" class="form-control" placeholder="Enter make" required />
+            <label class="form-group__label">Make *</label>
+            <input type="text" id="sellMake" class="form-control" placeholder="e.g. Toyota" required />
           </div>
           <div class="form-group">
-            <label class="form-group__label">Model</label>
-            <input type="text" id="sellModel" class="form-control" placeholder="Enter model" required />
-          </div>
-        </div>
-
-        <!-- Row 2: Generation + Year -->
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-group__label">Generation</label>
-            <input type="text" id="sellGeneration" class="form-control" placeholder="Enter generation" />
-          </div>
-          <div class="form-group">
-            <label class="form-group__label">Year</label>
-            <input type="text" id="sellYear" class="form-control" placeholder="Enter year" />
+            <label class="form-group__label">Model *</label>
+            <input type="text" id="sellModel" class="form-control" placeholder="e.g. RAV4" required />
           </div>
         </div>
 
-        <!-- Row 3: Engine volume + Power -->
+        <!-- Row 2: Year + Mileage -->
         <div class="form-row">
           <div class="form-group">
-            <label class="form-group__label">Engine Volume</label>
-            <div class="input-group">
-              <input type="text" id="sellEngineVolume" class="form-control" placeholder="Enter engine volume" />
-              <span class="input-group__unit">L</span>
-            </div>
+            <label class="form-group__label">Year *</label>
+            <input type="number" id="sellYear" class="form-control" placeholder="e.g. 2022" min="1900" max="2026" required />
           </div>
           <div class="form-group">
-            <label class="form-group__label">Power</label>
+            <label class="form-group__label">Mileage *</label>
             <div class="input-group">
-              <input type="text" id="sellPower" class="form-control" placeholder="Enter power" />
-              <span class="input-group__unit">hp</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 4: Transmission + Mileage -->
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-group__label">Transmission</label>
-            <input type="text" id="sellTransmission" class="form-control" placeholder="Enter transmission" />
-          </div>
-          <div class="form-group">
-            <label class="form-group__label form-group__label--inline">
-              Mileage
-              <span class="hint">?</span>
-            </label>
-            <div class="input-group">
-              <input type="text" id="sellMileage" class="form-control" placeholder="Enter mileage" />
+              <input type="number" id="sellMileage" class="form-control" placeholder="e.g. 50000" min="0" required />
               <span class="input-group__unit">km</span>
             </div>
           </div>
+        </div>
+
+        <!-- Row 3: City + Address -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-group__label">City *</label>
+            <input type="text" id="sellCity" class="form-control" placeholder="e.g. Moscow" required />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">Address</label>
+            <input type="text" id="sellAddress" class="form-control" placeholder="e.g. Tverskaya St. 15" />
+          </div>
+        </div>
+
+        <!-- Row 4: Description (full width) -->
+        <div class="form-row" style="grid-template-columns: 1fr;">
+          <div class="form-group">
+            <label class="form-group__label">Description</label>
+            <textarea id="sellDescription" class="form-control" rows="4" placeholder="Describe your car's condition, features, service history..." style="resize: vertical; min-height: 100px; padding: 12px; height: auto; font-family: inherit;"></textarea>
+          </div>
+        </div>
+
+        <!-- Note about car specs -->
+        <div style="margin-top: 12px; padding: 12px 16px; background: #F3F4F6; border-radius: 6px; font-size: 12px; color: #6B7280;">
+          <strong>Note:</strong> Engine volume, power, and transmission are automatically loaded from the car catalog based on the make, model, and year you select.
         </div>
       </div>
 
       <!-- ===== PRICING ===== -->
       <div class="card-form pricing-card">
         <div class="card-form__header">
-          <img src="assets/progress.svg">
+          <img src="assets/progress.svg" alt="Pricing" />
           <span class="card-form__title">Pricing</span>
         </div>
 
         <div class="form-group">
-          <label class="form-group__label">Price</label>
+          <label class="form-group__label">Price *</label>
           <div class="input-group">
-            <input type="text" id="sellPrice" class="form-control" placeholder="Enter price" required />
+            <!-- ✅ REMOVED min="0" and step="1000" - any positive number now -->
+            <input type="number" id="sellPrice" class="form-control" placeholder="Enter price" required />
             <span class="input-group__unit">₽</span>
           </div>
         </div>
@@ -133,15 +130,16 @@
 
     <!-- ===== PHOTO UPLOAD ===== -->
     <div class="upload-area">
-      <img class="upload-area__svg" src="assets/empty_image.svg">
+      <img class="upload-area__svg" src="assets/empty_image.svg" alt="Upload" />
       <div class="upload-area__text">Drag & drop photos here (max 15)</div>
-      <div class="upload-area__hint">JPG, PNG up to 10MB each</div>
+      <div class="upload-area__hint">JPG, PNG, WebP up to 10MB each</div>
+      <div class="upload-area__preview" id="photoPreview"></div>
     </div>
 
     <!-- ===== SUBMIT ===== -->
     <div class="sell__actions">
       <button type="submit" class="btn-submit" form="sellForm">
-        <img src="assets/publish.svg">
+        <img src="assets/publish.svg" alt="Publish" />
         Publish Ad
       </button>
     </div>
@@ -149,39 +147,39 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer__inner">
-    <div>
-      <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <img src="assets/logo.svg" alt="AvtoAnalytics" />
+        </div>
+        <p class="footer__tagline">
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
+        </p>
       </div>
-      <p class="footer__tagline">
-        We fight against unfair prices and make the used car market transparent
-        through data, analytics, and community
-      </p>
-    </div>
 
-    <div class="footer__legal">
-      <h4>LEGAL INFORMATION</h4>
-      <ul>
-        <li>Privacy Policy</li>
-        <li>Terms of Service</li>
-        <li>Cookie Policy</li>
-      </ul>
-    </div>
-
-    <div class="footer__social-block">
-      <div class="footer__social-icons">
-        <img src="assets/tg.svg" alt="Telegram">
-        <img src="assets/github.svg" alt="GitHub">
+      <div class="footer__legal">
+        <h4>LEGAL INFORMATION</h4>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
+        </ul>
       </div>
-      <a class="footer__about" href="about_us.html">ABOUT US</a>
-    </div>
 
-    <hr class="footer__divider" />
-    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
-  </div>
-</footer>
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram" />
+          <img src="assets/github.svg" alt="GitHub" />
+        </div>
+        <a class="footer__about" href="about_us.html">ABOUT US</a>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="scripts/base.js"></script>
   <script src="scripts/sell_car.js"></script>

@@ -1,41 +1,119 @@
 /* =========================================================
-   CATALOGUE.JS
-   Реальные объявления с бэкенда. Бэкенд отдаёт список через
-   GET /api/ads (без реальной фильтрации по цене/пробегу —
-   CarService.buildSpecification их не применяет), поэтому весь
-   список забирается один раз, а фильтрация/сортировка/пагинация
-   сделаны на фронте.
-
-   "Engine Type" (Petrol/Diesel/Electric) визуально оставлен —
-   у Car нет поля типа топлива, поэтому эти чекбоксы ни на что
-   не влияют (только Transmission реально фильтрует список).
+   CATALOGUE.JS - WITH URL SYNC
    ========================================================= */
 
 const PAGE_SIZE = 6;
 
-let allItems = [];          // все объявления, уже смэппленные под карточку
-let filteredItems = [];     // после фильтров/сортировки
+let allItems = [];
+let filteredItems = [];
 let currentPage = 1;
 let favoriteIds = new Set();
 const selectedForCompare = new Set();
+let isUpdatingFromUrl = false;
 
 const gridEl = document.querySelector('.cards-grid');
 const countEl = document.querySelector('.main__count');
 const paginationEl = document.querySelector('.pagination');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+
+// ===== URL PARAMETER HELPERS =====
+function getUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    make: params.get('make') || '',
+    model: params.get('model') || '',
+    priceFrom: params.get('priceFrom') || '',
+    priceTo: params.get('priceTo') || '',
+    yearFrom: params.get('yearFrom') || '',
+    yearTo: params.get('yearTo') || '',
+    mileageFrom: params.get('mileageFrom') || '',
+    mileageTo: params.get('mileageTo') || '',
+  };
+}
+
+function updateUrlParams() {
+  // Don't update URL if we're loading from URL params
+  if (isUpdatingFromUrl) return;
+  
+  const priceFromEl = document.getElementById('priceFrom');
+  const priceToEl = document.getElementById('priceTo');
+  const yearFromEl = document.getElementById('yearFrom');
+  const yearToEl = document.getElementById('yearTo');
+  const mileageFromEl = document.getElementById('mileageFrom');
+  const mileageToEl = document.getElementById('mileageTo');
+  
+  const searchTerm = searchInput ? searchInput.value.trim() : '';
+  
+  const params = new URLSearchParams();
+  
+  // Parse search term to extract make and model
+  if (searchTerm) {
+    const parts = searchTerm.split(' ');
+    if (parts.length >= 1 && parts[0]) params.set('make', parts[0]);
+    if (parts.length >= 2 && parts[1]) params.set('model', parts.slice(1).join(' '));
+  }
+  
+  if (priceFromEl && priceFromEl.value) params.set('priceFrom', priceFromEl.value);
+  if (priceToEl && priceToEl.value) params.set('priceTo', priceToEl.value);
+  if (yearFromEl && yearFromEl.value) params.set('yearFrom', yearFromEl.value);
+  if (yearToEl && yearToEl.value) params.set('yearTo', yearToEl.value);
+  if (mileageFromEl && mileageFromEl.value) params.set('mileageFrom', mileageFromEl.value);
+  if (mileageToEl && mileageToEl.value) params.set('mileageTo', mileageToEl.value);
+  
+  // Build new URL
+  const queryString = params.toString();
+  const newUrl = window.location.pathname + (queryString ? '?' + queryString : '');
+  
+  // Update URL without reloading the page
+  if (window.location.search !== (queryString ? '?' + queryString : '')) {
+    window.history.replaceState({}, '', newUrl);
+  }
+}
+
+function applyUrlParamsToFilters() {
+  isUpdatingFromUrl = true;
+  const urlParams = getUrlParams();
+  
+  // Build search term from make + model
+  const searchTerm = [urlParams.make, urlParams.model].filter(Boolean).join(' ');
+  if (searchInput && searchTerm) {
+    searchInput.value = searchTerm;
+  }
+  
+  const priceFromEl = document.getElementById('priceFrom');
+  const priceToEl = document.getElementById('priceTo');
+  const yearFromEl = document.getElementById('yearFrom');
+  const yearToEl = document.getElementById('yearTo');
+  const mileageFromEl = document.getElementById('mileageFrom');
+  const mileageToEl = document.getElementById('mileageTo');
+  
+  if (priceFromEl && urlParams.priceFrom) priceFromEl.value = urlParams.priceFrom;
+  if (priceToEl && urlParams.priceTo) priceToEl.value = urlParams.priceTo;
+  if (yearFromEl && urlParams.yearFrom) yearFromEl.value = urlParams.yearFrom;
+  if (yearToEl && urlParams.yearTo) yearToEl.value = urlParams.yearTo;
+  if (mileageFromEl && urlParams.mileageFrom) mileageFromEl.value = urlParams.mileageFrom;
+  if (mileageToEl && urlParams.mileageTo) mileageToEl.value = urlParams.mileageTo;
+  
+  isUpdatingFromUrl = false;
+}
 
 function parseNumber(str) {
-  if (!str) return null;
-  const n = Number(String(str).replace(/[^\d.]/g, ''));
-  return Number.isFinite(n) && str.trim() !== '' ? n : null;
+  if (!str || str.trim() === '') return null;
+  const cleaned = String(str).replace(/[^\d]/g, '');
+  if (cleaned === '') return null;
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : null;
 }
 
 function formatPrice(value) {
+  if (value == null) return '—';
   return Math.round(value).toLocaleString('ru-RU') + ' ₽';
 }
 
 /* ===== Loading data ===== */
 async function loadAds() {
-  gridEl.innerHTML = '<p style="grid-column:1/-1;">Загружаем объявления…</p>';
+  if (gridEl) gridEl.innerHTML = '<p style="grid-column:1/-1;">Загружаем объявления…</p>';
 
   try {
     const page = await apiFetch('/ads?page=0&size=200');
@@ -53,7 +131,17 @@ async function loadAds() {
 
     allItems = ads.map(ad => {
       const car = ad.car || {};
+      
+      let year = car.year;
+      if (year == null && ad.title) {
+        const yearMatch = ad.title.match(/\b(19|20)\d{2}\b/);
+        if (yearMatch) {
+          year = parseInt(yearMatch[0]);
+        }
+      }
+
       const fairPrice = car.id != null ? averages[car.id] : null;
+
       return {
         id: ad.id,
         title: [car.make, car.model].filter(Boolean).join(' ') || ad.title,
@@ -61,7 +149,7 @@ async function loadAds() {
         model: car.model || '',
         specs: [car.engineVolume ? `${car.engineVolume}L` : null, car.horsepower ? `${car.horsepower} hp` : null].filter(Boolean).join(' · '),
         price: ad.price,
-        year: car.year,
+        year: year,
         mileage: ad.mileage,
         transmission: car.transmission,
         photoUrls: ad.photoUrls,
@@ -79,64 +167,80 @@ async function loadAds() {
       }
     }
 
-    applyInitialQueryParams();
+    // Apply URL parameters BEFORE rendering
+    applyUrlParamsToFilters();
     applyFiltersAndRender();
   } catch (err) {
-    gridEl.innerHTML = `<p style="grid-column:1/-1; color:#934344;">Не удалось загрузить объявления: ${err.message}</p>`;
+    console.error('Load ads error:', err);
+    if (gridEl) {
+      gridEl.innerHTML = `<p style="grid-column:1/-1; color:#934344;">Не удалось загрузить объявления: ${err.message}</p>`;
+    }
   }
 }
 
-/* ===== Pre-fill from ?make=&model=&priceTo= coming from the main page search ===== */
-function applyInitialQueryParams() {
-  const params = new URLSearchParams(window.location.search);
-  const priceTo = params.get('priceTo');
-  if (priceTo) {
-    document.querySelectorAll('.price-range__inputs input')[1].value = priceTo;
-  }
-  // make/model are matched silently against the fetched list (no dedicated sidebar field exists)
-  window.__quickMake = params.get('make') || '';
-  window.__quickModel = params.get('model') || '';
-}
-
-/* ===== Reading current filter/sort state from the sidebar ===== */
+/* ===== Reading filters ===== */
 function readFilters() {
-  const priceInputs = document.querySelectorAll('.price-range__inputs input');
-  const yearInputs = document.querySelectorAll('.filter-group')[1].querySelectorAll('input');
-  const mileageInputs = document.querySelectorAll('.filter-group')[2].querySelectorAll('input');
-  const transmissionBoxes = document.querySelectorAll('.filter-group')[4].querySelectorAll('input[type="checkbox"]');
-
-  const transmissionMap = ['AUTOMATIC', 'MANUAL', 'CVT'];
-  const checkedTransmissions = transmissionMap.filter((_, i) => transmissionBoxes[i]?.checked);
+  const priceFrom = document.getElementById('priceFrom');
+  const priceTo = document.getElementById('priceTo');
+  const yearFrom = document.getElementById('yearFrom');
+  const yearTo = document.getElementById('yearTo');
+  const mileageFrom = document.getElementById('mileageFrom');
+  const mileageTo = document.getElementById('mileageTo');
 
   return {
-    priceFrom: parseNumber(priceInputs[0]?.value),
-    priceTo: parseNumber(priceInputs[1]?.value),
-    yearFrom: parseNumber(yearInputs[0]?.value),
-    yearTo: parseNumber(yearInputs[1]?.value),
-    mileageFrom: parseNumber(mileageInputs[0]?.value),
-    mileageTo: parseNumber(mileageInputs[1]?.value),
-    // all 3 checked (or none) => no filtering
-    transmissions: checkedTransmissions.length === 3 ? [] : checkedTransmissions,
+    priceFrom: parseNumber(priceFrom?.value),
+    priceTo: parseNumber(priceTo?.value),
+    yearFrom: parseNumber(yearFrom?.value),
+    yearTo: parseNumber(yearTo?.value),
+    mileageFrom: parseNumber(mileageFrom?.value),
+    mileageTo: parseNumber(mileageTo?.value),
   };
 }
 
 function readSort() {
-  return document.querySelector('.main__sort-select').value;
+  const el = document.querySelector('.main__sort-select');
+  return el ? el.value : 'Price: Low to High';
+}
+
+function getSearchTerm() {
+  return searchInput ? searchInput.value.trim() : '';
 }
 
 function applyFiltersAndRender() {
   const f = readFilters();
+  const searchTerm = getSearchTerm().toLowerCase();
 
   filteredItems = allItems.filter(item => {
+    // Price
     if (f.priceFrom != null && item.price < f.priceFrom) return false;
     if (f.priceTo != null && item.price > f.priceTo) return false;
-    if (f.yearFrom != null && item.year != null && item.year < f.yearFrom) return false;
-    if (f.yearTo != null && item.year != null && item.year > f.yearTo) return false;
+    
+    // Year
+    if (f.yearFrom != null) {
+      if (item.year != null) {
+        const yearNum = Number(item.year);
+        if (yearNum < f.yearFrom) return false;
+      }
+    }
+    if (f.yearTo != null) {
+      if (item.year != null) {
+        const yearNum = Number(item.year);
+        if (yearNum > f.yearTo) return false;
+      }
+    }
+    
+    // Mileage
     if (f.mileageFrom != null && item.mileage != null && item.mileage < f.mileageFrom) return false;
     if (f.mileageTo != null && item.mileage != null && item.mileage > f.mileageTo) return false;
-    if (f.transmissions.length && !f.transmissions.includes(item.transmission)) return false;
-    if (window.__quickMake && !item.make.toLowerCase().includes(window.__quickMake.toLowerCase())) return false;
-    if (window.__quickModel && !item.model.toLowerCase().includes(window.__quickModel.toLowerCase())) return false;
+    
+    // Search
+    if (searchTerm) {
+      const matchMake = item.make.toLowerCase().includes(searchTerm);
+      const matchModel = item.model.toLowerCase().includes(searchTerm);
+      const matchTitle = item.title.toLowerCase().includes(searchTerm);
+      if (!matchMake && !matchModel && !matchTitle) return false;
+    }
+    
     return true;
   });
 
@@ -154,10 +258,13 @@ function applyFiltersAndRender() {
   renderCount();
   renderGrid();
   renderPagination();
+  
+  // ✅ Update URL after filtering
+  updateUrlParams();
 }
 
 function renderCount() {
-  countEl.textContent = `${filteredItems.length} cars found`;
+  if (countEl) countEl.textContent = `${filteredItems.length} cars found`;
 }
 
 function cardHTML(item) {
@@ -170,10 +277,10 @@ function cardHTML(item) {
   return `
     <div class="card" data-id="${item.id}">
       <div class="card__image">
-        <a href="avto_card.html?id=${item.id}"><img src="${image}" alt="${item.title}"></a>
+        <a href="avto_card.html?id=${item.id}"><img src="${image}" alt="${item.title}" loading="lazy"></a>
         <input type="checkbox" class="card__checkbox" data-id="${item.id}" ${selectedForCompare.has(item.id) ? 'checked' : ''} />
         <div class="card__favorite" data-id="${item.id}">
-          <img src="${favIcon}">
+          <img src="${favIcon}" alt="favorite">
         </div>
       </div>
       <div class="card__body">
@@ -189,6 +296,7 @@ function cardHTML(item) {
 }
 
 function renderGrid() {
+  if (!gridEl) return;
   const start = (currentPage - 1) * PAGE_SIZE;
   const pageItems = filteredItems.slice(start, start + PAGE_SIZE);
 
@@ -200,6 +308,7 @@ function renderGrid() {
 }
 
 function renderPagination() {
+  if (!paginationEl) return;
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
   const pages = [];
   const window_ = 2;
@@ -223,80 +332,129 @@ function renderPagination() {
 }
 
 /* ===== Events ===== */
-document.querySelectorAll('.filter-group input, .main__sort-select').forEach(el => {
-  el.addEventListener('change', () => { currentPage = 1; applyFiltersAndRender(); });
-});
+// ✅ Filter inputs - update URL on every change
 document.querySelectorAll('.filter-group input[type="text"]').forEach(el => {
-  el.addEventListener('keyup', () => { currentPage = 1; applyFiltersAndRender(); });
+  el.addEventListener('input', () => { 
+    currentPage = 1; 
+    applyFiltersAndRender(); 
+  });
 });
 
-document.querySelector('.sidebar__reset').addEventListener('click', () => {
-  document.querySelectorAll('.filter-group input[type="text"]').forEach(i => i.value = '');
-  document.querySelectorAll('.filter-group input[type="checkbox"]').forEach(i => i.checked = true);
-  window.__quickMake = '';
-  window.__quickModel = '';
-  currentPage = 1;
-  applyFiltersAndRender();
-});
+// ✅ Sort - update URL on change
+const sortSelect = document.getElementById('sortSelect');
+if (sortSelect) {
+  sortSelect.addEventListener('change', () => { 
+    currentPage = 1; 
+    applyFiltersAndRender(); 
+  });
+}
 
-paginationEl.addEventListener('click', (e) => {
-  const pageEl = e.target.closest('[data-page]');
-  const navEl = e.target.closest('[data-nav]');
-  const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
+// ✅ Search input - update URL on Enter
+if (searchInput) {
+  searchInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      currentPage = 1;
+      applyFiltersAndRender();
+    }
+  });
+}
 
-  if (pageEl) {
-    currentPage = Number(pageEl.dataset.page);
-  } else if (navEl) {
-    currentPage = navEl.dataset.nav === 'prev' ? Math.max(1, currentPage - 1) : Math.min(totalPages, currentPage + 1);
-  } else {
-    return;
-  }
-  renderGrid();
-  renderPagination();
-  window.scrollTo({ top: gridEl.offsetTop - 100, behavior: 'smooth' });
-});
+// ✅ Search button
+if (searchBtn) {
+  searchBtn.addEventListener('click', () => {
+    currentPage = 1;
+    applyFiltersAndRender();
+  });
+}
 
-gridEl.addEventListener('click', async (e) => {
-  const favEl = e.target.closest('.card__favorite');
-  const checkboxEl = e.target.closest('.card__checkbox');
+// ✅ Reset button - clear all filters and URL
+const resetBtn = document.querySelector('.sidebar__reset');
+if (resetBtn) {
+  resetBtn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-group input[type="text"]').forEach(i => i.value = '');
+    if (searchInput) searchInput.value = '';
+    currentPage = 1;
+    // Clear URL params
+    window.history.replaceState({}, '', window.location.pathname);
+    applyFiltersAndRender();
+  });
+}
 
-  if (favEl) {
-    e.preventDefault();
-    const adId = Number(favEl.dataset.id);
+// ✅ Pagination
+if (paginationEl) {
+  paginationEl.addEventListener('click', (e) => {
+    const pageEl = e.target.closest('[data-page]');
+    const navEl = e.target.closest('[data-nav]');
+    const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
 
-    if (!Auth.isAuthenticated()) {
-      window.location.href = 'login_signup.html';
+    if (pageEl) {
+      currentPage = Number(pageEl.dataset.page);
+    } else if (navEl) {
+      currentPage = navEl.dataset.nav === 'prev' ? Math.max(1, currentPage - 1) : Math.min(totalPages, currentPage + 1);
+    } else {
+      return;
+    }
+    renderGrid();
+    renderPagination();
+    if (gridEl) {
+      window.scrollTo({ top: gridEl.offsetTop - 100, behavior: 'smooth' });
+    }
+  });
+}
+
+// ✅ Favorites & Compare
+if (gridEl) {
+  gridEl.addEventListener('click', async (e) => {
+    const favEl = e.target.closest('.card__favorite');
+    const checkboxEl = e.target.closest('.card__checkbox');
+
+    if (favEl) {
+      e.preventDefault();
+      const adId = Number(favEl.dataset.id);
+
+      if (!Auth.isAuthenticated()) {
+        window.location.href = 'login_signup.html';
+        return;
+      }
+
+      try {
+        if (favoriteIds.has(adId)) {
+          await apiFetch(`/users/favorites/${adId}`, { method: 'DELETE', auth: true });
+          favoriteIds.delete(adId);
+        } else {
+          await apiFetch(`/users/favorites/${adId}`, { method: 'POST', auth: true });
+          favoriteIds.add(adId);
+        }
+        renderGrid();
+      } catch (err) {
+        alert(`Не удалось обновить избранное: ${err.message}`);
+      }
       return;
     }
 
-    try {
-      if (favoriteIds.has(adId)) {
-        await apiFetch(`/users/favorites/${adId}`, { method: 'DELETE', auth: true });
-        favoriteIds.delete(adId);
-      } else {
-        await apiFetch(`/users/favorites/${adId}`, { method: 'POST', auth: true });
-        favoriteIds.add(adId);
-      }
-      renderGrid();
-    } catch (err) {
-      alert(`Не удалось обновить избранное: ${err.message}`);
+    if (checkboxEl) {
+      const adId = Number(checkboxEl.dataset.id);
+      if (checkboxEl.checked) selectedForCompare.add(adId);
+      else selectedForCompare.delete(adId);
     }
-    return;
-  }
+  });
+}
 
-  if (checkboxEl) {
-    const adId = Number(checkboxEl.dataset.id);
-    if (checkboxEl.checked) selectedForCompare.add(adId);
-    else selectedForCompare.delete(adId);
-  }
-});
+// ✅ Compare button
+const compareBtn = document.querySelector('.main__compare-btn');
+if (compareBtn) {
+  compareBtn.addEventListener('click', () => {
+    if (selectedForCompare.size === 0) {
+      alert('Выберите хотя бы одно объявление для сравнения.');
+      return;
+    }
+    window.location.href = `compare.html?ids=${[...selectedForCompare].join(',')}`;
+  });
+}
 
-document.querySelector('.main__compare-btn').addEventListener('click', () => {
-  if (selectedForCompare.size === 0) {
-    alert('Выберите хотя бы одно объявление для сравнения.');
-    return;
-  }
-  window.location.href = `compare.html?ids=${[...selectedForCompare].join(',')}`;
-});
-
-loadAds();
+// Load ads when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadAds);
+} else {
+  loadAds();
+}

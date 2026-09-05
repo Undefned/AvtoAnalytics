@@ -29,18 +29,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
+        String method = request.getMethod();
 
-        // Публичные эндпоинты — пропускаем без токена
-        return path.startsWith("/api/auth/")
-                || path.startsWith("/api/ads/")
-                || path.startsWith("/api/cars/")
-                || path.startsWith("/api/analytics/")
-                || path.startsWith("/api/compare/")
-                || path.startsWith("/swagger-ui/")
-                || path.equals("/swagger-ui.html")
-                || path.startsWith("/v3/api-docs/")
-                || path.startsWith("/swagger-resources/")
-                || path.startsWith("/webjars/");
+        // Only GET requests to public endpoints should skip authentication
+        // POST /api/ads requires authentication!
+        return method.equals("GET") && (
+            path.startsWith("/api/auth/")
+            || path.startsWith("/api/ads/")
+            || path.startsWith("/api/cars/")
+            || path.startsWith("/api/analytics/")
+            || path.startsWith("/api/compare/")
+            || path.startsWith("/swagger-ui/")
+            || path.equals("/swagger-ui.html")
+            || path.startsWith("/v3/api-docs/")
+            || path.startsWith("/swagger-resources/")
+            || path.startsWith("/webjars/")
+        );
     }
 
     @Override

@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <a href="main.html"><img src="assets/logo.svg"></a>
+        <a href="main.html"><img src="assets/logo.svg" alt="Logo" /></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html" class="active">Catalogue</a>
@@ -22,13 +22,17 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <a href="profile.html"><img src="assets/profile.svg"></a>
+        <a href="profile.html"><img src="assets/profile.svg" alt="Profile" /></a>
       </div>
     </div>
   </header>
 
   <!-- ===== BREADCRUMB ===== -->
-  <p class="breadcrumb">Главная / Каталог</p>
+  <p class="breadcrumb">
+    <a href="main.html">Главная</a>
+    <span class="breadcrumb__separator">/</span>
+    <span class="breadcrumb__current">Каталог</span>
+  </p>
 
   <!-- ===== CATALOG ===== -->
   <main class="catalog">
@@ -41,7 +45,7 @@
         <span class="sidebar__title">Filters</span>
         <div class="sidebar__reset">
           Reset all
-          <img src="assets/reset.svg">
+          <img src="assets/reset.svg" alt="reset" />
         </div>
       </div>
 
@@ -57,8 +61,8 @@
             <span>5,000,000</span>
           </div>
           <div class="price-range__inputs">
-            <input type="text" placeholder="500,000" />
-            <input type="text" placeholder="5,000,000" />
+            <input type="text" id="priceFrom" placeholder="500,000" />
+            <input type="text" id="priceTo" placeholder="5,000,000" />
           </div>
         </div>
       </div>
@@ -71,8 +75,8 @@
         </div>
         <div class="filter-group__body">
           <div class="price-range__inputs">
-            <input type="text" placeholder="From" />
-            <input type="text" placeholder="To" />
+            <input type="text" id="yearFrom" placeholder="From" />
+            <input type="text" id="yearTo" placeholder="To" />
           </div>
         </div>
       </div>
@@ -85,13 +89,13 @@
         </div>
         <div class="filter-group__body">
           <div class="price-range__inputs">
-            <input type="text" placeholder="Min mileage" />
-            <input type="text" placeholder="Max mileage" />
+            <input type="text" id="mileageFrom" placeholder="Min mileage" />
+            <input type="text" id="mileageTo" placeholder="Max mileage" />
           </div>
         </div>
       </div>
 
-      <!-- Engine Type -->
+      <!--
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Engine Type</span>
@@ -112,7 +116,6 @@
         </div>
       </div>
 
-      <!-- Transmission -->
       <div class="filter-group">
         <div class="filter-group__header">
           <span class="filter-group__title">Transmission</span>
@@ -132,6 +135,7 @@
           </div>
         </div>
       </div>
+      -->
 
     </aside>
 
@@ -142,25 +146,31 @@
       <div class="main__toolbar">
         <span class="main__count">Loading…</span>
         <div class="main__actions">
+          <div class="main__search">
+            <input type="text" class="main__search-input" id="searchInput" placeholder="Search by make or model..." />
+            <button class="main__search-btn" id="searchBtn">
+              <img src="assets/search.svg" alt="Search" />
+            </button>
+          </div>
           <span class="main__sort-label">Sort by:</span>
-          <select class="main__sort-select">
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Year: Newest</option>
-            <option>Year: Oldest</option>
-            <option>Mileage: Low to High</option>
+          <select class="main__sort-select" id="sortSelect">
+            <option value="Price: Low to High">Price: Low to High</option>
+            <option value="Price: High to Low">Price: High to Low</option>
+            <option value="Year: Newest">Year: Newest</option>
+            <option value="Year: Oldest">Year: Oldest</option>
+            <option value="Mileage: Low to High">Mileage: Low to High</option>
           </select>
           <button class="main__compare-btn" type="button">
-            <img src="assets/compare.svg">
+            <img src="assets/compare.svg" alt="compare" />
             Compare selected
           </button>
         </div>
       </div>
 
-      <!-- Cards Grid (filled by catalogue.js) -->
+      <!-- Cards Grid -->
       <div class="cards-grid"></div>
 
-      <!-- Pagination (filled by catalogue.js) -->
+      <!-- Pagination -->
       <div class="pagination"></div>
 
     </div>
@@ -168,39 +178,39 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer__inner">
-    <div>
-      <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <img src="assets/logo.svg" alt="AvtoAnalytics" />
+        </div>
+        <p class="footer__tagline">
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
+        </p>
       </div>
-      <p class="footer__tagline">
-        We fight against unfair prices and make the used car market transparent
-        through data, analytics, and community
-      </p>
-    </div>
 
-    <div class="footer__legal">
-      <h4>LEGAL INFORMATION</h4>
-      <ul>
-        <li>Privacy Policy</li>
-        <li>Terms of Service</li>
-        <li>Cookie Policy</li>
-      </ul>
-    </div>
-
-    <div class="footer__social-block">
-      <div class="footer__social-icons">
-        <img src="assets/tg.svg" alt="Telegram">
-        <img src="assets/github.svg" alt="GitHub">
+      <div class="footer__legal">
+        <h4>LEGAL INFORMATION</h4>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
+        </ul>
       </div>
-      <a class="footer__about" href="about_us.html">ABOUT US</a>
-    </div>
 
-    <hr class="footer__divider" />
-    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
-  </div>
-</footer>
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram" />
+          <img src="assets/github.svg" alt="GitHub" />
+        </div>
+        <a class="footer__about" href="about_us.html">ABOUT US</a>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="scripts/base.js"></script>
   <script src="scripts/catalogue.js"></script>
