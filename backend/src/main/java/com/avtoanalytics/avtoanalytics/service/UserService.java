@@ -3,6 +3,7 @@ package com.avtoanalytics.avtoanalytics.service;
 import com.avtoanalytics.avtoanalytics.entity.Ad;
 import com.avtoanalytics.avtoanalytics.entity.Favorite;
 import com.avtoanalytics.avtoanalytics.entity.User;
+import com.avtoanalytics.avtoanalytics.exception.BadRequestException;
 import com.avtoanalytics.avtoanalytics.exception.ResourceNotFoundException;
 import com.avtoanalytics.avtoanalytics.repository.AdRepository;
 import com.avtoanalytics.avtoanalytics.repository.FavoriteRepository;
@@ -41,10 +42,23 @@ public class UserService {
     // ===== FAVORITES =====
     @Transactional
     public void addFavorite(Long userId, Long adId) {
+        // ✅ Проверяем, что userId и adId не null
+        if (userId == null) {
+            throw new BadRequestException("User ID cannot be null");
+        }
+        if (adId == null) {
+            throw new BadRequestException("Ad ID cannot be null");
+        }
+        
         User user = getUserById(userId);
         Ad ad = adRepository.findById(adId)
             .orElseThrow(() -> new ResourceNotFoundException("Ad not found with id: " + adId));
-
+        
+        // Проверка: уже в избранном?
+        if (favoriteRepository.existsByUserIdAndAdId(userId, adId)) {
+            throw new BadRequestException("Ad already in favorites");
+        }
+        
         Favorite favorite = new Favorite();
         favorite.setUser(user);
         favorite.setAd(ad);

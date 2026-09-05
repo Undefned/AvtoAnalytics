@@ -5,14 +5,8 @@
 
    Данные:
    - GET  /api/ads/{id}         -> цена, фото, название (по каждому id)
-   - POST /api/compare          -> характеристики авто (Engine/HP/Drive),
-                                     тем же порядком, что и adIds на входе
+   - POST /api/compare          -> характеристики авто (Engine/HP/Drive/BodyType/Transmission)
    - GET  /api/analytics/average/{carId} -> средняя цена по модели
-
-   "Registration date" — в схеме нет отдельного поля, поэтому здесь
-   показывается дата создания объявления (ad.createdAt).
-   "Active listings count" — считается на фронте по уже загруженному
-   списку объявлений (нет отдельного эндпоинта для агрегации).
    ========================================================= */
 
 const cardsEl = document.querySelector('.compare__cards');
@@ -23,8 +17,21 @@ function formatPrice(value) {
   return Math.round(value).toLocaleString('ru-RU') + ' ₽';
 }
 
+function formatMileage(value) {
+  if (value == null) return '—';
+  return value.toLocaleString('ru-RU') + ' km';
+}
+
 function driveLabel(drive) {
   return { FRONT: 'Front-Wheel Drive', REAR: 'Rear-Wheel Drive', ALL: 'All-Wheel Drive' }[drive] || drive || '—';
+}
+
+function transmissionLabel(trans) {
+  return { AUTOMATIC: 'Automatic', MANUAL: 'Manual', CVT: 'CVT', ROBOT: 'Robot' }[trans] || trans || '—';
+}
+
+function bodyTypeLabel(body) {
+  return { SEDAN: 'Sedan', SUV: 'SUV', HATCHBACK: 'Hatchback', WAGON: 'Wagon', COUPE: 'Coupe', CABRIOLET: 'Cabriolet', MINIVAN: 'Minivan', PICKUP: 'Pickup' }[body] || body || '—';
 }
 
 function getIds() {
@@ -62,7 +69,6 @@ async function load() {
       apiFetch('/ads?page=0&size=200').catch(() => ({ content: [] })),
     ]);
 
-    // drop any ids that failed to load (deleted ad, bad id, etc.)
     const items = ids
       .map((id, i) => ({ id, ad: ads[i], spec: specs[i] }))
       .filter(x => x.ad);
@@ -81,20 +87,21 @@ async function load() {
       const avg = ad.carId != null ? averages[ad.carId] : null;
       const diff = avg != null ? ad.price - avg : null;
       const diffPct = avg ? (diff / avg * 100) : null;
-      const activeListings = allAds.filter(a => a.status === 'ACTIVE' && a.car?.id === ad.carId).length;
 
       return {
         adId: id,
         name: `${ad.carMake || ''} ${ad.carModel || ''}`.trim() || ad.title,
         image: (ad.photoUrls && ad.photoUrls[0]) || 'https://placehold.co/335x162',
         price: ad.price,
-        engine: spec ? [spec.engineVolume ? `${spec.engineVolume}L` : null].filter(Boolean).join(' ') || '—' : '—',
+        mileage: ad.mileage,
+        engine: spec?.engineVolume != null ? `${spec.engineVolume}L` : '—',
         hp: spec?.horsepower != null ? `${spec.horsepower} hp` : '—',
         drive: spec ? driveLabel(spec.driveType) : '—',
+        transmission: spec ? transmissionLabel(spec.transmission) : '—',
+        bodyType: spec ? bodyTypeLabel(spec.bodyType) : '—',
         avgPrice: avg,
         diff,
         diffPct,
-        activeListings,
         createdAt: ad.createdAt ? new Date(ad.createdAt).toLocaleDateString('ru-RU', { month: 'short', year: 'numeric' }) : '—',
       };
     });
@@ -135,6 +142,7 @@ function renderCards(cars) {
 function row(label, cells) {
   return `<tr><td>${label}</td>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
 }
+
 function sectionRow(icon, title, colCount) {
   return `<tr class="section-header"><td colspan="${colCount + 1}"><span class="icon"><img src="assets/${icon}"></span> ${title}</td></tr>`;
 }
@@ -142,6 +150,7 @@ function sectionRow(icon, title, colCount) {
 function renderTable(cars) {
   const n = cars.length;
 
+  // ✅ Fixed: Return just the cell content, not wrapped in <td>
   const priceVsMarketCells = cars.map(car => {
     if (car.avgPrice == null) return '—';
     const dir = car.diff >= 0 ? 'text-red' : 'text-green';
@@ -168,14 +177,16 @@ function renderTable(cars) {
         ${sectionRow('settings.svg', 'TECHNICAL SPECS', n)}
         ${row('Engine', cars.map(c => c.engine))}
         ${row('HP', cars.map(c => c.hp))}
-        ${row('Drive', cars.map(c => c.drive))}
+        ${row('Transmission', cars.map(c => c.transmission))}
+        ${row('Drive Type', cars.map(c => c.drive))}
+        ${row('Body Type', cars.map(c => c.bodyType))}
+        ${row('Mileage', cars.map(c => formatMileage(c.mileage)))}
 
         ${sectionRow('graphics.svg', 'MARKET ANALYTICS', n)}
         ${row('Average Price', cars.map(c => formatPrice(c.avgPrice)))}
         ${row('Price vs Market', priceVsMarketCells)}
 
-        ${sectionRow('people.svg', 'SELLER SCORE', n)}
-        ${row('Active listings count', cars.map(c => c.activeListings))}
+        ${sectionRow('people.svg', 'SELLER INFO', n)}
         ${row('Ad posted', cars.map(c => c.createdAt))}
       </tbody>
     </table>

@@ -1,13 +1,11 @@
 /* =========================================================
-   MAIN.JS
-   Главная страница: подтягивает объявления с бэкенда и для
-   каждого показывает "справедливую цену" (средняя цена по
-   модели авто), сравнивая её с текущей ценой объявления.
+   MAIN.JS - FIXED (Fair Price)
    ========================================================= */
 
 const grid = document.getElementById('catalogGrid');
 
 function formatPrice(value) {
+  if (value == null) return '—';
   return Math.round(value).toLocaleString('ru-RU') + ' ₽';
 }
 
@@ -45,6 +43,7 @@ function cardHTML(item) {
 }
 
 async function loadCatalogPreview() {
+  if (!grid) return;
   grid.innerHTML = '<p style="grid-column:1/-1;">Загружаем объявления…</p>';
 
   try {
@@ -56,26 +55,75 @@ async function loadCatalogPreview() {
       return;
     }
 
-    // Fetch the average market price per car model in parallel (deduped by carId)
-    const carIds = [...new Set(ads.map(ad => ad.car?.id).filter(Boolean))];
+    console.log('📦 Ads loaded:', ads.length);
+
+    // ✅ Get car IDs from the ad data - try multiple sources
+    const carIds = [];
+    ads.forEach(ad => {
+      // Try ad.car.id
+      if (ad.car && ad.car.id) {
+        carIds.push(ad.car.id);
+      }
+      // Try ad.carId (some responses use this)
+      else if (ad.carId) {
+        carIds.push(ad.carId);
+      }
+    });
+    
+    // Remove duplicates
+    const uniqueCarIds = [...new Set(carIds.filter(Boolean))];
+    console.log('🔍 Unique car IDs:', uniqueCarIds);
+
+    // ✅ Fetch averages for each car
     const averages = {};
-    await Promise.all(carIds.map(async (carId) => {
+    await Promise.all(uniqueCarIds.map(async (carId) => {
       try {
-        averages[carId] = await apiFetch(`/analytics/average/${carId}`);
-      } catch (_) {
+        const avg = await apiFetch(`/analytics/average/${carId}`);
+        averages[carId] = avg;
+        console.log(`✅ Average for car ${carId}:`, avg);
+      } catch (err) {
+        console.log(`⚠️ No average for car ${carId}:`, err.message);
         averages[carId] = null;
       }
     }));
 
+    console.log('📊 Averages loaded:', averages);
+
     const items = ads.map(ad => {
       const car = ad.car || {};
-      const fairPrice = car.id != null ? averages[car.id] : null;
+      
+      // ✅ Get car ID from multiple sources
+      let carId = car.id;
+      if (!carId && ad.carId) carId = ad.carId;
+      
+      // Extract year from title if car.year is null
+      let year = car.year;
+      if (year == null && ad.title) {
+        const yearMatch = ad.title.match(/\b(19|20)\d{2}\b/);
+        if (yearMatch) {
+          year = parseInt(yearMatch[0]);
+        }
+      }
+      
+      // Try description if still null
+      if (year == null && ad.description) {
+        const yearMatch = ad.description.match(/\b(19|20)\d{2}\b/);
+        if (yearMatch) {
+          year = parseInt(yearMatch[0]);
+        }
+      }
+
+      // ✅ Get fair price using the car ID
+      const fairPrice = carId != null ? averages[carId] : null;
+      
+      console.log(`🚗 ${car.make || 'Unknown'} ${car.model || ''} - carId: ${carId}, fairPrice: ${fairPrice}`);
+
       return {
         id: ad.id,
         title: [car.make, car.model].filter(Boolean).join(' ') || ad.title,
         trim: [car.engineVolume ? `${car.engineVolume}L` : null, car.transmission].filter(Boolean).join(' '),
         price: ad.price,
-        year: car.year,
+        year: year,
         mileage: ad.mileage,
         transmission: car.transmission,
         photoUrls: ad.photoUrls,
@@ -86,23 +134,32 @@ async function loadCatalogPreview() {
 
     grid.innerHTML = items.map(cardHTML).join('');
   } catch (err) {
+    console.error('❌ Load error:', err);
     grid.innerHTML = `<p style="grid-column:1/-1; color:#934344;">Не удалось загрузить объявления: ${err.message}</p>`;
   }
 }
 
-loadCatalogPreview();
-
 // ===== Search: redirect to the catalogue with the entered filters =====
-document.getElementById('searchForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const make = document.getElementById('searchMake').value.trim();
-  const model = document.getElementById('searchModel').value.trim();
-  const price = document.getElementById('searchPrice').value.trim();
+const searchForm = document.getElementById('searchForm');
+if (searchForm) {
+  searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const make = document.getElementById('searchMake').value.trim();
+    const model = document.getElementById('searchModel').value.trim();
+    const price = document.getElementById('searchPrice').value.trim();
 
-  const params = new URLSearchParams();
-  if (make) params.set('make', make);
-  if (model) params.set('model', model);
-  if (price) params.set('priceTo', price);
+    const params = new URLSearchParams();
+    if (make) params.set('make', make);
+    if (model) params.set('model', model);
+    if (price) params.set('priceTo', price);
 
-  window.location.href = `catalogue.html${params.toString() ? '?' + params.toString() : ''}`;
-});
+    window.location.href = `catalogue.html${params.toString() ? '?' + params.toString() : ''}`;
+  });
+}
+
+// Load when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadCatalogPreview);
+} else {
+  loadCatalogPreview();
+}

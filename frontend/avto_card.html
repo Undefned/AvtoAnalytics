@@ -10,11 +10,10 @@
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <a href="main.html"><img src="assets/logo.svg"></a>
+        <a href="main.html"><img src="assets/logo.svg" alt="Logo" /></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html">Catalogue</a>
@@ -22,68 +21,133 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <a href="profile.html"><img src="assets/profile.svg"></a>
+        <a href="profile.html"><img src="assets/profile.svg" alt="Profile" /></a>
       </div>
     </div>
   </header>
 
-  <p class="breadcrumb">Главная / Каталог / <span id="breadcrumbCurrent">…</span></p>
+  <p class="breadcrumb">
+    <a href="main.html">Главная</a>
+    <span class="breadcrumb__separator">/</span>
+    <a href="catalogue.html">Каталог</a>
+    <span class="breadcrumb__separator">/</span>
+    <span class="breadcrumb__current" id="breadcrumbCurrent">…</span>
+  </p>
 
   <main class="listing">
 
-    <!-- ============ ЛЕВАЯ КОЛОНКА: ГАЛЕРЕЯ + Q&A ============ -->
+    <!-- ЛЕВАЯ КОЛОНКА -->
     <div class="gallery-wrapper">
 
-      <!-- Gallery -->
       <section class="gallery">
-        <div class="gallery__main">
+        <div class="gallery__main" style="position: relative;">
           <img id="mainPhoto" src="https://placehold.co/598x349" alt="Фото объявления" />
           <span class="gallery__counter" id="photoCounter">1 / 1</span>
-          <button class="gallery__nav gallery__nav--prev" id="prevPhoto" aria-label="Предыдущее фото">&#8249;</button>
-          <button class="gallery__nav gallery__nav--next" id="nextPhoto" aria-label="Следующее фото">&#8250;</button>
+          <button class="gallery__nav gallery__nav--prev" id="prevPhoto">&#8249;</button>
+          <button class="gallery__nav gallery__nav--next" id="nextPhoto">&#8250;</button>
         </div>
         <div class="gallery__thumbs" id="galleryThumbs"></div>
       </section>
 
-      <!-- Q&A (под фото) — статично: у бэкенда нет эндпоинта для вопросов -->
+      <!-- Car Details Card (NEW) -->
+      <div class="car-details-card">
+        <div class="car-details-card__header">
+          <span class="car-details-card__title">📋 Car Specifications</span>
+        </div>
+        <div class="car-details-card__grid" id="carDetailsGrid">
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Make</span>
+            <span class="car-detail-item__value" id="detailMake">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Model</span>
+            <span class="car-detail-item__value" id="detailModel">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Year</span>
+            <span class="car-detail-item__value" id="detailYear">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Mileage</span>
+            <span class="car-detail-item__value" id="detailMileage">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Engine</span>
+            <span class="car-detail-item__value" id="detailEngine">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Horsepower</span>
+            <span class="car-detail-item__value" id="detailHorsepower">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Transmission</span>
+            <span class="car-detail-item__value" id="detailTransmission">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Drive Type</span>
+            <span class="car-detail-item__value" id="detailDrive">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Body Type</span>
+            <span class="car-detail-item__value" id="detailBody">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Status</span>
+            <span class="car-detail-item__value" id="detailStatus">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q&A (dynamic from database) -->
       <section class="qa-card--inline">
-        <div class="qa-item">
-          <div class="qa-item__avatar">A</div>
-          <div>
-            <p class="qa-item__author">Alexey S.</p>
-            <p class="qa-item__date">May 24, 2024 14:32</p>
-            <p class="qa-item__q"><b>Q</b> Have there been any accidents or body repairs?</p>
-            <p class="qa-item__a"><b>A</b> Hello! No, the car has not been in any accidents. All body parts are original, paint is factory.</p>
-            <p class="qa-item__answered-by">Seller · May 24, 2024 14:45</p>
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-item__avatar">D</div>
-          <div>
-            <p class="qa-item__author">Dmitry K.</p>
-            <p class="qa-item__date">May 22, 2024 09:11</p>
-            <p class="qa-item__q"><b>Q</b> What is the condition of the tires and brakes?</p>
-            <p class="qa-item__a"><b>A</b> Tires are summer, bought last season, ~80% tread left. Brake pads and discs are in good condition.</p>
-            <p class="qa-item__answered-by">Seller · May 22, 2024 09:27</p>
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-item__avatar">M</div>
-          <div>
-            <p class="qa-item__author">Maria L.</p>
-            <p class="qa-item__date">May 19, 2024 18:07</p>
-            <p class="qa-item__q"><b>Q</b> Can I come for an inspection and test drive?</p>
-            <p class="qa-item__a"><b>A</b> Yes, of course! I'm available on weekdays after 6 PM and on weekends. Please message me to agree on time.</p>
-            <p class="qa-item__answered-by">Seller · May 19, 2024 18:20</p>
-          </div>
+        <div id="questionsContainer" style="padding: 20px; text-align: center; color: #6B7280; font-size: 14px;">
+          Loading questions...
         </div>
       </section>
 
+      <!-- Ask Question Form -->
+      <div class="ask-question-form" id="askQuestionForm" style="display: none; margin-top: 16px; padding: 20px; background: #fff; border: 1px solid #DDDDDD; border-radius: 8px;">
+        <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Ask a Question</h4>
+        <textarea id="questionInput" rows="3" placeholder="Write your question about this car..." style="
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #DDDDDD;
+          border-radius: 6px;
+          font-size: 14px;
+          font-family: inherit;
+          resize: vertical;
+          min-height: 80px;
+          outline: none;
+          transition: border-color 0.2s;
+        "></textarea>
+        <div style="display: flex; justify-content: flex-end; margin-top: 8px; gap: 8px;">
+          <button id="cancelQuestionBtn" style="
+            padding: 8px 20px;
+            border: 1px solid #DDDDDD;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+          ">Cancel</button>
+          <button id="submitQuestionBtn" style="
+            padding: 8px 24px;
+            border: none;
+            border-radius: 6px;
+            background: #2563EB;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+          ">Post Question</button>
+        </div>
+      </div>
+
     </div>
 
-    <!-- ============ ПРАВАЯ КОЛОНКА: ДЕТАЛИ ============ -->
+    <!-- ПРАВАЯ КОЛОНКА -->
     <section class="details">
       <div class="badges">
         <span class="badge badge--active">Used</span>
@@ -104,17 +168,18 @@
       <div class="card">
         <div class="card__header">
           <span class="card__title">Price history</span>
-          <button class="range-select">All time
-            <img src="assets/open.svg">
-          </button>
+          <select class="range-select" id="rangeSelect">
+            <option value="all">All time</option>
+            <option value="3m">Last 3 months</option>
+            <option value="1m">Last month</option>
+          </select>
         </div>
-
         <div class="chart">
           <svg id="priceChart" viewBox="0 0 494 99" preserveAspectRatio="none"></svg>
         </div>
         <div class="chart-labels" id="chartLabels"></div>
         <p class="chart-note" id="chartNote" style="display:none;">
-          <img id="chartNoteIcon" src="assets/downgrade.svg">
+          <img id="chartNoteIcon" src="assets/downgrade.svg" alt="icon" />
           <span id="chartNoteText"></span>
         </p>
       </div>
@@ -122,17 +187,18 @@
       <!-- Market average + Seller -->
       <div class="info-grid">
         <div class="card">
-          <div class="card__title"><img src="assets/graphicsBlack.svg"> Market Average <span class="info-icon">i</span></div>
+          <div class="card__title"><img src="assets/graphicsBlack.svg" alt="icon" /> Market Average <span class="info-icon">i</span></div>
           <p class="card__label" id="avgPriceLabel">Average price for this model</p>
           <p class="card__value" id="avgPriceValue">—</p>
         </div>
 
         <div class="card">
-          <div class="card__title"><img src="assets/profile.svg"> Seller Info</div>
+          <div class="card__title"><img src="assets/profile.svg" alt="icon" /> Seller Info</div>
           <div class="seller" style="margin-top:16px;">
-            <img class="seller__avatar" src="https://placehold.co/48x48" alt="Seller" />
+            <img class="seller__avatar" id="sellerAvatar" src="https://placehold.co/48x48" alt="Seller" />
             <div>
               <p class="seller__name" id="sellerName">—</p>
+              <p class="seller__since" id="sellerSince">Member since: —</p>
             </div>
           </div>
         </div>
@@ -140,52 +206,48 @@
 
       <!-- Location + similar offers -->
       <div class="card location-card">
-        <div class="card__title"><img src="assets/location.svg"> Location</div>
-        <br>
+        <div class="card__title"><img src="assets/location.svg" alt="icon" /> Location</div>
+        <br />
         <p class="card__value" id="adLocation">—</p>
-
         <div class="location-body">
-          <p class="similar-note">Similar offers nearby — coming soon</p>
+          <p class="similar-note" id="similarNote">Similar offers nearby — coming soon</p>
+          <div class="similar-list" id="similarList"></div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer__inner">
-    <div>
-      <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <img src="assets/logo.svg" alt="AvtoAnalytics" />
+        </div>
+        <p class="footer__tagline">
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
+        </p>
       </div>
-      <p class="footer__tagline">
-        We fight against unfair prices and make the used car market transparent
-        through data, analytics, and community
-      </p>
-    </div>
-
-    <div class="footer__legal">
-      <h4>LEGAL INFORMATION</h4>
-      <ul>
-        <li>Privacy Policy</li>
-        <li>Terms of Service</li>
-        <li>Cookie Policy</li>
-      </ul>
-    </div>
-
-    <div class="footer__social-block">
-      <div class="footer__social-icons">
-        <img src="assets/tg.svg" alt="Telegram">
-        <img src="assets/github.svg" alt="GitHub">
+      <div class="footer__legal">
+        <h4>LEGAL INFORMATION</h4>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
+        </ul>
       </div>
-      <a class="footer__about" href="about_us.html">ABOUT US</a>
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram" />
+          <img src="assets/github.svg" alt="GitHub" />
+        </div>
+        <a class="footer__about" href="about_us.html">ABOUT US</a>
+      </div>
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
     </div>
-
-    <hr class="footer__divider" />
-    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
-  </div>
-</footer>
+  </footer>
 
   <script src="scripts/base.js"></script>
   <script src="scripts/avto_card.js"></script>

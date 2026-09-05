@@ -25,14 +25,13 @@ public class JwtTokenProvider {
         this.expiration = expiration;
     }
 
-    // ✅ subject = userId (Long), а email идёт в claim
     public String generateToken(Long userId, String email, String fullName, Role role) {
         Instant now = Instant.now();
         Instant exp = now.plusMillis(expiration);
 
         return Jwts.builder()
-                .subject(userId.toString())              // ← userId в subject
-                .claim("email", email)                  // ← email в claim
+                .subject(userId.toString())
+                .claim("email", email)
                 .claim("fullName", fullName)
                 .claim("role", role.name())
                 .issuedAt(Date.from(now))
@@ -48,7 +47,7 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload();
 
-        long userId = Long.parseLong(claims.getSubject());  // ← userId из subject
+        long userId = Long.parseLong(claims.getSubject());
         String email = claims.get("email", String.class);
         String fullName = claims.get("fullName", String.class);
         Role role = Role.valueOf(claims.get("role", String.class));
@@ -69,13 +68,14 @@ public class JwtTokenProvider {
         return parse(token).email();
     }
 
+    // ✅ FIXED: Read userId from the subject, not from a non-existent claim
     public Long getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
             .verifyWith(key)
             .build()
             .parseSignedClaims(token)
             .getPayload();
-        return claims.get("userId", Long.class);
+        return Long.parseLong(claims.getSubject());  // ← userId is in the subject!
     }
 
     public record JwtPayload(long userId, String email, String fullName, Role role) {}

@@ -38,7 +38,7 @@ public class AdService {
         Pageable pageable = PageRequest.of(page, size);
         Specification<Ad> spec = buildSpecification(city, status);
         Page<Ad> adPage = adRepository.findAll(spec, pageable);
-        return adPage.map(this::mapToResponse);  // ← преобразуем в DTO
+        return adPage.map(this::convertToResponse);
     }
 
     // ===== GET AD BY ID =====
@@ -50,7 +50,7 @@ public class AdService {
     // ===== GET AD RESPONSE =====
     public AdResponse getAdResponseById(Long id) {
         Ad ad = getAdById(id);
-        return mapToResponse(ad);
+        return convertToResponse(ad);
     }
 
     // ===== CREATE AD =====
@@ -77,14 +77,13 @@ public class AdService {
 
         Ad savedAd = adRepository.save(ad);
 
-        // Save price history
         PriceHistory priceHistory = new PriceHistory();
         priceHistory.setAd(savedAd);
         priceHistory.setPrice(savedAd.getPrice());
         priceHistory.setRecordedAt(LocalDateTime.now());
         priceHistoryRepository.save(priceHistory);
 
-        return mapToResponse(savedAd);
+        return convertToResponse(savedAd);
     }
 
     // ===== UPDATE AD =====
@@ -92,7 +91,6 @@ public class AdService {
     public AdResponse updateAd(Long id, CreateAdRequest request, Long userId) {
         Ad ad = getAdById(id);
 
-        // Check ownership
         if (!ad.getSeller().getId().equals(userId)) {
             throw new RuntimeException("You are not the owner of this ad");
         }
@@ -104,7 +102,6 @@ public class AdService {
         ad.setAddress(request.getAddress());
         ad.setPhotoUrls(request.getPhotoUrls());
 
-        // Check if price changed
         if (request.getPrice().compareTo(ad.getPrice()) != 0) {
             PriceHistory priceHistory = new PriceHistory();
             priceHistory.setAd(ad);
@@ -115,7 +112,7 @@ public class AdService {
         }
 
         Ad updatedAd = adRepository.save(ad);
-        return mapToResponse(updatedAd);
+        return convertToResponse(updatedAd);
     }
 
     // ===== DELETE AD =====
@@ -161,8 +158,7 @@ public class AdService {
         };
     }
 
-    // ===== MAP TO RESPONSE =====
-    private AdResponse mapToResponse(Ad ad) {
+    public AdResponse convertToResponse(Ad ad) {
         AdResponse response = new AdResponse();
         response.setId(ad.getId());
         response.setTitle(ad.getTitle());
@@ -177,15 +173,33 @@ public class AdService {
         response.setCreatedAt(ad.getCreatedAt());
 
         // Seller info
-        response.setSellerId(ad.getSeller().getId());
-        response.setSellerName(ad.getSeller().getFullName());
-        response.setPrivateSeller(ad.getSeller().isPrivateSeller());
+        if (ad.getSeller() != null) {
+            response.setSellerId(ad.getSeller().getId());
+            response.setSellerName(ad.getSeller().getFullName());
+            response.setPrivateSeller(ad.getSeller().isPrivateSeller());
+            response.setSellerAvatar(ad.getSeller().getAvatarUrl());
+            response.setSellerSince(ad.getSeller().getCreatedAt());
+        }
 
         // Car info
-        response.setCarId(ad.getCar().getId());
-        response.setCarMake(ad.getCar().getMake());
-        response.setCarModel(ad.getCar().getModel());
-        response.setCarYear(ad.getCar().getYear());
+        if (ad.getCar() != null) {
+            response.setCarId(ad.getCar().getId());
+            response.setCarMake(ad.getCar().getMake());
+            response.setCarModel(ad.getCar().getModel());
+            response.setCarYear(ad.getCar().getYear());
+            
+            response.setEngineVolume(ad.getCar().getEngineVolume());
+            response.setHorsepower(ad.getCar().getHorsepower());
+            if (ad.getCar().getTransmission() != null) {
+                response.setTransmission(ad.getCar().getTransmission().name());
+            }
+            if (ad.getCar().getDriveType() != null) {
+                response.setDriveType(ad.getCar().getDriveType().name());
+            }
+            if (ad.getCar().getBodyType() != null) {
+                response.setBodyType(ad.getCar().getBodyType().name());
+            }
+        }
 
         return response;
     }

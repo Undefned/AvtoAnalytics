@@ -14,7 +14,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="logo">
-        <a href="main.html"><img src="assets/logo.svg"></a>
+        <a href="main.html"><img src="assets/logo.svg" alt="Logo" /></a>
       </div>
       <nav class="nav">
         <a href="catalogue.html">Catalogue</a>
@@ -22,123 +22,24 @@
         <a href="compare.html">Compare Cars</a>
       </nav>
       <div class="header__icon">
-        <a href="profile.html"><img src="assets/profile.svg"></a>
+        <a href="profile.html"><img src="assets/profile.svg" alt="Profile" /></a>
       </div>
     </div>
   </header>
 
-  <!-- ===== CATALOG ===== -->
+  <!-- ===== BREADCRUMB ===== -->
+  <p class="breadcrumb">
+    <a href="main.html">Главная</a>
+    <span class="breadcrumb__separator">/</span>
+    <span class="breadcrumb__current">404</span>
+  </p>
+
+  <!-- ===== NOT FOUND ===== -->
   <main class="catalog">
-
-    <!-- ===== SIDEBAR ===== -->
+    
+    <!-- ===== SIDEBAR - EMPTY ===== -->
     <aside class="sidebar">
-
-      <div class="sidebar__header">
-        <span class="sidebar__title">Filters</span>
-        <div class="sidebar__reset">
-          Reset all
-          <img src="assets/reset.svg">
-        </div>
-      </div>
-
-      <!-- Price -->
-      <div class="filter-group">
-        <div class="filter-group__header">
-          <span class="filter-group__title">Price (₽)</span>
-          <span class="filter-group__arrow">
-            
-          </span>
-        </div>
-        <div class="filter-group__body">
-          <div class="price-range__labels">
-            <span>500,000</span>
-            <span>5,000,000</span>
-          </div>
-          <div class="price-range__inputs">
-            <input type="text" placeholder="500,000" />
-            <input type="text" placeholder="5,000,000" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Year -->
-      <div class="filter-group">
-        <div class="filter-group__header">
-          <span class="filter-group__title">Year</span>
-          <span class="filter-group__arrow">
-            
-          </span>
-        </div>
-        <div class="filter-group__body">
-          <div class="price-range__inputs">
-            <input type="text" placeholder="From" />
-            <input type="text" placeholder="To" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Mileage -->
-      <div class="filter-group">
-        <div class="filter-group__header">
-          <span class="filter-group__title">Mileage (km)</span>
-          <span class="filter-group__arrow">
-            
-          </span>
-        </div>
-        <div class="filter-group__body">
-          <div class="price-range__inputs">
-            <input type="text" placeholder="Min mileage" />
-            <input type="text" placeholder="Max mileage" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Engine Type -->
-      <div class="filter-group">
-        <div class="filter-group__header">
-          <span class="filter-group__title">Engine Type</span>
-          <span class="filter-group__arrow">
-            
-          </span>
-        </div>
-        <div class="filter-group__body">
-          <div class="checkbox-list">
-            <label class="checkbox-item">
-              <input type="checkbox" checked /> Petrol
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" checked /> Diesel
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" checked /> Electric
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Transmission -->
-      <div class="filter-group">
-        <div class="filter-group__header">
-          <span class="filter-group__title">Transmission</span>
-          <span class="filter-group__arrow">
-            
-          </span>
-        </div>
-        <div class="filter-group__body">
-          <div class="checkbox-list">
-            <label class="checkbox-item">
-              <input type="checkbox" checked /> Automatic
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" checked /> Manual
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" checked /> CVT
-            </label>
-          </div>
-        </div>
-      </div>
-
+      <!-- All filters removed -->
     </aside>
 
     <!-- ===== EMPTY STATE ===== -->
@@ -155,13 +56,13 @@
         или таких машин пока нет в продаже.
       </p>
 
-      <button class="empty__btn">
-        <img src="assets/reset-1.svg">
-        Сбросить все фильтры
+      <button class="empty__btn" onclick="window.location.href='catalogue.html'">
+        <img src="assets/reset-1.svg" alt="reset" />
+        Перейти в каталог
       </button>
 
       <div class="empty__hint">
-        <img src="assets/search.svg">
+        <img src="assets/search.svg" alt="search" />
         Попробуйте поискать по марке или модели в строке поиска
       </div>
 
@@ -170,39 +71,39 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer__inner">
-    <div>
-      <div class="logo">
-        <img src="assets/logo.svg" alt="AvtoAnalytics">
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="logo">
+          <img src="assets/logo.svg" alt="AvtoAnalytics" />
+        </div>
+        <p class="footer__tagline">
+          We fight against unfair prices and make the used car market transparent
+          through data, analytics, and community
+        </p>
       </div>
-      <p class="footer__tagline">
-        We fight against unfair prices and make the used car market transparent
-        through data, analytics, and community
-      </p>
-    </div>
 
-    <div class="footer__legal">
-      <h4>LEGAL INFORMATION</h4>
-      <ul>
-        <li>Privacy Policy</li>
-        <li>Terms of Service</li>
-        <li>Cookie Policy</li>
-      </ul>
-    </div>
-
-    <div class="footer__social-block">
-      <div class="footer__social-icons">
-        <img src="assets/tg.svg" alt="Telegram">
-        <img src="assets/github.svg" alt="GitHub">
+      <div class="footer__legal">
+        <h4>LEGAL INFORMATION</h4>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
+        </ul>
       </div>
-      <a class="footer__about" href="about_us.html">ABOUT US</a>
-    </div>
 
-    <hr class="footer__divider" />
-    <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
-  </div>
-</footer>
+      <div class="footer__social-block">
+        <div class="footer__social-icons">
+          <img src="assets/tg.svg" alt="Telegram" />
+          <img src="assets/github.svg" alt="GitHub" />
+        </div>
+        <a class="footer__about" href="about_us.html">ABOUT US</a>
+      </div>
+
+      <hr class="footer__divider" />
+      <p class="footer__copy">© 2026 AvtoAnalytics. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="scripts/base.js"></script>
   <script src="scripts/not_found.js"></script>

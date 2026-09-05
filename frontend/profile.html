@@ -26,6 +26,15 @@
         <img src="assets/profile.svg" alt="Profile" />
       </button>
       <div class="header__dropdown" id="profileDropdown">
+        <div class="header__dropdown-user" id="dropdownUserInfo">
+          <div class="header__dropdown-avatar">
+            <img src="assets/profile.svg" alt="User" id="dropdownAvatar" />
+          </div>
+          <div class="header__dropdown-name" id="dropdownUserName">Loading...</div>
+          <div class="header__dropdown-email" id="dropdownUserEmail">Loading...</div>
+        </div>
+        <div class="header__dropdown-divider"></div>
+        <a href="profile.html" class="header__dropdown-item">Profile</a>
         <button class="header__dropdown-item header__dropdown-item--danger" id="logoutBtn">
           Выйти
         </button>
@@ -35,7 +44,11 @@
 </header>
 
   <!-- ===== BREADCRUMB ===== -->
-  <p class="breadcrumb">Главная / Личный кабинет</p>
+  <p class="breadcrumb">
+    <a href="main.html">Главная</a>
+    <span class="breadcrumb__separator">/</span>
+    <span class="breadcrumb__current">Личный кабинет</span>
+  </p>
 
   <!-- ===== DASHBOARD ===== -->
   <main class="dashboard">

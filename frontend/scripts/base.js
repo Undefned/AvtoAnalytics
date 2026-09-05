@@ -51,7 +51,7 @@ async function apiFetch(path, options = {}) {
   const { method = 'GET', body, auth = false, headers = {} } = options;
 
   const finalHeaders = { ...headers };
-  if (body !== undefined) {
+  if (body !== undefined && !(body instanceof FormData)) {
     finalHeaders['Content-Type'] = 'application/json';
   }
   if (auth) {
@@ -64,7 +64,7 @@ async function apiFetch(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers: finalHeaders,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    body: body !== undefined && !(body instanceof FormData) ? JSON.stringify(body) : body,
   });
 
   if (!response.ok) {
@@ -85,3 +85,28 @@ async function apiFetch(path, options = {}) {
 
   return response.json();
 }
+
+/* ===== 404 HANDLER ===== */
+(function() {
+  // List of valid page names (without .html)
+  const validPages = [
+    'main',
+    'catalogue', 
+    'sell_car',
+    'compare',
+    'profile',
+    'about_us',
+    'login_signup',
+    'avto_card',
+    'not_found'
+  ];
+
+  // Get current page name from URL
+  const path = window.location.pathname;
+  const pageName = path.split('/').pop().replace('.html', '');
+
+  // Check if it's a valid page
+  if (pageName && !validPages.includes(pageName) && !path.includes('assets') && !path.includes('styles') && !path.includes('scripts')) {
+    window.location.href = '404.html';
+  }
+})();

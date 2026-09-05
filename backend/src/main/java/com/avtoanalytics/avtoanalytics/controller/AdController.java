@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/ads")
@@ -37,7 +38,6 @@ public class AdController {
     @GetMapping("/{id}")
     @Operation(summary = "Get ad by ID")
     public ResponseEntity<AdResponse> getAdById(@PathVariable Long id) {
-        // Increment views
         adService.incrementViews(id);
         return ResponseEntity.ok(adService.getAdResponseById(id));
     }
@@ -71,10 +71,15 @@ public class AdController {
         return ResponseEntity.noContent().build();
     }
 
+    // ✅ Fixed: Use AdResponse DTOs instead of Ad entities
     @GetMapping("/seller/{userId}")
     @Operation(summary = "Get ads by seller")
-    public ResponseEntity<List<Ad>> getAdsBySeller(@PathVariable Long userId) {
-        return ResponseEntity.ok(adService.getAdsBySeller(userId));
+    public ResponseEntity<List<AdResponse>> getAdsBySeller(@PathVariable Long userId) {
+        List<Ad> ads = adService.getAdsBySeller(userId);
+        List<AdResponse> responses = ads.stream()
+            .map(adService::convertToResponse)  // ← Use the method name from AdService
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
     }
 
     private Long getUserIdFromToken(String authHeader) {
