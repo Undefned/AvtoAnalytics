@@ -702,3 +702,56 @@
   color: #6B7280;
   padding: 20px;
 }
+
+/* =========================================================
+   CAR DETAILS CARD
+   ========================================================= */
+.car-details-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 0;
+}
+
+.car-details-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.car-details-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.car-details-card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+}
+
+.car-detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.car-detail-item:last-child {
+  border-bottom: none;
+}
+
+.car-detail-item__label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.car-detail-item__value {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dark);
+  text-align: right;
+}

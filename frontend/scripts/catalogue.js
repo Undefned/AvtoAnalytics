@@ -1,5 +1,5 @@
 /* =========================================================
-   CATALOGUE.JS - WITH URL SYNC
+   CATALOGUE.JS - WITH URL SYNC (FIXED FOR DOCKER)
    ========================================================= */
 
 const PAGE_SIZE = 6;
@@ -88,6 +88,7 @@ function applyUrlParamsToFilters() {
   const mileageFromEl = document.getElementById('mileageFrom');
   const mileageToEl = document.getElementById('mileageTo');
   
+  // ✅ Check if elements exist before setting values
   if (priceFromEl && urlParams.priceFrom) priceFromEl.value = urlParams.priceFrom;
   if (priceToEl && urlParams.priceTo) priceToEl.value = urlParams.priceTo;
   if (yearFromEl && urlParams.yearFrom) yearFromEl.value = urlParams.yearFrom;
@@ -158,11 +159,16 @@ async function loadAds() {
       };
     });
 
+    // ✅ Try to load favorites, but don't fail if token is expired
     if (Auth.isAuthenticated()) {
       try {
         const favs = await apiFetch('/users/favorites', { auth: true });
         favoriteIds = new Set((favs || []).map(a => a.id));
-      } catch (_) {
+      } catch (err) {
+        if (err.message && (err.message.includes('JWT') || err.message.includes('expired'))) {
+          console.log('⚠️ Token expired, clearing...');
+          Auth.logout();
+        }
         favoriteIds = new Set();
       }
     }
@@ -188,12 +194,13 @@ function readFilters() {
   const mileageTo = document.getElementById('mileageTo');
 
   return {
-    priceFrom: parseNumber(priceFrom?.value),
-    priceTo: parseNumber(priceTo?.value),
-    yearFrom: parseNumber(yearFrom?.value),
-    yearTo: parseNumber(yearTo?.value),
-    mileageFrom: parseNumber(mileageFrom?.value),
-    mileageTo: parseNumber(mileageTo?.value),
+    // ✅ If element doesn't exist, return null
+    priceFrom: priceFrom ? parseNumber(priceFrom.value) : null,
+    priceTo: priceTo ? parseNumber(priceTo.value) : null,
+    yearFrom: yearFrom ? parseNumber(yearFrom.value) : null,
+    yearTo: yearTo ? parseNumber(yearTo.value) : null,
+    mileageFrom: mileageFrom ? parseNumber(mileageFrom.value) : null,
+    mileageTo: mileageTo ? parseNumber(mileageTo.value) : null,
   };
 }
 
@@ -332,7 +339,7 @@ function renderPagination() {
 }
 
 /* ===== Events ===== */
-// ✅ Filter inputs - update URL on every change
+// ✅ Filter inputs - update URL on every change (only if elements exist)
 document.querySelectorAll('.filter-group input[type="text"]').forEach(el => {
   el.addEventListener('input', () => { 
     currentPage = 1; 
@@ -367,14 +374,13 @@ if (searchBtn) {
   });
 }
 
-// ✅ Reset button - clear all filters and URL
+// ✅ Reset button - clear all filters and URL (only if exists)
 const resetBtn = document.querySelector('.sidebar__reset');
 if (resetBtn) {
   resetBtn.addEventListener('click', () => {
     document.querySelectorAll('.filter-group input[type="text"]').forEach(i => i.value = '');
     if (searchInput) searchInput.value = '';
     currentPage = 1;
-    // Clear URL params
     window.history.replaceState({}, '', window.location.pathname);
     applyFiltersAndRender();
   });
@@ -452,7 +458,7 @@ if (compareBtn) {
   });
 }
 
-// Load ads when DOM is ready
+// ✅ Load ads when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', loadAds);
 } else {

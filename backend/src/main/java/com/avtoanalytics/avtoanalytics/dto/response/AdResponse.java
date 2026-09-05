@@ -32,4 +32,10 @@ public class AdResponse {
     private String carMake;
     private String carModel;
     private Integer carYear;
+    
+    private Double engineVolume;
+    private Integer horsepower;
+    private String transmission;
+    private String driveType;
+    private String bodyType;
 }

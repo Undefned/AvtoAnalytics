@@ -45,20 +45,67 @@
           <span class="gallery__counter" id="photoCounter">1 / 1</span>
           <button class="gallery__nav gallery__nav--prev" id="prevPhoto">&#8249;</button>
           <button class="gallery__nav gallery__nav--next" id="nextPhoto">&#8250;</button>
-          <!-- Heart will be inserted here by JavaScript -->
         </div>
         <div class="gallery__thumbs" id="galleryThumbs"></div>
       </section>
 
+      <!-- Car Details Card (NEW) -->
+      <div class="car-details-card">
+        <div class="car-details-card__header">
+          <span class="car-details-card__title">📋 Car Specifications</span>
+        </div>
+        <div class="car-details-card__grid" id="carDetailsGrid">
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Make</span>
+            <span class="car-detail-item__value" id="detailMake">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Model</span>
+            <span class="car-detail-item__value" id="detailModel">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Year</span>
+            <span class="car-detail-item__value" id="detailYear">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Mileage</span>
+            <span class="car-detail-item__value" id="detailMileage">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Engine</span>
+            <span class="car-detail-item__value" id="detailEngine">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Horsepower</span>
+            <span class="car-detail-item__value" id="detailHorsepower">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Transmission</span>
+            <span class="car-detail-item__value" id="detailTransmission">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Drive Type</span>
+            <span class="car-detail-item__value" id="detailDrive">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Body Type</span>
+            <span class="car-detail-item__value" id="detailBody">—</span>
+          </div>
+          <div class="car-detail-item">
+            <span class="car-detail-item__label">Status</span>
+            <span class="car-detail-item__value" id="detailStatus">—</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Q&A (dynamic from database) -->
       <section class="qa-card--inline">
-        <!-- Questions will be inserted here -->
         <div id="questionsContainer" style="padding: 20px; text-align: center; color: #6B7280; font-size: 14px;">
           Loading questions...
         </div>
       </section>
 
-      <!-- Ask Question Form - OUTSIDE the container that gets replaced -->
+      <!-- Ask Question Form -->
       <div class="ask-question-form" id="askQuestionForm" style="display: none; margin-top: 16px; padding: 20px; background: #fff; border: 1px solid #DDDDDD; border-radius: 8px;">
         <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Ask a Question</h4>
         <textarea id="questionInput" rows="3" placeholder="Write your question about this car..." style="

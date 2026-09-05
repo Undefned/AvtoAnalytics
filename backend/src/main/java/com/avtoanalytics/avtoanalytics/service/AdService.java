@@ -158,7 +158,6 @@ public class AdService {
         };
     }
 
-    // ===== ✅ PUBLIC METHOD: MAP TO RESPONSE =====
     public AdResponse convertToResponse(Ad ad) {
         AdResponse response = new AdResponse();
         response.setId(ad.getId());
@@ -188,6 +187,18 @@ public class AdService {
             response.setCarMake(ad.getCar().getMake());
             response.setCarModel(ad.getCar().getModel());
             response.setCarYear(ad.getCar().getYear());
+            
+            response.setEngineVolume(ad.getCar().getEngineVolume());
+            response.setHorsepower(ad.getCar().getHorsepower());
+            if (ad.getCar().getTransmission() != null) {
+                response.setTransmission(ad.getCar().getTransmission().name());
+            }
+            if (ad.getCar().getDriveType() != null) {
+                response.setDriveType(ad.getCar().getDriveType().name());
+            }
+            if (ad.getCar().getBodyType() != null) {
+                response.setBodyType(ad.getCar().getBodyType().name());
+            }
         }
 
         return response;

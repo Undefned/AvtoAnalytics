@@ -1,5 +1,5 @@
 /* =========================================================
-   AVTO_CARD.JS - FIXED QUESTION FORM VISIBILITY
+   AVTO_CARD.JS - WITH 404 HANDLING
    ========================================================= */
 
 function getAdId() {
@@ -11,6 +11,11 @@ function getAdId() {
 function formatPrice(value) {
   if (value == null) return '—';
   return Math.round(value).toLocaleString('ru-RU') + ' ₽';
+}
+
+function formatMileage(value) {
+  if (value == null) return '—';
+  return value.toLocaleString('ru-RU') + ' km';
 }
 
 function formatDate(dateStr) {
@@ -38,6 +43,19 @@ function getInitials(name) {
     return (parts[0][0] + parts[1][0]).toUpperCase();
   }
   return name.substring(0, 2).toUpperCase();
+}
+
+// Label formatters
+function driveLabel(drive) {
+  return { FRONT: 'Front-Wheel Drive', REAR: 'Rear-Wheel Drive', ALL: 'All-Wheel Drive' }[drive] || drive || '—';
+}
+
+function transmissionLabel(trans) {
+  return { AUTOMATIC: 'Automatic', MANUAL: 'Manual', CVT: 'CVT', ROBOT: 'Robot' }[trans] || trans || '—';
+}
+
+function bodyTypeLabel(body) {
+  return { SEDAN: 'Sedan', SUV: 'SUV', HATCHBACK: 'Hatchback', WAGON: 'Wagon', COUPE: 'Coupe', CABRIOLET: 'Cabriolet', MINIVAN: 'Minivan', PICKUP: 'Pickup' }[body] || body || '—';
 }
 
 // ===== GLOBAL STATE =====
@@ -251,6 +269,22 @@ async function loadSimilarAds(city, currentAdId) {
   }
 }
 
+/* ===== RENDER CAR DETAILS ===== */
+function renderCarDetails(ad) {
+  const car = ad.car || {};
+  
+  document.getElementById('detailMake').textContent = car.make || ad.carMake || '—';
+  document.getElementById('detailModel').textContent = car.model || ad.carModel || '—';
+  document.getElementById('detailYear').textContent = car.year || ad.carYear || '—';
+  document.getElementById('detailMileage').textContent = formatMileage(ad.mileage);
+  document.getElementById('detailEngine').textContent = car.engineVolume ? `${car.engineVolume}L` : (ad.engineVolume ? `${ad.engineVolume}L` : '—');
+  document.getElementById('detailHorsepower').textContent = car.horsepower ? `${car.horsepower} hp` : (ad.horsepower ? `${ad.horsepower} hp` : '—');
+  document.getElementById('detailTransmission').textContent = car.transmission ? transmissionLabel(car.transmission) : (ad.transmission ? transmissionLabel(ad.transmission) : '—');
+  document.getElementById('detailDrive').textContent = car.driveType ? driveLabel(car.driveType) : (ad.driveType ? driveLabel(ad.driveType) : '—');
+  document.getElementById('detailBody').textContent = car.bodyType ? bodyTypeLabel(car.bodyType) : (ad.bodyType ? bodyTypeLabel(ad.bodyType) : '—');
+  document.getElementById('detailStatus').textContent = ad.status || '—';
+}
+
 /* ===== Q&A ===== */
 async function loadQuestions(adId) {
   const container = document.getElementById('questionsContainer');
@@ -262,13 +296,6 @@ async function loadQuestions(adId) {
     const user = Auth.getUser();
     const loggedInUserId = user ? user.userId : null;
     const isOwner = loggedInUserId && adData && adData.sellerId === loggedInUserId;
-    
-    console.log('📝 Q&A Debug:', {
-      loggedInUserId,
-      sellerId: adData?.sellerId,
-      isOwner,
-      hasQuestions: questions?.length > 0
-    });
     
     let html = '';
     
@@ -454,6 +481,9 @@ document.getElementById('rangeSelect').addEventListener('change', function() {
 /* ===== Main load ===== */
 async function loadAd() {
   const adId = getAdId();
+  
+  // Show loading state
+  document.getElementById('adTitle').textContent = 'Загрузка…';
 
   try {
     const [ad, analytics] = await Promise.all([
@@ -461,8 +491,15 @@ async function loadAd() {
       apiFetch(`/analytics/ad/${adId}`).catch(() => null),
     ]);
 
+    // ✅ Check if ad exists
+    if (!ad || !ad.id) {
+      console.log('❌ Ad not found, redirecting to 404 page');
+      window.location.href = 'not_found.html';
+      return;
+    }
+
     adData = ad;
-    console.log('Ad data:', ad);
+    console.log('✅ Ad data loaded:', ad);
 
     const title = `${ad.carMake || ''} ${ad.carModel || ''}${ad.carYear ? `, ${ad.carYear}` : ''}`.trim() || ad.title;
 
@@ -527,6 +564,9 @@ async function loadAd() {
       document.getElementById('chartLabels').innerHTML = '<span style="color:#94A3B8; font-size:12px;">Аналитика недоступна</span>';
     }
 
+    // ✅ Render car details
+    renderCarDetails(ad);
+
     // ✅ Check if ad is in favorites
     await checkFavoriteStatus(adId);
     
@@ -542,9 +582,19 @@ async function loadAd() {
     await loadQuestions(adId);
 
   } catch (err) {
-    console.error('Error loading ad:', err);
-    document.getElementById('adTitle').textContent = 'Объявление не найдено';
-    document.getElementById('adSpecs').textContent = err.message;
+    console.error('❌ Error loading ad:', err);
+    
+    // ✅ Check error message and redirect to 404
+    const errorMessage = err.message || '';
+    if (errorMessage.includes('404') || 
+        errorMessage.includes('not found') ||
+        errorMessage.includes('Ad not found')) {
+      window.location.href = 'not_found.html';
+    } else {
+      // Show error for other types (network, server errors)
+      document.getElementById('adTitle').textContent = 'Ошибка загрузки';
+      document.getElementById('adSpecs').textContent = err.message || 'Не удалось загрузить объявление';
+    }
   }
 }
 
