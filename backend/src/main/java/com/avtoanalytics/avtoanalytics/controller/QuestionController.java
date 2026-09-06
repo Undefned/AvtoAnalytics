@@ -47,6 +47,13 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.answerQuestion(questionId, request, userId));
     }
 
+    @GetMapping("/answered/count")
+    @Operation(summary = "Count questions answered by current user")
+    public ResponseEntity<Long> countAnsweredQuestions(@RequestHeader("Authorization") String authHeader) {
+        Long userId = getUserIdFromToken(authHeader);
+        return ResponseEntity.ok(questionService.countAnsweredQuestionsByUser(userId));
+    }
+
     private Long getUserIdFromToken(String authHeader) {
         String token = authHeader.substring(7);
         return jwtTokenProvider.getUserIdFromToken(token);

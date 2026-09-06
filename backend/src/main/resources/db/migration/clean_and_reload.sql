@@ -332,6 +332,39 @@ SET avatar_url = 'http://localhost:9000/avtoanalytics/Users/user' ||
     (floor(random() * 4) + 1) || '.png'
 WHERE avatar_url IS NULL;
 
+
+
+-- ============================================================
+-- fix_minio_urls.sql
+-- Разово переписывает уже засеянные абсолютные "http://localhost:9000/..."
+-- ссылки на фото/аватарки в относительные "/minio/..." — те, что после
+-- фикса MinioService.getDirectFileUrl() генерируются по умолчанию и
+-- резолвятся через nginx-прокси с любого хоста, а не только с localhost.
+--
+-- Выполнить один раз после того, как накатите фикс MinioService + nginx.
+-- Новые объявления/аватарки, созданные ПОСЛЕ фикса, уже получат
+-- правильный URL сами — этот скрипт только чинит старые, уже
+-- сохранённые записи.
+-- ============================================================
+
+UPDATE avto_analytics_ads
+SET photo_urls = (
+    SELECT array_agg(REPLACE(url, 'http://localhost:9000/avtoanalytics', '/minio/avtoanalytics'))
+    FROM unnest(photo_urls) AS url
+)
+WHERE photo_urls IS NOT NULL
+  AND EXISTS (
+    SELECT 1 FROM unnest(photo_urls) AS url WHERE url LIKE 'http://localhost:9000/%'
+  );
+
+UPDATE avto_analytics_users
+SET avatar_url = REPLACE(avatar_url, 'http://localhost:9000/avtoanalytics', '/minio/avtoanalytics')
+WHERE avatar_url LIKE 'http://localhost:9000/%';
+
+-- Проверка
+SELECT id, photo_urls FROM avto_analytics_ads WHERE photo_urls IS NOT NULL LIMIT 5;
+SELECT id, avatar_url FROM avto_analytics_users WHERE avatar_url IS NOT NULL LIMIT 5;
+
 -- ============================================================
 -- 6. ОБНОВЛЕНИЕ СТАТИСТИКИ
 -- ============================================================

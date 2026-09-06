@@ -755,3 +755,27 @@
   color: var(--text-dark);
   text-align: right;
 }
+
+
+/* =========================================================
+   SELLER CONTACT
+   ========================================================= */
+.seller__contact {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #2563EB;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.seller__contact a {
+  color: #2563EB;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.seller__contact a:hover {
+  color: #1D4ED8;
+  text-decoration: underline;
+}

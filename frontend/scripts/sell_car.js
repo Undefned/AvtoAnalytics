@@ -24,10 +24,10 @@ let uploadedFiles = [];
 // ===== CUSTOM MODAL SYSTEM =====
 function showModal(options) {
   const { title, message, type = 'info', confirmText = 'OK', onConfirm = null, showCancel = false, cancelText = 'Cancel' } = options;
-  
+
   const existingModal = document.querySelector('.custom-modal-overlay');
   if (existingModal) existingModal.remove();
-  
+
   const overlay = document.createElement('div');
   overlay.className = 'custom-modal-overlay';
   overlay.innerHTML = `
@@ -43,23 +43,23 @@ function showModal(options) {
       </div>
     </div>
   `;
-  
+
   document.body.appendChild(overlay);
-  
+
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeModal();
   });
-  
+
   const confirmBtn = overlay.querySelector('[data-action="confirm"]');
   const cancelBtn = overlay.querySelector('[data-action="cancel"]');
-  
+
   if (confirmBtn) {
     confirmBtn.addEventListener('click', () => {
       closeModal();
       if (onConfirm) onConfirm();
     });
   }
-  
+
   if (cancelBtn) {
     cancelBtn.addEventListener('click', closeModal);
   }
@@ -139,7 +139,7 @@ modalStyles.textContent = `
   .custom-modal__btn--danger:hover { background: #B91C1C; }
   .custom-modal__btn--cancel { background: #F3F4F6; color: #374151; }
   .custom-modal__btn--cancel:hover { background: #E5E7EB; }
-  
+
   .upload-area {
     border: 2px dashed #DDDDDD;
     border-radius: 8px;
@@ -246,13 +246,13 @@ async function handleFiles(files) {
     showErrorModal('Please select image files (JPG, PNG, or WebP).');
     return;
   }
-  
+
   const maxFiles = 15;
   if (uploadedFiles.length + imageFiles.length > maxFiles) {
     showErrorModal(`You can upload a maximum of ${maxFiles} images.`);
     return;
   }
-  
+
   const maxSize = 10 * 1024 * 1024;
   for (const file of imageFiles) {
     if (file.size > maxSize) {
@@ -260,7 +260,7 @@ async function handleFiles(files) {
       return;
     }
   }
-  
+
   uploadedFiles = [...uploadedFiles, ...imageFiles];
   renderUploadPreviews();
   await uploadImages(imageFiles);
@@ -268,19 +268,19 @@ async function handleFiles(files) {
 
 function renderUploadPreviews() {
   if (!photoPreview) return;
-  
+
   if (uploadedFiles.length === 0) {
     photoPreview.innerHTML = '';
     return;
   }
-  
+
   photoPreview.innerHTML = uploadedFiles.map((file, index) => `
     <div class="upload-area__preview-item">
       <img src="${URL.createObjectURL(file)}" alt="Upload ${index + 1}" />
       <button class="remove-btn" data-index="${index}">×</button>
     </div>
   `).join('');
-  
+
   photoPreview.querySelectorAll('.remove-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -297,15 +297,18 @@ async function uploadImages(files) {
     for (const file of files) {
       const formData = new FormData();
       formData.append('file', file);
-      
-      const response = await fetch('http://localhost:8080/api/files/upload', {
+
+      // Was hardcoded to http://localhost:8080 — broke under Docker for the
+      // same reason as the old API_BASE_URL. Now goes through the same
+      // origin-aware base URL as every other request.
+      const response = await fetch(`${API_BASE_URL}/files/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${Auth.getToken()}` },
         body: formData
       });
-      
+
       if (!response.ok) throw new Error(`Failed to upload ${file.name}`);
-      
+
       const data = await response.json();
       uploadedPhotoUrls.push(data.url);
     }
@@ -333,7 +336,7 @@ async function lookupCar() {
 
     const year = Number(yearInput.value);
     matchedCar = results[0];
-    
+
     if (year && !isNaN(year) && year > 1900) {
       const yearMatch = results.find(c => Number(c.year) === year);
       if (yearMatch) matchedCar = yearMatch;
@@ -386,7 +389,6 @@ form.addEventListener('submit', async (e) => {
   // Validation
   if (!make || !model) { showErrorModal('Please enter both make and model.'); return; }
   if (!year || year < 1900 || year > 2026) { showErrorModal('Please enter a valid year (1900-2026).'); return; }
-  // ✅ REMOVED price limit validation - any positive number is fine
   if (!price || price <= 0) { showErrorModal('Please enter a valid price.'); return; }
   if (!mileage || mileage < 0) { showErrorModal('Please enter a valid mileage.'); return; }
   if (!city) { showErrorModal('Please enter a city.'); return; }
@@ -397,7 +399,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     if (!matchedCar) await lookupCar();
-    
+
     if (!matchedCar) {
       const results = await apiFetch(`/cars/search?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}`);
       if (results && results.length > 0) {
@@ -405,7 +407,7 @@ form.addEventListener('submit', async (e) => {
         matchedAverage = await apiFetch(`/analytics/average/${matchedCar.id}`).catch(() => null);
       }
     }
-    
+
     if (!matchedCar) {
       showErrorModal(`"${make} ${model}" isn't in our catalog. Available: Toyota RAV4, BMW X5, Audi Q5, etc.`);
       return;

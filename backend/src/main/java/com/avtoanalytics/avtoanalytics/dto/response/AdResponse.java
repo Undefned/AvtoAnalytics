@@ -26,6 +26,7 @@ public class AdResponse {
     private boolean privateSeller;
     private String sellerAvatar;
     private LocalDateTime sellerSince;
+    private String sellerEmail;
 
     // Car
     private Long carId;

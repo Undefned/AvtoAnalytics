@@ -5,7 +5,20 @@
    через глобальные объекты `API_BASE_URL`, `Auth`, `apiFetch`.
    ========================================================= */
 
-const API_BASE_URL = 'http://localhost:8080/api';
+/* API_BASE_URL резолвится в зависимости от того, откуда открыта страница:
+   - Live Server (обычно порт 5500) не проксирует /api — бьём в бэкенд напрямую.
+   - Всё остальное (Docker/nginx, прод) — относительный путь: браузер сам
+     подставит текущий origin, а nginx проксирует /api/ на бэкенд контейнер.
+   Это чинит основную причину "работает в Live Server, но не в Docker":
+   раньше URL был жёстко зашит на http://localhost:8080, а "localhost" в
+   браузере — это машина ЗРИТЕЛЯ, а не сервер, где крутится бэкенд. */
+const API_BASE_URL = (() => {
+  const { port } = window.location;
+  if (port === '5500' || port === '5501') {
+    return 'http://localhost:8080/api';
+  }
+  return '/api';
+})();
 
 /* ===== AUTH: хранение JWT-токена и данных пользователя ===== */
 const Auth = {
@@ -51,7 +64,7 @@ async function apiFetch(path, options = {}) {
   const { method = 'GET', body, auth = false, headers = {} } = options;
 
   const finalHeaders = { ...headers };
-  if (body !== undefined && !(body instanceof FormData)) {
+  if (body !== undefined) {
     finalHeaders['Content-Type'] = 'application/json';
   }
   if (auth) {
@@ -64,7 +77,7 @@ async function apiFetch(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers: finalHeaders,
-    body: body !== undefined && !(body instanceof FormData) ? JSON.stringify(body) : body,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
   });
 
   if (!response.ok) {
@@ -85,28 +98,3 @@ async function apiFetch(path, options = {}) {
 
   return response.json();
 }
-
-/* ===== 404 HANDLER ===== */
-(function() {
-  // List of valid page names (without .html)
-  const validPages = [
-    'main',
-    'catalogue', 
-    'sell_car',
-    'compare',
-    'profile',
-    'about_us',
-    'login_signup',
-    'avto_card',
-    'not_found'
-  ];
-
-  // Get current page name from URL
-  const path = window.location.pathname;
-  const pageName = path.split('/').pop().replace('.html', '');
-
-  // Check if it's a valid page
-  if (pageName && !validPages.includes(pageName) && !path.includes('assets') && !path.includes('styles') && !path.includes('scripts')) {
-    window.location.href = '404.html';
-  }
-})();

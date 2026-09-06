@@ -22,23 +22,27 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
-
+    
     private final QuestionRepository questionRepository;
     private final AdRepository adRepository;
     private final UserRepository userRepository;
 
     public List<QuestionResponse> getPublicQuestionsByAd(Long adId) {
         Ad ad = adRepository.findById(adId)
-            .orElseThrow(() -> new ResourceNotFoundException("Ad not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Ad not found"));
         List<Question> questions = questionRepository.findByAdAndIsPublicTrue(ad);
         return questions.stream()
-            .map(this::mapToResponse)
+        .map(this::mapToResponse)
             .collect(Collectors.toList());
+    }
+
+    public long countAnsweredQuestionsByUser(Long userId) {
+        return questionRepository.countByAnswererId(userId);
     }
 
     public List<QuestionResponse> getAllQuestionsByAd(Long adId) {
         Ad ad = adRepository.findById(adId)
-            .orElseThrow(() -> new ResourceNotFoundException("Ad not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Ad not found"));
         List<Question> questions = questionRepository.findByAd(ad);
         return questions.stream()
             .map(this::mapToResponse)
