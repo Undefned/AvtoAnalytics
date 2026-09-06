@@ -21,15 +21,30 @@ public class MinioService {
     @Value("${minio.bucket-name}")
     private String bucketName;
 
-    @Value("${minio.public-endpoint:localhost}")
-    private String publicEndpoint;
-
-    @Value("${minio.public-port:9000}")
-    private int publicPort;
+    /**
+     * Публичный базовый URL для файлов, отдаваемых наружу (в браузер).
+     *
+     * По умолчанию — относительный путь "/minio", который проксируется
+     * через nginx (location /minio/ -> minio:9000) на том же origin,
+     * с которого отдаётся сам сайт. Это работает откуда угодно —
+     * с вашего ноутбука, с сервера, за любым доменом — без переменных
+     * окружения под конкретный хост.
+     *
+     * Раньше здесь был абсолютный "http://localhost:9000", который
+     * означает "порт 9000 на машине ЗРИТЕЛЯ", а не сервера — поэтому
+     * фото/аватарки не грузились нигде, кроме как при локальном запуске
+     * фронта и бэка на одной машине (Live Server).
+     *
+     * Если когда-нибудь понадобится реально отдавать MinIO с отдельного
+     * хоста/CDN — переопределите minio.public-url-base значением вида
+     * "https://cdn.example.com/minio" через переменную окружения
+     * MINIO_PUBLIC_URL_BASE, и это будет использовано как есть.
+     */
+    @Value("${minio.public-url-base:/minio}")
+    private String publicUrlBase;
 
     public String uploadFile(MultipartFile file, String folder) {
         try {
-            // Check if bucket exists
             boolean bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
                     .bucket(bucketName)
                     .build());
@@ -41,18 +56,16 @@ public class MinioService {
                 log.info("Bucket '{}' created", bucketName);
             }
 
-            // Generate unique filename
             String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename != null && originalFilename.contains(".") 
-                    ? originalFilename.substring(originalFilename.lastIndexOf('.')) 
+            String extension = originalFilename != null && originalFilename.contains(".")
+                    ? originalFilename.substring(originalFilename.lastIndexOf('.'))
                     : "";
             String fileName = UUID.randomUUID() + extension;
-            
-            String fullPath = folder != null && !folder.isEmpty() 
-                    ? folder + "/" + fileName 
+
+            String fullPath = folder != null && !folder.isEmpty()
+                    ? folder + "/" + fileName
                     : fileName;
 
-            // Upload file
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(fullPath)
@@ -60,7 +73,6 @@ public class MinioService {
                     .contentType(file.getContentType())
                     .build());
 
-            // ✅ Return DIRECT URL instead of presigned URL
             return getDirectFileUrl(fullPath);
 
         } catch (Exception e) {
@@ -74,21 +86,20 @@ public class MinioService {
     }
 
     /**
-     * ✅ Returns a direct URL without presigned parameters
-     * Works if MinIO bucket is public
+     * Возвращает URL, который реально резолвится в браузере — относительный
+     * путь через nginx-прокси, а не хардкод хоста бэкенда.
      */
     public String getDirectFileUrl(String fileName) {
-        return String.format("http://%s:%d/%s/%s", publicEndpoint, publicPort, bucketName, fileName);
+        String base = publicUrlBase.endsWith("/")
+                ? publicUrlBase.substring(0, publicUrlBase.length() - 1)
+                : publicUrlBase;
+        return String.format("%s/%s/%s", base, bucketName, fileName);
     }
 
-    /**
-     * ⚠️ Deprecated: Use getDirectFileUrl instead
-     * This was causing issues with the browser
-     */
     @Deprecated
     public String getPresignedFileUrl(String fileName) {
         try {
-            String url = minioClient.getPresignedObjectUrl(
+            return minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .bucket(bucketName)
                             .object(fileName)
@@ -96,7 +107,6 @@ public class MinioService {
                             .expiry(7, java.util.concurrent.TimeUnit.DAYS)
                             .build()
             );
-            return url;
         } catch (Exception e) {
             log.error("Error generating presigned URL: {}", e.getMessage());
             return getDirectFileUrl(fileName);

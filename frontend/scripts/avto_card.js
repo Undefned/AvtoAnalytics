@@ -530,6 +530,19 @@ async function loadAd() {
       sinceEl.textContent = ad.sellerSince ? `Member since: ${formatDate(ad.sellerSince)}` : 'Member since: —';
     }
     
+    // ✅ Seller email - show if available
+    const emailText = document.getElementById('sellerEmailText');
+    const emailLink = document.getElementById('sellerEmailLink');
+    const sellerContact = document.getElementById('sellerContact');
+    
+    if (ad.sellerEmail) {
+      if (emailText) emailText.textContent = ad.sellerEmail;
+      if (emailLink) emailLink.href = `mailto:${ad.sellerEmail}`;
+      if (sellerContact) sellerContact.style.display = 'flex';
+    } else {
+      if (sellerContact) sellerContact.style.display = 'none';
+    }
+    
     document.getElementById('adLocation').textContent = [ad.city, ad.address].filter(Boolean).join(', ') || '—';
 
     // Photos

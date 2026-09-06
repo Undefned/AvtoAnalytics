@@ -1,5 +1,5 @@
 /* =========================================================
-   PROFILE.JS - COMPLETE FIX
+   PROFILE.JS - COMPLETE FIX WITH QUESTIONS COUNTER
    ========================================================= */
 
 function formatPrice(value) {
@@ -88,7 +88,6 @@ async function load() {
     updateDropdownUser(me);
 
     // ✅ Get user's ads using the same /api/ads endpoint with filter
-    // Since /api/ads/seller/{userId} might not exist, use /api/ads with seller filter
     let myAds = [];
     let favorites = [];
     
@@ -120,7 +119,15 @@ async function load() {
 
     if (activeAdsValue) activeAdsValue.textContent = activeCount;
     if (savedCarsValue) savedCarsValue.textContent = favoritesCount;
-    if (questionsValue) questionsValue.textContent = '—';
+
+    // ✅ FIXED: Get questions answered count from backend
+    try {
+      const answeredCount = await apiFetch('/questions/answered/count', { auth: true });
+      if (questionsValue) questionsValue.textContent = answeredCount || 0;
+    } catch (err) {
+      console.warn('Could not fetch answered questions count:', err);
+      if (questionsValue) questionsValue.textContent = '0';
+    }
 
     // ✅ Render My Ads
     if (myAdsRow) {

@@ -179,6 +179,7 @@ public class AdService {
             response.setPrivateSeller(ad.getSeller().isPrivateSeller());
             response.setSellerAvatar(ad.getSeller().getAvatarUrl());
             response.setSellerSince(ad.getSeller().getCreatedAt());
+            response.setSellerEmail(ad.getSeller().getEmail());
         }
 
         // Car info

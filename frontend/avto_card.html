@@ -52,7 +52,7 @@
       <!-- Car Details Card (NEW) -->
       <div class="car-details-card">
         <div class="car-details-card__header">
-          <span class="car-details-card__title">📋 Car Specifications</span>
+          <span class="car-details-card__title">Car Specifications</span>
         </div>
         <div class="car-details-card__grid" id="carDetailsGrid">
           <div class="car-detail-item">
@@ -149,11 +149,11 @@
 
     <!-- ПРАВАЯ КОЛОНКА -->
     <section class="details">
-      <div class="badges">
+      <!-- <div class="badges">
         <span class="badge badge--active">Used</span>
         <span class="badge">No accidents</span>
         <span class="badge">1 owner</span>
-      </div>
+      </div> -->
 
       <h1 class="listing__title" id="adTitle">Загрузка…</h1>
       <p class="listing__specs" id="adSpecs"></p>
@@ -199,6 +199,21 @@
             <div>
               <p class="seller__name" id="sellerName">—</p>
               <p class="seller__since" id="sellerSince">Member since: —</p>
+                <!-- ✅ Add seller email -->
+                <p class="seller__contact" id="sellerContact" style="
+                  margin-top: 4px;
+                  font-size: 12px;
+                  color: #2563EB;
+                  display: flex;
+                  align-items: center;
+                  gap: 4px;
+                ">
+                  <span style="font-size: 14px;"></span>
+                  <a href="mailto:" id="sellerEmailLink" style="color: #2563EB; text-decoration: none; word-break: break-all;">
+                    <span id="sellerEmailText">—</span>
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
